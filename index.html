@@ -59,23 +59,29 @@
         <p>Esplora le ultime scoperte e le migliori pratiche nella sicurezza informatica.</p>
     </header>
     <nav>
-        <a href="#">Home</a>
-        <a href="#">Articoli</a>
-        <a href="#">Chi Sono</a>
-        <a href="#">Contatti</a>
+        <a href="index.php">Home</a>
+        <a href="articoli.php">Articoli</a>
+        <a href="chi_sono.php">Chi Sono</a>
+        <a href="contatti.php">Contatti</a>
     </nav>
     <div class="container">
-        <div class="post">
-            <h2>Titolo dell'articolo</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam ut venenatis justo. Vestibulum ac ultrices ante. Quisque at ante nec lorem congue ullamcorper. Sed fermentum pharetra felis at suscipit. Pellentesque ultrices, justo non egestas bibendum, lorem justo feugiat ex, et hendrerit neque felis id libero.</p>
-            <p>Morbi fermentum, sem id ullamcorper fermentum, mauris odio condimentum quam, vel varius sapien mi sed elit. Integer vitae elit odio. Ut eget eros arcu. Cras vehicula id nisl vitae feugiat. Nulla facilisi. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Fusce fermentum dui vel est facilisis, nec fermentum nunc commodo. Ut dictum bibendum tortor, nec vestibulum quam molestie non. Curabitur viverra, velit at posuere viverra, purus neque mattis ex, a suscipit justo lectus sed tortor. Integer rhoncus sodales ex, vitae tempor nibh aliquet non.</p>
-            <p>Donec accumsan ut ipsum id vehicula. Nulla facilisi. Cras in malesuada lorem, sed molestie metus. Duis nec volutpat urna. Proin vel congue eros, at rutrum orci. Proin et odio eros. Ut id dolor quis nibh ullamcorper tristique non ac arcu. Nulla auctor augue eu eros commodo, eu viverra urna feugiat.</p>
-        </div>
-        <div class="post">
-            <h2>Titolo dell'articolo</h2>
-            <p>Contenuto dell'articolo...</p>
-        </div>
-        <!-- Aggiungi altri post qui -->
+        <?php
+        // Contenuto della pagina in base all'URL richiesto
+        $pagina = isset($_GET['pagina']) ? $_GET['pagina'] : 'home';
+
+        // Includi il contenuto della pagina richiesta
+        if ($pagina === 'home') {
+            include('home.php');
+        } elseif ($pagina === 'articoli') {
+            include('articoli.php');
+        } elseif ($pagina === 'chi_sono') {
+            include('chi_sono.php');
+        } elseif ($pagina === 'contatti') {
+            include('contatti.php');
+        } else {
+            include('404.php'); // Pagina non trovata
+        }
+        ?>
     </div>
 </body>
 </html>
