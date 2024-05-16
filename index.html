@@ -59,29 +59,20 @@
         <p>Esplora le ultime scoperte e le migliori pratiche nella sicurezza informatica.</p>
     </header>
     <nav>
-        <a href="index.php">Home</a>
+        <a href="index.html">Home</a>
         <a href="articoli.html">Articoli</a>
-        <a href="chi_sono.php">Chi Sono</a>
-        <a href="contatti.php">Contatti</a>
+        <a href="chi_sono.html">Chi Sono</a>
+        <a href="contatti.html">Contatti</a>
     </nav>
     <div class="container">
-        <?php
-        // Contenuto della pagina in base all'URL richiesto
-        $pagina = isset($_GET['pagina']) ? $_GET['pagina'] : 'home';
-
-        // Includi il contenuto della pagina richiesta
-        if ($pagina === 'home') {
-            include('home.php');
-        } elseif ($pagina === 'articoli') {
-            include('articoli.html');
-        } elseif ($pagina === 'chi_sono') {
-            include('chi_sono.php');
-        } elseif ($pagina === 'contatti') {
-            include('contatti.php');
-        } else {
-            include('404.php'); // Pagina non trovata
-        }
-        ?>
+        <div class="post">
+            <h2>Titolo del post</h2>
+            <p>Contenuto del post Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis nec risus vel arcu tincidunt ullamcorper. Fusce at nisl vitae purus suscipit feugiat.</p>
+        </div>
+        <div class="post">
+            <h2>Altro Titolo del post</h2>
+            <p>Altri contenuti del post Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis nec risus vel arcu tincidunt ullamcorper. Fusce at nisl vitae purus suscipit feugiat.</p>
+        </div>
     </div>
 </body>
 </html>
