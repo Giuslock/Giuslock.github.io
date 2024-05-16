@@ -1,78 +1,37 @@
 <!DOCTYPE html>
-<html lang="it">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Under Construction</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f8f9fa;
-        }
-        header {
-            background-color: #343a40;
-            color: #fff;
-            padding: 20px 0;
-            text-align: center;
-        }
-        h1 {
-            margin: 0;
-        }
-        nav {
-            background-color: #212529;
-            color: #fff;
-            padding: 10px 0;
-            text-align: center;
-        }
-        nav a {
-            color: #fff;
-            text-decoration: none;
-            padding: 0 15px;
-        }
-        nav a:hover {
-            text-decoration: underline;
-        }
-        .container {
-            max-width: 800px;
-            margin: 20px auto;
-            padding: 0 20px;
-        }
-        .post {
-            background-color: #fff;
-            margin-bottom: 20px;
-            padding: 20px;
-            border-radius: 5px;
-        }
-        .post h2 {
-            margin-top: 0;
-        }
-        .post p {
-            line-height: 1.6;
-        }
-    </style>
+    <title>{{ Blog Title Placeholder }}</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" type="image/png" href="{{ Favicon Placeholder }}">
 </head>
 <body>
     <header>
-        <h1>Under Construction</h1>
-        <p>Esplora le ultime scoperte e le migliori pratiche nella sicurezza informatica.</p>
+        <h1>{{ Header Title Placeholder }}</h1>
+        <p>{{ Header Description Placeholder }}</p>
     </header>
     <nav>
-        <a href="index.html">Home</a>
-        <a href="articoli.html">Articoli</a>
-        <a href="chi_sono.html">Chi Sono</a>
-        <a href="contatti.html">Contatti</a>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="articles.html">Articles</a></li>
+            <li><a href="about_me.html">About Me</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
     </nav>
-    <div class="container">
-        <div class="post">
-            <h2>Titolo del post</h2>
-            <p>Contenuto del post Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis nec risus vel arcu tincidunt ullamcorper. Fusce at nisl vitae purus suscipit feugiat.</p>
-        </div>
-        <div class="post">
-            <h2>Altro Titolo del post</h2>
-            <p>Altri contenuti del post Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis nec risus vel arcu tincidunt ullamcorper. Fusce at nisl vitae purus suscipit feugiat.</p>
-        </div>
-    </div>
+    <main>
+        <article class="post">
+            <h2>{{ Post Title Placeholder }}</h2>
+            <p>{{ Post Content Placeholder }}</p>
+        </article>
+        <article class="post">
+            <h2>{{ Another Post Title Placeholder }}</h2>
+            <p>{{ More Post Content Placeholder }}</p>
+        </article>
+    </main>
+    <footer>
+        <p>© {{ Current Year Placeholder }} {{ Blog Name Placeholder }}. All rights reserved.</p>
+    </footer>
 </body>
 </html>
