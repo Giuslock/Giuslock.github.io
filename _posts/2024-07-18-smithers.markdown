@@ -4,7 +4,7 @@ title:  "Smithers"
 date:   2024-07-18 17:42:56 +0200
 categories: ctf
 ---
-![Smithers](/assets/_smithers_0f5264ff08434e25b0eec8db30373c63.png)
+![Smithers](/assets/smithers.png)
 
 [Link to target](https://echoctf.red/target/5)
 
