@@ -27,7 +27,7 @@ url: "https://giuslock.github.io/" # the base hostname & protocol for your site,
 github_username:  Giuslock
 
 # Build settings
-theme: jekyll-theme-hacker
+theme: minima
 plugins:
   - jekyll-feed
 
