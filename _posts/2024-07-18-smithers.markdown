@@ -4,7 +4,7 @@ title:  "Smithers"
 date:   2024-07-18 17:42:56 +0200
 categories: ctf
 ---
-![Smithers](/assets/smithers.png)
+![Smithers](/assets/smithers/smithers.png)
 
 [Link to target](https://echoctf.red/target/5)
 
@@ -27,7 +27,7 @@ PORT      STATE SERVICE   VERSION
 
 ### Web Server on Port 10888
 There is a web server running on port 10888:
-![Webserver](/assets/webserver.png)
+![Webserver](/assets/smithers/webserver.png)
 
 It mentions that these utilities are only available to authorized IP addresses.
 
@@ -72,7 +72,7 @@ STORED
 
 ### Accessing the Web Server
 Once my address is stored, I can access the web server, which presents a command line interface:
-![Webserver After](/assets/webserver_after.png)
+![Webserver After](/assets/smithers/webserver_after.png)
 
 Two flags are visible. Using a semicolon (`;`), I can run other commands and see that it runs as root. By executing:
 
