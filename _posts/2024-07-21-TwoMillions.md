@@ -7,6 +7,9 @@ categories: ctf
 
 # CTF Report: 2Million
 
+![68118964e19378ac1e7f7a867f29b644.jpg](/assets/twomillions/68118964e19378ac1e7f7a867f29b644.jpg)
+https://app.hackthebox.com/machines/TwoMillion
+
 ## Initial Results and Information
 
 We started by performing an Nmap scan on the target machine:
