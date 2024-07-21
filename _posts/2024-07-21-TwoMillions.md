@@ -1,10 +1,7 @@
 ---
-title: 2024-07-21-HTB-TwoMillions.markdown
-updated: 2024-07-21 16:42:01Z
-created: 2024-07-21 16:20:33Z
-latitude: 45.46882440
-longitude: 9.23013560
-altitude: 0.0000
+layout: post
+title: "TwoMillion"
+date: 2024-07-21 16:42:01Z
 ---
 
 # CTF Report: 2Million
