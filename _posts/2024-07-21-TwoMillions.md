@@ -1,7 +1,8 @@
 ---
 layout: post
 title: "TwoMillion"
-date: 2024-07-21 16:42:01Z
+date: 2024-07-21 16:42:01 +0200
+categories: ctf
 ---
 
 # CTF Report: 2Million
