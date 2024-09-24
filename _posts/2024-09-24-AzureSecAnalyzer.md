@@ -5,7 +5,7 @@ date: 2024-09-24 15:24:01 +0200
 categories: projects
 ---
 
-I'm excited to announce that I've just published **AzureSecAnalyzer**, a PowerShell-based tool that checks the security settings of Azure resources. Whether you're managing a small-scale deployment or a multi-tenant environment, AzureSecAnalyzer provides comprehensive insights into the security configurations of your Azure resources and helps you identify potential vulnerabilities.
+I'm excited to announce that I've just published [**AzureSecAnalyzer**](https://github.com/Giuslock/AzureSecAnalyzer), a PowerShell-based tool that checks the security settings of Azure resources. Whether you're managing a small-scale deployment or a multi-tenant environment, AzureSecAnalyzer provides comprehensive insights into the security configurations of your Azure resources and helps you identify potential vulnerabilities.
 
 ### What Is AzureSecAnalyzer?
 AzureSecAnalyzer is a versatile PowerShell project designed to analyze the security settings of various Azure resources, giving you a clear overview of how secure your environment is. The tool currently supports a wide range of Azure services, including:
@@ -37,3 +37,6 @@ The process is simple:
 
 ### Output Format
 The results are saved as an .xlsx file for easy analysis. You can quickly identify weak security settings and take the necessary actions to secure your environment.
+
+### Get Involved
+If you find AzureSecAnalyzer helpful or have ideas for improvements, contributions are welcome! Head over to the [GitHub repository](https://github.com/Giuslock/AzureSecAnalyzer) to create a pull request or submit issues.
