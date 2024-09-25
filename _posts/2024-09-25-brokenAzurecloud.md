@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "BrokenAzure.cloud a series of CTFs on Azure"
+title:  "BrokenAzure.cloud - A series of CTFs on Azure"
 date:   2024-09-25 09:42:56 +0200
 categories: ctf
 ---
