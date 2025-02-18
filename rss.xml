@@ -4,9 +4,18 @@
         <title></title>
         <link>undefined</link>
         <description>undefined</description>
-        <lastBuildDate>Sat, 15 Feb 2025 17:28:10 GMT</lastBuildDate>
+        <lastBuildDate>Tue, 18 Feb 2025 13:32:08 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>Joplin Pages Publisher</generator>
+        <item>
+            <title><![CDATA[Got Titanic!]]></title>
+            <guid>c2bf11b0f884499384f45f2bf1af0468</guid>
+            <pubDate>Tue, 18 Feb 2025 13:27:54 GMT</pubDate>
+            <content:encoded><![CDATA[<p><img src="/_resources/e62901204d8c44c39652323a58509c45.png" /></p>
+<p>Starting this season late, but that's it!</p>
+<p><a title="https://www.hackthebox.com/machines/Titanic" href="https://www.hackthebox.com/machines/Titanic">Titanic</a></p>
+]]></content:encoded>
+        </item>
         <item>
             <title><![CDATA[BrokenAzure.cloud - A series of CTFs on Azure]]></title>
             <guid>ebeabaed1fdb4b41b8ceb89e16d4477c</guid>
