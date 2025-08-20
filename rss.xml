@@ -1,22 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+<rss version="2.0">
     <channel>
         <title></title>
         <link>undefined</link>
         <description>undefined</description>
-        <lastBuildDate>Wed, 20 Aug 2025 21:51:16 GMT</lastBuildDate>
+        <lastBuildDate>Wed, 20 Aug 2025 21:52:44 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>Joplin Pages Publisher</generator>
-        <item>
-            <title><![CDATA[SSSSSS]]></title>
-            <guid>d99ff203a72b41d090c11d07eb8489dc</guid>
-            <pubDate>Wed, 19 Mar 2025 22:05:48 GMT</pubDate>
-            <content:encoded><![CDATA[<p>Seiri - separare: separa ciò che ti serve da ciò che non è funzionale all'attività e quindi crea disturbo e disordine, quindi spreco di tempo o di risorse (muda); un termine alternativo con la S è scarta.</p>
-<p>Seiton - riordinare: metti a posto tutto quello che è utile, il vecchio motto "ogni cosa al suo posto e un posto per ogni cosa"; un termine alternativo con la S è sistema.</p>
-<p>Seiso - pulire: tieni tale ordine costante e pulisci, un ambiente pulito ed ordinato è un ambiente che "non nasconde" le inefficienze (una logica molto in linea con il Total Quality Management TQM); un termine alternativo con la S è spazza.</p>
-<p>Seiketsu - sistematizzare o standardizzare: definisci delle metodologie ripetitive e canonizzate da utilizzare per continuare queste attività di razionalizzazione delle risorse e degli spazi lavorativi;</p>
-<p>Shitsuke - diffondere o sostenere: fai che questo modo di pensare ed agire sia pervasivo per tutte le attività aziendali.</p>
-]]></content:encoded>
-        </item>
     </channel>
 </rss>
