@@ -1,63 +1,46 @@
 <!doctype html>
 <html lang="en">
   <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Simplex</title>
-
-  
-  
-  
-
-  <link rel="stylesheet" href="_assets/css/simplex.css" />
-  <link rel="stylesheet" href="_assets/css/pygments.css" />
-
-  <!-- Lity lightbox (CDN) -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lity/2.4.1/lity.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
-
-  <script defer src="_assets/js/main.js"></script>
-  <script src="https://code.jquery.com/jquery-3.7.1.min.js" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/lity/2.4.1/lity.min.js" crossorigin="anonymous"></script>
-</head>
-
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Giuslock Pages</title>
+    <meta name="description" content="Cybersecurity blog — exploits, malware, red teaming." />
+    <link rel="stylesheet" href="_assets/css/style.css" />
+    <!-- Optional: Prism.js for code highlighting (CDN). Remove if not needed. -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-okaidia.min.css" integrity="sha512-8bQusQ6LzA4p1fxcc3Biiyw7FQ7Zr9mY8B6JH3IOgBqYFhU2Y4iOQx2Q8i5v1xJQ+udx4oH6Wk9HpnD5wWZy7g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script defer src="_assets/js/main.js"></script>
+  </head>
   <body>
-    <header class="sx-header">
-  <a class="sx-brand" href="/index">
-    
-      <span>Simplex</span>
-    
-  </a>
-  <nav class="sx-nav">
-    
-    
-      
-      
-      
-    
-    
-  </nav>
-</header>
+    <header class="site-header">
+      <a class="brand" href="/index">Giuslock Pages</a>
+      <nav>
+        <a href="/archives">Archives</a>
+        <a href="/about">About</a>
+        <a href="/rss.xml">RSS</a>
+      </nav>
+    </header>
 
-    <main class="sx-container">
-      <section class="sx-hero">
-        <h1>Welcome</h1>
-        <p>Simplex port for Joplin Pages Publisher</p>
+    <main class="container">
+      <section class="hero">
+        <h1>💻 Giuslock Pages</h1>
+        <p>Cybersecurity blog — exploits, malware, red teaming.</p>
+        <input id="search" type="search" placeholder="Search posts, tags..." aria-label="Search posts" />
       </section>
-      <section class="sx-post-list">
-        
-          <article class="sx-post-item">
-            <h2 class="sx-post-title"><a href="/article/basic-syntax-or-markdown-guide">Basic Syntax | Markdown Guide</a></h2>
-            <div class="sx-post-meta">
-              <time>2023-03-01</time>
-              
-            </div>
-          </article>
-        
+
+      <section class="post-list">
+        <h2>Latest Articles</h2>
+        <ul id="postList">
+          
+        </ul>
       </section>
     </main>
-    <footer class="sx-footer">
-  <p>© 2025 Simplex</p>
-</footer>
 
+    <footer class="site-footer">
+      <p>© 2025 Giuslock Pages</p>
+    </footer>
+
+    <!-- Prism core (optional) -->
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js" integrity="sha512-0bTuf3hP8B2jWUM3d7y4N8mLqPi3rdUJDwmH1S9n9mTO2cCj8wz3d8p1H9b+Qibx8vk8o9bmvmA1eKxGXBnqjA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js" integrity="sha512-Z9v0C9kH4m8bB+1xZ4cE9uX3ZQwR4e1H2b8j0r6QqZC1u1+0fQm0nqT9hF3d7k6XkbhUQyP1YLB2UQbNQv1oGQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   </body>
 </html>
