@@ -27,17 +27,13 @@
   </div>
 </header>
 
-        <div class="card"><div class="post"><h1>Home</h1>
-<p class="post-meta"></p>
-<ul class="post-list">
-  
-    <li class="post-item"><a href="/article/untitled">CTF Report: 2Million</a> <span class="post-meta">— 2025-02-15</span></li>
-  
-    <li class="post-item"><a href="/article/smithers-echo-ctf-challenge">Smithers - Echo CTF Challenge</a> <span class="post-meta">— 2025-02-15</span></li>
-  
-    <li class="post-item"><a href="/article/soccer-an-htb-easy-machine">Soccer - An HTB easy machine</a> <span class="post-meta">— 2025-02-15</span></li>
-  
-</ul></div></div>
+        <div class="card"><div class="post"><h1>Search</h1>
+<input id="search-input" type="search" placeholder="Type to search..." style="width:100%;padding:.6rem;border-radius:8px;border:1px solid var(--border);background:var(--panel-2);color:var(--text);" />
+<ul id="search-results" class="post-list" style="margin-top:1rem;"></ul>
+<script>window.__SITE_INDEX__=([{"title":"CTF Report: 2Million","url":"article/untitled","date":"2025-02-15","tags":["topic:ctf"]},{"title":"Smithers - Echo CTF Challenge","url":"article/smithers-echo-ctf-challenge","date":"2025-02-15","tags":["topic:ctf"]},{"title":"Soccer - An HTB easy machine","url":"article/soccer-an-htb-easy-machine","date":"2025-02-15","tags":["topic:ctf"]}]);</script>
+<script>
+(function(){const input=document.getElementById('search-input');const list=document.getElementById('search-results');if(!input||!list||!window.__SITE_INDEX__)return;const idx=window.__SITE_INDEX__;function render(items){list.innerHTML=items.map(i=>`<li class="post-item"><a href="/${i.url}">${i.title}</a> — ${i.date}</li>`).join('');}input.addEventListener('input',()=>{const q=input.value.trim().toLowerCase();if(!q){render([]);return;}const out=idx.filter(i=>(i.title+i.tags.join(' ')).toLowerCase().includes(q)).slice(0,30);render(out);});})();</script>
+</div></div>
       </div>
     </div>
   </div>
