@@ -1,7 +1,7 @@
 // Giuslock Pages Theme JS
 console.debug('Giuslock Pages theme loaded');
 
-// Open external links in new tab
+// Open external links in a new tab and enable simple client-side search
 document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('a[href^="http"]').forEach(a => {
     try {
@@ -12,7 +12,6 @@ document.addEventListener('DOMContentLoaded', () => {
     } catch (e) {}
   });
 
-  // Simple client-side search on index
   const search = document.getElementById('search');
   const list = document.getElementById('postList');
   if (search && list) {

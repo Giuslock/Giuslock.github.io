@@ -29,7 +29,6 @@ nav a { margin-left: 1rem; text-decoration: none; color: var(--link); font-weigh
 .post-list ul, .archive-year ul { list-style: none; padding: 0; margin: 0; }
 .post-item { padding: 0.6rem 0; border-bottom: 1px dashed var(--border); display: flex; align-items: baseline; gap: 0.5rem; flex-wrap: wrap; }
 .post-title { text-decoration: none; color: var(--fg); font-weight: 700; }
-.post-title:hover { color: var(--accent); text-decoration: underline; }
 .post-date { color: var(--muted); font-size: 0.85rem; margin-left: 0.25rem; }
 .tag { background: var(--border); color: var(--accent); padding: 0.1rem 0.5rem; border-radius: 4px; font-size: 0.75rem; margin-left: 0.25rem; }
 .post { padding-bottom: 2rem; }
@@ -45,6 +44,14 @@ nav a { margin-left: 1rem; text-decoration: none; color: var(--link); font-weigh
   padding: 0.75rem;
 }
 blockquote { border-left: 4px solid var(--accent); padding-left: 1rem; color: var(--muted); margin: 1rem 0; font-style: italic; }
-.post-nav.prevnext { display: flex; justify-content: space-between; margin-top: 1.5rem; }
-.post-nav.prevnext a { color: var(--link); text-decoration: none; font-weight: 600; }
-.post-nav.prevnext a:hover { text-decoration: underline; }
+
+/* Hover grow effect for titles */
+.hover-grow { 
+  display: inline-block; 
+  transition: transform 0.18s ease, text-shadow 0.18s ease;
+  will-change: transform;
+}
+.hover-grow:hover, .hover-grow:focus {
+  transform: scale(1.035);
+  text-shadow: 0 0 12px rgba(0, 255, 136, 0.45);
+}
