@@ -1,0 +1,52 @@
+:root{
+  --bg:#0b0f14;
+  --card:#111720;
+  --text:#e6eef7;
+  --muted:#9fb3c8;
+  --accent:#64ffda;
+  --link:#7cc1ff;
+  --code:#0e1621;
+  --border:#223042;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font:16px/1.6 system-ui,Segoe UI,Roboto,Ubuntu,Arial,sans-serif}
+.container{max-width:960px;margin:0 auto;padding:0 20px}
+.site-header{border-bottom:1px solid var(--border);background:rgba(11,15,20,.7);backdrop-filter:saturate(180%) blur(6px);position:sticky;top:0;z-index:5}
+.header-inner{display:flex;align-items:center;justify-content:space-between;height:64px}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--text);font-weight:700}
+.logo img{height:28px;width:auto}
+.nav a{margin-left:16px;text-decoration:none;color:var(--muted)}
+.nav a:hover{color:var(--text)}
+.hero{padding:48px 0 8px}
+.hero h1{font-size:2.2rem;margin:0 0 6px}
+.subtitle{color:var(--muted);margin-top:0}
+.intro{background:var(--card);border:1px solid var(--border);padding:16px;border-radius:14px}
+h1,h2,h3{line-height:1.25}
+h2{margin-top:28px}
+.post-list{list-style:none;padding:0;margin:12px 0 0;display:grid;grid-template-columns:1fr;gap:14px}
+.post-card{background:var(--card);border:1px solid var(--border);padding:16px;border-radius:16px}
+.post-title{margin:0 0 4px;font-size:1.15rem}
+.meta{color:var(--muted);font-size:.95rem}
+.tags{opacity:.85}
+.snippet{margin:.2rem 0 0;color:var(--muted)}
+.more{margin:20px 0}
+.btn{display:inline-block;padding:10px 14px;border-radius:12px;border:1px solid var(--border);text-decoration:none;color:var(--text);background:transparent}
+.btn:hover{border-color:var(--accent)}
+.post h1{margin-top:24px}
+.post .content pre{background:var(--code);padding:14px;border-radius:12px;overflow:auto;border:1px solid var(--border)}
+.post .content code{background:var(--code);padding:2px 6px;border-radius:6px}
+.post .content a{color:var(--link)}
+.post .content a:hover{text-decoration:underline}
+.post-nav{margin:24px 0}
+.prev-next{display:flex;justify-content:space-between;gap:10px}
+.site-footer{border-top:1px solid var(--border);margin-top:40px;padding:18px 0;color:var(--muted)}
+.small{font-size:.9rem}
+.archives .year{margin-top:22px}
+.archive-list{list-style:none;padding:0}
+.archive-list li{padding:6px 0;border-bottom:1px dashed var(--border)}
+.arch-date{display:inline-block;width:72px;color:var(--muted)}
+.back-home a{color:var(--link);text-decoration:none}
+.back-home a:hover{text-decoration:underline}
+@media(min-width:720px){
+  .post-list{grid-template-columns:1fr 1fr}
+}
