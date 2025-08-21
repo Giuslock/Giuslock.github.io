@@ -1,0 +1,41 @@
+
+/* === JPP Simplex-like overrides === */
+.post-content, .container { line-height: 1.6; }
+
+.post-content pre,
+.post-content code,
+.post-content kbd,
+.post-content samp {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+  line-height: 1.5;
+}
+
+.post-content pre {
+  white-space: pre-wrap;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+  overflow: auto;
+  padding: 0.75rem 1rem;
+  border-radius: 6px;
+  max-width: 100%;
+}
+
+.post-content code { white-space: break-spaces; }
+
+.post-content blockquote {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  line-height: 1.5;
+}
+
+.post-content table { border-collapse: collapse; width: 100%; }
+.post-content th, .post-content td {
+  padding: 0.35rem 0.5rem;
+  vertical-align: top;
+  line-height: 1.5;
+  word-break: break-word;
+}
+
+header nav a { word-break: break-word; overflow-wrap: anywhere; }
+
+@media (max-width: 640px) { .container { padding: 1rem; } }
