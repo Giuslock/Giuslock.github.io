@@ -4,15 +4,14 @@
         <title></title>
         <link>undefined</link>
         <description>undefined</description>
-        <lastBuildDate>Fri, 22 Aug 2025 07:46:11 GMT</lastBuildDate>
+        <lastBuildDate>Fri, 22 Aug 2025 07:48:16 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>Joplin Pages Publisher</generator>
         <item>
             <title><![CDATA[AzureSecAnalyzer - A PowerShell project that checks the security settings of Azure resources]]></title>
             <guid>38aa4de844c249f7bccc1d5148cedae8</guid>
             <pubDate>Fri, 22 Aug 2025 07:43:24 GMT</pubDate>
-            <content:encoded><![CDATA[<h1 id="azuresecanalyzer-a-powershell-project-that-checks-the-security-settings-of-azure-resources">AzureSecAnalyzer - A PowerShell project that checks the security settings of Azure resources.</h1>
-<p>I'm excited to announce that I've just published <a title="https://github.com/Giuslock/AzureSecAnalyzer" href="https://github.com/Giuslock/AzureSecAnalyzer"><strong>AzureSecAnalyzer</strong></a>, a PowerShell-based tool that checks the security settings of Azure resources. Whether you're managing a small-scale deployment or a multi-tenant environment, AzureSecAnalyzer provides comprehensive insights into the security configurations of your Azure resources and helps you identify potential vulnerabilities.</p>
+            <content:encoded><![CDATA[<p>I'm excited to announce that I've just published <a title="https://github.com/Giuslock/AzureSecAnalyzer" href="https://github.com/Giuslock/AzureSecAnalyzer"><strong>AzureSecAnalyzer</strong></a>, a PowerShell-based tool that checks the security settings of Azure resources. Whether you're managing a small-scale deployment or a multi-tenant environment, AzureSecAnalyzer provides comprehensive insights into the security configurations of your Azure resources and helps you identify potential vulnerabilities.</p>
 <h3 id="what-is-azuresecanalyzer">What Is AzureSecAnalyzer?</h3>
 <p>AzureSecAnalyzer is a versatile PowerShell project designed to analyze the security settings of various Azure resources, giving you a clear overview of how secure your environment is. The tool currently supports a wide range of Azure services, including:</p>
 <ul>
