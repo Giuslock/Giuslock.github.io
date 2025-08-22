@@ -10,14 +10,31 @@
 </head>
   <body>
     <div class="wrapper">
-      <aside class="sidebar">
-  <div class="brand"><a href="/">Giuslock Pages</a><span class="sub"></span></div>
+      <aside class="sidebar" role="navigation">
+  <div class="sidebar-profile">
+    <a href="/about">
+      <img
+        src="/_assets/img/profile.png"
+        alt="Profile picture"
+        class="profile-img"
+        width="100"
+        height="100"
+      >
+    </a>
+    <h2 class="brand">
+      <a href="/">Giuslock Pages</a>
+    </h2>
+    <span class="sub"></span>
+  </div>
+
   <nav class="nav">
     <a href="/">Home</a>
     <a href="/archives">Archives</a>
     <a href="/tags">Tags</a>
     <a href="/about">About</a>
-    <a href="/rss.xml">RSS</a>
+    
+      <a href="/rss.xml">RSS</a>
+    
     <a href="/search">Search</a>
   </nav>
 </aside>
@@ -34,6 +51,13 @@
 
           <div class="card">
             <div class="post">
+
+              <!-- Profile image centered -->
+              <div class="about-image">
+                <img src="/_assets/img/profile.png" alt="Profile picture">
+                <p class="caption"><em>they're tracking us, unplug, unplug</em></p>
+              </div>
+
               <h1>About</h1>
               <p>
                 Hi 👋 I'm <strong>Giuslock</strong>, a passionate <em>Pentester</em> with a strong interest 
