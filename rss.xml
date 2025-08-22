@@ -4,9 +4,49 @@
         <title></title>
         <link>undefined</link>
         <description>undefined</description>
-        <lastBuildDate>Fri, 22 Aug 2025 07:44:08 GMT</lastBuildDate>
+        <lastBuildDate>Fri, 22 Aug 2025 07:44:32 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>Joplin Pages Publisher</generator>
+        <item>
+            <title><![CDATA[AzureSecAnalyzer - A PowerShell project that checks the security settings of Azure resources]]></title>
+            <guid>38aa4de844c249f7bccc1d5148cedae8</guid>
+            <pubDate>Fri, 22 Aug 2025 07:43:24 GMT</pubDate>
+            <content:encoded><![CDATA[<h1 id="azuresecanalyzer-a-powershell-project-that-checks-the-security-settings-of-azure-resources">AzureSecAnalyzer - A PowerShell project that checks the security settings of Azure resources.</h1>
+<p>I'm excited to announce that I've just published <a title="https://github.com/Giuslock/AzureSecAnalyzer" href="https://github.com/Giuslock/AzureSecAnalyzer"><strong>AzureSecAnalyzer</strong></a>, a PowerShell-based tool that checks the security settings of Azure resources. Whether you're managing a small-scale deployment or a multi-tenant environment, AzureSecAnalyzer provides comprehensive insights into the security configurations of your Azure resources and helps you identify potential vulnerabilities.</p>
+<h3 id="what-is-azuresecanalyzer">What Is AzureSecAnalyzer?</h3>
+<p>AzureSecAnalyzer is a versatile PowerShell project designed to analyze the security settings of various Azure resources, giving you a clear overview of how secure your environment is. The tool currently supports a wide range of Azure services, including:</p>
+<ul>
+<li>Analysis Services</li>
+<li>App Services</li>
+<li>Azure Cache for Redis</li>
+<li>Cosmos DB</li>
+<li>Disks</li>
+<li>Event Hub Namespaces</li>
+<li>Key Vaults</li>
+<li>PostgreSQL (Flexible and Single Servers)</li>
+<li>SQL Database and SQL Server</li>
+<li>Storage Accounts</li>
+</ul>
+<p>AzureSecAnalyzer outputs the analysis results in an easy-to-read <code>.xlsx</code> file, making it simple to sort, filter, and interpret the data to improve your security posture.</p>
+<h3 id="how-it-works">How It Works</h3>
+<p>Once everything is set up, running AzureSecAnalyzer is straightforward. The tool offers different modes based on your needs:</p>
+<ul>
+<li><strong>Subscription mode:</strong> Analyze the entire Azure subscription.</li>
+<li><strong>Resource Group mode:</strong> Focus on specific resource groups.</li>
+<li><strong>Tenant mode:</strong> Analyze at the tenant level without additional input.</li>
+</ul>
+<p>The process is simple:</p>
+<ol>
+<li>Run the script <code>launch.ps1</code>.</li>
+<li>Input the required details (subscription, resource group, etc.) into the <code>variables.txt</code> file.</li>
+<li>The script will perform the analysis and generate a comprehensive <code>.xlsx</code> report.</li>
+</ol>
+<h3 id="output-format">Output Format</h3>
+<p>The results are saved as an <code>.xlsx</code> file for easy analysis. You can quickly identify weak security settings and take the necessary actions to secure your environment.</p>
+<h3 id="get-involved">Get Involved</h3>
+<p>If you find AzureSecAnalyzer helpful or have ideas for improvements, contributions are welcome! Head over to the <a title="https://github.com/Giuslock/AzureSecAnalyzer" href="https://github.com/Giuslock/AzureSecAnalyzer">GitHub repository</a> to create a pull request or submit issues.</p>
+]]></content:encoded>
+        </item>
         <item>
             <title><![CDATA[CTF Report: 2Million]]></title>
             <guid>7deed476299845cd9460a54ecbe76f4c</guid>
