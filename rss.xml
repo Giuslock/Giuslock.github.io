@@ -4,9 +4,38 @@
         <title></title>
         <link>undefined</link>
         <description>undefined</description>
-        <lastBuildDate>Wed, 21 Jan 2026 17:28:23 GMT</lastBuildDate>
+        <lastBuildDate>Sat, 28 Feb 2026 11:40:30 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>Joplin Pages Publisher</generator>
+        <item>
+            <title><![CDATA[Why I Invested in the Burp Suite Certified Practitioner]]></title>
+            <guid>43ca2ee292b34a76a0564a1b3a861719</guid>
+            <pubDate>Sat, 28 Feb 2026 11:28:43 GMT</pubDate>
+            <content:encoded><![CDATA[<h1 id="navigating-the-ai-era-why-i-invested-in-the-burp-suite-certified-practitioner-bscp">Navigating the AI Era: Why I Invested in the Burp Suite Certified Practitioner (BSCP)</h1>
+<p><img src="/_resources/35bc1797ba764529b660a23d994ac4d0.png" /></p>
+<p>Exactly one month ago, I officially achieved the Burp Suite Certified Practitioner (BSCP) certification. In the current technological landscape, pursuing a highly technical, manual testing certification might seem counterintuitive to some. Every corner of the internet is currently saturated with discussions about Artificial Intelligence, automation, and the looming anxiety that AI will inevitably replace human operators across the tech industry.</p>
+<p>However, it was precisely this environment that motivated my decision to invest significant time and resources into mastering the BSCP.</p>
+<h2 id="the-human-in-the-loop-imperative">The "Human in the Loop" Imperative</h2>
+<p>The narrative that AI will wholesale replace cybersecurity professionals fundamentally misunderstands how both AI and offensive security operate. AI models are exceptionally powerful tools for pattern recognition, data synthesis, and automating repetitive tasks. They will undoubtedly become integral to our workflows, assisting in reconnaissance, identifying low-hanging fruit, and suggesting potential attack vectors.</p>
+<p>Yet, the efficacy of these tools relies heavily on the "human in the loop." AI lacks true contextual understanding and the creative intuition required to chain the complex, multi-stage vulnerabilities inherent in modern web applications.</p>
+<h2 id="the-risk-of-delegating-without-understanding">The Risk of Delegating Without Understanding</h2>
+<p>This brings us to the core issue: relying on AI without a deep understanding of the underlying mechanics is a dangerous proposition.</p>
+<p>When an AI suggests an approach, the operator must understand exactly why that approach is valid, how it interacts with the target architecture, and how to troubleshoot when the initial attempt fails or is blocked by a Web Application Firewall. Without this fundamental knowledge, the human operator is reduced to blindly executing generated suggestions. An AI is only as effective as the professional guiding it; a lack of core knowledge guarantees that the AI will be utilized poorly.</p>
+<h2 id="why-the-bscp-matters-now">Why the BSCP Matters Now</h2>
+<p>The BSCP is renowned for being a grueling, practical examination of web application security. It does not merely test theoretical concepts; it demands the ability to identify, exploit, and chain vulnerabilities in a live, constrained environment under strict time limits.</p>
+<p>By pursuing the BSCP, I deliberately focused on the precise skills that AI currently struggles to replicate:</p>
+<ul>
+<li><strong>Contextual Analysis:</strong> Understanding the unique business logic of an application to identify unconventional, non-standard attack paths.</li>
+<li><strong>Vulnerability Chaining:</strong> Combining a seemingly low-impact vulnerability with a more critical flaw to achieve significant compromise.</li>
+<li><strong>Manual Verification:</strong> Developing the intuition to discern when an automated scanner—or an AI prompt—has produced a false positive or completely missed a subtle, critical vulnerability.</li>
+</ul>
+<h2 id="the-value-of-knowledge-in-an-uncertain-future">The Value of Knowledge in an Uncertain Future</h2>
+<p>I do not possess a crystal ball, and I cannot predict exactly what the cybersecurity landscape will look like in five or ten years. The capabilities of AI will undoubtedly evolve in ways we might not fully anticipate today. However, I am absolutely certain that deep technical knowledge retains immense value.</p>
+<p>Abandoning our core expertise and discarding years of foundational learning—simply because vocal individuals make grandiose, unverified claims about total automation and human replacement—would be a critical mistake. We cannot afford to discard our hard-earned skills based on the overhyped promises of those who claim we are already obsolete.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>Ultimately, the BSCP was a strategic investment in foundational expertise. Whatever the future holds for our industry, maintaining a deep technical comprehension ensures that we remain the drivers of our security assessments, rather than passive operators relying on tools we do not fully understand. In an environment increasingly captivated by automated solutions and hype, solid technical knowledge remains the ultimate safeguard against failure.</p>
+]]></content:encoded>
+        </item>
         <item>
             <title><![CDATA[Conversor HTB - Complete Walkthrough]]></title>
             <guid>4d286e3950f4452fb816ece235974b2b</guid>
