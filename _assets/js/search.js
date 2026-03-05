@@ -18,12 +18,23 @@
     }).join('');
   }
 
-  input.addEventListener('input', function () {
-    var q = input.value.trim().toLowerCase();
+  function search(q) {
     if (!q) { results.innerHTML = ''; return; }
     var out = idx.filter(function (i) {
       return (i.title + ' ' + i.tags.join(' ')).toLowerCase().indexOf(q) !== -1;
     }).slice(0, 30);
     render(out);
+  }
+
+  input.addEventListener('input', function () {
+    search(input.value.trim().toLowerCase());
   });
+
+  // Read ?q= from URL on page load
+  var params = new URLSearchParams(window.location.search);
+  var q = (params.get('q') || '').trim();
+  if (q) {
+    input.value = q;
+    search(q.toLowerCase());
+  }
 })();

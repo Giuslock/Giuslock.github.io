@@ -23,13 +23,11 @@
 
   if (overlay) overlay.addEventListener('click', close);
 
-  // Close when a nav link is tapped
   var links = sidebar.querySelectorAll('.nav-list a');
   for (var i = 0; i < links.length; i++) {
     links[i].addEventListener('click', close);
   }
 
-  // Close on Escape
   document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape') close();
   });

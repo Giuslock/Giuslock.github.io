@@ -6,8 +6,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Giuslock Pages</title>
 <meta name="description" content="" />
+<link rel="icon" href="/favicon.ico" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;600;700&family=Outfit:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="/_assets/css/style.css" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-okaidia.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" />
 <script defer src="/_assets/js/app.js"></script>
 <script data-goatcounter="https://giuslock.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 
@@ -16,14 +20,14 @@
 <div class="layout">
   
 
-<!-- Mobile topbar (position:fixed on mobile, display:none on desktop via CSS) -->
+<!-- Mobile topbar -->
 <header class="topbar">
   <button class="hamburger" id="nav-toggle" aria-label="Open menu" aria-expanded="false">&#9776;</button>
   <a href="/" class="topbar-brand">Giuslock Pages</a>
-  <a href="/search" class="topbar-search">Search</a>
+  <a href="/search" class="topbar-search">grep</a>
 </header>
 
-<!-- Overlay (closes sidebar on tap) -->
+<!-- Overlay -->
 <div class="overlay" id="nav-overlay"></div>
 
 <!-- Sidebar -->
@@ -31,7 +35,7 @@
   <div class="sidebar-body">
 
     <a href="/" class="brand">
-      <img src="/_assets/img/profile.png" alt="Avatar" class="brand-avatar" width="46" height="46" loading="lazy" />
+      <img src="/_assets/img/profile.png" alt="Avatar" class="brand-avatar" width="44" height="44" loading="lazy" />
       <span>
         <span class="brand-name">Giuslock Pages</span>
         <span class="brand-sub"></span>
@@ -40,19 +44,18 @@
 
     <nav>
       <ul class="nav-list">
-        <li><a href="/"><i class="nav-icon">&#8962;</i> Home</a></li>
-        <li><a href="/archives"><i class="nav-icon">&#9632;</i> Archives</a></li>
-        <li><a href="/tags"><i class="nav-icon">&#9830;</i> Tags</a></li>
-        <li><a href="/about"><i class="nav-icon">&#9786;</i> About</a></li>
+        <li><a href="/"><span class="nav-icon">~/</span> Home</a></li>
+        <li><a href="/archives"><span class="nav-icon">ls</span> Archives</a></li>
+        <li><a href="/tags"><span class="nav-icon">#</span> Tags</a></li>
+        <li><a href="/about"><span class="nav-icon">id</span> About</a></li>
         
-          <li><a href="/rss.xml"><i class="nav-icon">&#9675;</i> RSS</a></li>
+          <li><a href="/rss.xml"><span class="nav-icon">rss</span> RSS</a></li>
         
-        <li><a href="/search"><i class="nav-icon">&#9906;</i> Search</a></li>
       </ul>
     </nav>
 
     <div class="sidebar-search">
-      <form action="/search">
+      <form action="/search" method="get">
         <input type="search" name="q" placeholder="Search posts&#8230;" aria-label="Search" />
         <button type="submit">Go</button>
       </form>
@@ -72,9 +75,9 @@
 
       <!-- Breadcrumb -->
       <nav class="breadcrumb" aria-label="Breadcrumb">
-        <a href="/">Home</a>
+        <a href="/">~</a>
         <span class="breadcrumb-sep">/</span>
-        <a href="/archives">Archives</a>
+        <a href="/archives">archives</a>
         
       </nav>
 
