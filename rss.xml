@@ -4,9 +4,29 @@
         <title></title>
         <link>undefined</link>
         <description>undefined</description>
-        <lastBuildDate>Thu, 05 Mar 2026 12:46:08 GMT</lastBuildDate>
+        <lastBuildDate>Thu, 05 Mar 2026 13:38:56 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>Joplin Pages Publisher</generator>
+        <item>
+            <title><![CDATA[I'm a Certified Hacker - My Journey to CPTS]]></title>
+            <guid>c279fd29c6954a7793a58450336ebbef</guid>
+            <pubDate>Thu, 05 Mar 2026 13:25:29 GMT</pubDate>
+            <content:encoded><![CDATA[<p>After 17 days of waiting, I can finally say it: I am <strong>CPTS certified</strong>!<br />
+<img src="/_resources/8ba571d6cf004d0fba0997100f9baacf.png" /></p>
+<p>After 17 days of agonizing wait, I can finally say it: I am <strong>CPTS certified</strong>! What can I say? In these uncertain times, bringing this home is a truly immense satisfaction.</p>
+<h2 id="why-cpts-and-not-oscp">Why CPTS and not OSCP?</h2>
+<p>Before diving into the exam experience, let's address the elephant in the room. When you decide to get a pentesting certification, OffSec's OSCP is usually the default choice. So why did I go for Hack The Box's CPTS instead?</p>
+<p>The answer is simple: accessibility and self-funding. OSCP has become incredibly expensive, often reaching a price point where you need corporate sponsorship to foot the bill. I wanted to finance my own education and paid for my entire CPTS journey completely out of pocket. For anyone looking to bootstrap their cybersecurity studies without going broke, CPTS is the perfect choice. You get top-tier, modern labs at a fraction of the cost.</p>
+<h2 id="hitting-the-active-directory-wall">Hitting the Active Directory Wall</h2>
+<p>The certification journey was long, but incredibly useful. Hack The Box truly knows how to push you to your limits. I actually made my first two attempts back in June, but I hit a brick wall at the third machine. The Active Directory section proved to be too tough for me at the time.</p>
+<p>I honestly don't think this exam is designed to be easily passed on the first try; it almost feels built to require multiple attempts. But giving up is not an option, because the practical knowledge you walk away with is massive.</p>
+<h2 id="the-10-day-grind-and-the-ctf-mindset">The 10-Day Grind and the "CTF Mindset"</h2>
+<p>The exam itself is a grueling 10-day marathon. During the assessment, I realized I still relied heavily on a <em>"CTF mindset,"</em> which caused me to waste a lot of time rabbit-holing on minor details.</p>
+<p>The CPTS is deliberately designed to mess with your head. It constantly leaves you with the lingering doubt that you might not be following the right path, testing your methodology as much as your technical skills.</p>
+<h2 id="the-ultimate-reality-check">The Ultimate Reality Check</h2>
+<p>If you ever find yourself questioning your actual, real-world pentesting abilities, I highly recommend clashing with this exam. For me, it was a fundamental reality check and one of the best learning experiences I've had.</p>
+]]></content:encoded>
+        </item>
         <item>
             <title><![CDATA[Why I Invested in the Burp Suite Certified Practitioner]]></title>
             <guid>43ca2ee292b34a76a0564a1b3a861719</guid>
