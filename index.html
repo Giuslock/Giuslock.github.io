@@ -1,224 +1,174 @@
 <!doctype html>
 <html lang="en">
-  <head><meta charset="UTF-8" />
+<head><meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Giuslock Pages</title>
-<meta name="description" content="Giuslock Pages — " />
-<link rel="stylesheet" href="/_assets/css/chirpy.css" />
+<meta name="description" content="" />
+<link rel="stylesheet" href="/_assets/css/style.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-okaidia.min.css" />
-<script defer src="/_assets/js/main.js"></script>
+<script defer src="/_assets/js/app.js"></script>
+<script data-goatcounter="https://giuslock.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </head>
-  <body>
-    <div class="wrapper">
-      <aside class="sidebar" role="navigation">
-  <div class="sidebar-profile">
-    <a href="/about">
-      <img
-        src="/_assets/img/profile.png"
-        alt="Profile picture"
-        class="profile-img"
-        width="100"
-        height="100"
-      >
-    </a>
-    <h2 class="brand">
-      <a href="/">Giuslock Pages</a>
-    </h2>
-    <span class="sub"></span>
-  </div>
+<body>
+<div class="layout">
+  
 
-  <nav class="nav">
-    <a href="/">Home</a>
-    <a href="/archives">Archives</a>
-    <a href="/tags">Tags</a>
-    <a href="/about">About</a>
-    
-      <a href="/rss.xml">RSS</a>
-    
-    <a href="/search">Search</a>
-  </nav>
-</aside>
-
-      <div class="content">
-        <div class="container">
-          <header class="header">
-  <div class="search">
-    <form action="/search">
-      <input type="search" name="q" placeholder="Search…" />
-    </form>
-  </div>
+<!-- Mobile topbar (position:fixed on mobile, display:none on desktop via CSS) -->
+<header class="topbar">
+  <button class="hamburger" id="nav-toggle" aria-label="Open menu" aria-expanded="false">&#9776;</button>
+  <a href="/" class="topbar-brand">Giuslock Pages</a>
+  <a href="/search" class="topbar-search">Search</a>
 </header>
 
-          <div class="card"><div class="post"><div class="home-grid">
-  <div>
-    <h1>Home</h1>
-    <p class="post-meta"></p>
+<!-- Overlay (closes sidebar on tap) -->
+<div class="overlay" id="nav-overlay"></div>
 
-    
-    <div class="card-list">
+<!-- Sidebar -->
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-body">
+
+    <a href="/" class="brand">
+      <img src="/_assets/img/profile.png" alt="Avatar" class="brand-avatar" width="46" height="46" loading="lazy" />
+      <span>
+        <span class="brand-name">Giuslock Pages</span>
+        <span class="brand-sub"></span>
+      </span>
+    </a>
+
+    <nav>
+      <ul class="nav-list">
+        <li><a href="/"><i class="nav-icon">&#8962;</i> Home</a></li>
+        <li><a href="/archives"><i class="nav-icon">&#9632;</i> Archives</a></li>
+        <li><a href="/tags"><i class="nav-icon">&#9830;</i> Tags</a></li>
+        <li><a href="/about"><i class="nav-icon">&#9786;</i> About</a></li>
+        
+          <li><a href="/rss.xml"><i class="nav-icon">&#9675;</i> RSS</a></li>
+        
+        <li><a href="/search"><i class="nav-icon">&#9906;</i> Search</a></li>
+      </ul>
+    </nav>
+
+    <div class="sidebar-search">
+      <form action="/search">
+        <input type="search" name="q" placeholder="Search posts&#8230;" aria-label="Search" />
+        <button type="submit">Go</button>
+      </form>
+    </div>
+
+  </div>
+
+  <footer class="sidebar-foot">
+    &copy; 2026 Giuslock
+  </footer>
+</aside>
+
+  <main class="main">
+    <div class="page">
+
+      <h1 class="page-title">Home</h1>
+      <span class="page-sub"></span>
+
       
-        <div class="card post-card">
-          <div>
-            <a class="title" href="/article/why-i-invested-in-the-burp-suite-certified-practitioner">Why I Invested in the Burp Suite Certified Practitioner</a>
-            <p class="excerpt">Navigating the AI Era: Why I Invested in the Burp Suite Certified Practitioner (BSCP) Exactly one month ago, I officially achieved the Burp Suite Certified Practitioner (BSCP) certification. In the...</p>
-            <div class="meta">
+
+      <div class="card-list">
+        
+          <div class="card">
+            <a class="card-title" href="/article/why-i-invested-in-the-burp-suite-certified-practitioner">Why I Invested in the Burp Suite Certified Practitioner</a>
+            
+              <p class="card-excerpt">Navigating the AI Era: Why I Invested in the Burp Suite Certified Practitioner (BSCP) Exactly one month ago, I officially achieved the Burp Suite Certified Practitioner (BSCP) certification. In the…</p>
+            
+            <div class="card-meta">
               <span>2026-02-28</span>
               
             </div>
           </div>
-          <div class="thumb">
+        
+          <div class="card">
+            <a class="card-title" href="/article/conversor-htb-complete-walkthrough">Conversor HTB - Complete Walkthrough</a>
             
-              <img src="/_resources/35bc1797ba764529b660a23d994ac4d0.png" alt="">
+              <p class="card-excerpt">Executive Summary This write up documents the complete exploitation chain for the &#34;Conversor&#34; machine on HackTheBox. The attack path leverages an XSLT injection vulnerability in a web application…</p>
             
-          </div>
-        </div>
-      
-        <div class="card post-card">
-          <div>
-            <a class="title" href="/article/conversor-htb-complete-walkthrough">Conversor HTB - Complete Walkthrough</a>
-            <p class="excerpt">Executive Summary This write up documents the complete exploitation chain for the &#34;Conversor&#34; machine on HackTheBox. The attack path leverages an XSLT injection vulnerability in a web application t...</p>
-            <div class="meta">
+            <div class="card-meta">
               <span>2026-01-20</span>
               
             </div>
           </div>
-          <div class="thumb">
+        
+          <div class="card">
+            <a class="card-title" href="/article/azuresecanalyzer">AzureSecAnalyzer - A PowerShell project that checks the security settings of Azure resources</a>
             
-              <img src="/_resources/20a6c430d632426e8f16536fee5bf6f0.png" alt="">
+              <p class="card-excerpt">I&#39;m excited to announce that I&#39;ve just published AzureSecAnalyzer , a PowerShell based tool that checks the security settings of Azure resources. Whether you&#39;re managing a small scale deployment or a…</p>
             
-          </div>
-        </div>
-      
-        <div class="card post-card">
-          <div>
-            <a class="title" href="/article/azuresecanalyzer">AzureSecAnalyzer - A PowerShell project that checks the security settings of Azure resources</a>
-            <p class="excerpt">I&#39;m excited to announce that I&#39;ve just published AzureSecAnalyzer , a PowerShell based tool that checks the security settings of Azure resources. Whether you&#39;re managing a small scale deployment or...</p>
-            <div class="meta">
+            <div class="card-meta">
               <span>2025-08-22</span>
               
             </div>
           </div>
-          <div class="thumb">
+        
+          <div class="card">
+            <a class="card-title" href="/article/untitled">CTF Report: 2Million</a>
             
-              <span style="opacity:.6">No preview</span>
+              <p class="card-excerpt">CTF Report: 2Million https://app.hackthebox.com/machines/TwoMillion Initial Results and Information We started by performing an Nmap scan on the target machine: We have two services running: SSH and…</p>
             
-          </div>
-        </div>
-      
-        <div class="card post-card">
-          <div>
-            <a class="title" href="/article/untitled">CTF Report: 2Million</a>
-            <p class="excerpt">CTF Report: 2Million https://app.hackthebox.com/machines/TwoMillion Initial Results and Information We started by performing an Nmap scan on the target machine: We have two services running: SSH an...</p>
-            <div class="meta">
+            <div class="card-meta">
               <span>2025-02-15</span>
               
-                <span>• topic:ctf</span>
+                <span>&mdash;</span>
+                
+                  <a class="card-tag" href="/tags#topic:ctf">topic:ctf</a>
+                
               
             </div>
           </div>
-          <div class="thumb">
+        
+          <div class="card">
+            <a class="card-title" href="/article/smithers-echo-ctf-challenge">Smithers - Echo CTF Challenge</a>
             
-              <img src="/_resources/0e0cdc5a31954e1f9684e83f8785e46f.png" alt="">
-            
-          </div>
-        </div>
-      
-        <div class="card post-card">
-          <div>
-            <a class="title" href="/article/smithers-echo-ctf-challenge">Smithers - Echo CTF Challenge</a>
-            <p class="excerpt">Link to target Introduction
+              <p class="card-excerpt">Link to target Introduction
 This post details the process of solving the &#34;Smithers&#34; challenge on echoctf.red. Enumeration Phase Nmap Scan
-I start the reconnaissance with nmap: Web Server on Port 10...</p>
-            <div class="meta">
+I start the reconnaissance with nmap: Web Server on Port…</p>
+            
+            <div class="card-meta">
               <span>2025-02-15</span>
               
-                <span>• topic:ctf</span>
+                <span>&mdash;</span>
+                
+                  <a class="card-tag" href="/tags#topic:ctf">topic:ctf</a>
+                
               
             </div>
           </div>
-          <div class="thumb">
+        
+          <div class="card">
+            <a class="card-title" href="/article/soccer-an-htb-easy-machine">Soccer - An HTB easy machine</a>
             
-              <img src="/_resources/a6e7b38cb9944cc4ba6cb5ffb04cef74.png" alt="">
-            
-          </div>
-        </div>
-      
-        <div class="card post-card">
-          <div>
-            <a class="title" href="/article/soccer-an-htb-easy-machine">Soccer - An HTB easy machine</a>
-            <p class="excerpt">Link to target Capture the Flag (CTF) Write Up: Soccer.htb Table of Contents
+              <p class="card-excerpt">Link to target Capture the Flag (CTF) Write Up: Soccer.htb Table of Contents
 1. Initial Enumeration Nmap Scan Key Findings
-2.</p>
-            <div class="meta">
+2. Enumeration and Exploitation Discovering Tiny File Manager Exploiting…</p>
+            
+            <div class="card-meta">
               <span>2025-02-15</span>
               
-                <span>• topic:ctf</span>
+                <span>&mdash;</span>
+                
+                  <a class="card-tag" href="/tags#topic:ctf">topic:ctf</a>
+                
               
             </div>
           </div>
-          <div class="thumb">
-            
-              <img src="/_resources/ea61b8d11797440cbeddc13be3a74d38.png" alt="">
-            
-          </div>
-        </div>
-      
-    </div>
-  </div>
+        
 
-  <aside class="article-aside">
-    <div class="aside-section">
-      <h3>Recently Updated</h3>
-      <ul class="post-list">
         
-          <li class="post-item" style="border:0;padding:.25rem 0;">
-            <a href="/article/why-i-invested-in-the-burp-suite-certified-practitioner">Why I Invested in the Burp Suite Certified Practitioner</a>
-          </li>
-        
-          <li class="post-item" style="border:0;padding:.25rem 0;">
-            <a href="/article/conversor-htb-complete-walkthrough">Conversor HTB - Complete Walkthrough</a>
-          </li>
-        
-          <li class="post-item" style="border:0;padding:.25rem 0;">
-            <a href="/article/azuresecanalyzer">AzureSecAnalyzer - A PowerShell project that checks the security settings of Azure resources</a>
-          </li>
-        
-          <li class="post-item" style="border:0;padding:.25rem 0;">
-            <a href="/article/untitled">CTF Report: 2Million</a>
-          </li>
-        
-          <li class="post-item" style="border:0;padding:.25rem 0;">
-            <a href="/article/smithers-echo-ctf-challenge">Smithers - Echo CTF Challenge</a>
-          </li>
-        
-          <li class="post-item" style="border:0;padding:.25rem 0;">
-            <a href="/article/soccer-an-htb-easy-machine">Soccer - An HTB easy machine</a>
-          </li>
-        
-      </ul>
-    </div>
-    <div class="aside-section">
-      <h3>Trending Tags</h3>
-      
-      
-        <a href="/tags#topic:ctf" class="tag-chip">topic:ctf</a>
-      
-    </div>
-  </aside>
-</div>
-</div></div>
-        </div>
       </div>
+
     </div>
     <footer class="site-footer">
-  <div class="container">
-    <p>© 2026 Giuslock.</p>
-  </div>
+  &copy; 2026 Giuslock &mdash; 
 </footer>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
-<script defer src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/toolbar/prism-toolbar.min.js"></script>
-<script defer src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/copy-to-clipboard/prism-copy-to-clipboard.min.js"></script>
 
-  </body>
+  </main>
+</div>
+</body>
 </html>

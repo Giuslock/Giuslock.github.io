@@ -1,74 +1,98 @@
 <!doctype html>
 <html lang="en">
-  <head><meta charset="UTF-8" />
+<head><meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Giuslock Pages</title>
-<meta name="description" content="Giuslock Pages — " />
-<link rel="stylesheet" href="/_assets/css/chirpy.css" />
+<meta name="description" content="" />
+<link rel="stylesheet" href="/_assets/css/style.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-okaidia.min.css" />
-<script defer src="/_assets/js/main.js"></script>
+<script defer src="/_assets/js/app.js"></script>
+<script data-goatcounter="https://giuslock.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </head>
-  <body>
-    <div class="wrapper">
-      <aside class="sidebar" role="navigation">
-  <div class="sidebar-profile">
-    <a href="/about">
-      <img
-        src="/_assets/img/profile.png"
-        alt="Profile picture"
-        class="profile-img"
-        width="100"
-        height="100"
-      >
-    </a>
-    <h2 class="brand">
-      <a href="/">Giuslock Pages</a>
-    </h2>
-    <span class="sub"></span>
-  </div>
+<body>
+<div class="layout">
+  
 
-  <nav class="nav">
-    <a href="/">Home</a>
-    <a href="/archives">Archives</a>
-    <a href="/tags">Tags</a>
-    <a href="/about">About</a>
-    
-      <a href="/rss.xml">RSS</a>
-    
-    <a href="/search">Search</a>
-  </nav>
-</aside>
-
-      <div class="content">
-        <div class="container">
-          <header class="header">
-  <div class="search">
-    <form action="/search">
-      <input type="search" name="q" placeholder="Search…" />
-    </form>
-  </div>
+<!-- Mobile topbar (position:fixed on mobile, display:none on desktop via CSS) -->
+<header class="topbar">
+  <button class="hamburger" id="nav-toggle" aria-label="Open menu" aria-expanded="false">&#9776;</button>
+  <a href="/" class="topbar-brand">Giuslock Pages</a>
+  <a href="/search" class="topbar-search">Search</a>
 </header>
 
-          <div class="card"><div class="post"><h1>Search</h1>
-<input id="search-input" type="search" placeholder="Type to search..." style="width:100%;padding:.6rem;border-radius:8px;border:1px solid var(--border);background:var(--panel-2);color:var(--text);" />
-<ul id="search-results" class="post-list" style="margin-top:1rem;"></ul>
-<script>
-  window.__SITE_INDEX__ = ([{"title":"Why I Invested in the Burp Suite Certified Practitioner","url":"article/why-i-invested-in-the-burp-suite-certified-practitioner","date":"2026-02-28","tags":[]},{"title":"Conversor HTB - Complete Walkthrough","url":"article/conversor-htb-complete-walkthrough","date":"2026-01-20","tags":[]},{"title":"AzureSecAnalyzer - A PowerShell project that checks the security settings of Azure resources","url":"article/azuresecanalyzer","date":"2025-08-22","tags":[]},{"title":"CTF Report: 2Million","url":"article/untitled","date":"2025-02-15","tags":["topic:ctf"]},{"title":"Smithers - Echo CTF Challenge","url":"article/smithers-echo-ctf-challenge","date":"2025-02-15","tags":["topic:ctf"]},{"title":"Soccer - An HTB easy machine","url":"article/soccer-an-htb-easy-machine","date":"2025-02-15","tags":["topic:ctf"]}]);
-</script>
-<script defer src="/_assets/js/search.js"></script>
-</div></div>
-        </div>
+<!-- Overlay (closes sidebar on tap) -->
+<div class="overlay" id="nav-overlay"></div>
+
+<!-- Sidebar -->
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-body">
+
+    <a href="/" class="brand">
+      <img src="/_assets/img/profile.png" alt="Avatar" class="brand-avatar" width="46" height="46" loading="lazy" />
+      <span>
+        <span class="brand-name">Giuslock Pages</span>
+        <span class="brand-sub"></span>
+      </span>
+    </a>
+
+    <nav>
+      <ul class="nav-list">
+        <li><a href="/"><i class="nav-icon">&#8962;</i> Home</a></li>
+        <li><a href="/archives"><i class="nav-icon">&#9632;</i> Archives</a></li>
+        <li><a href="/tags"><i class="nav-icon">&#9830;</i> Tags</a></li>
+        <li><a href="/about"><i class="nav-icon">&#9786;</i> About</a></li>
+        
+          <li><a href="/rss.xml"><i class="nav-icon">&#9675;</i> RSS</a></li>
+        
+        <li><a href="/search"><i class="nav-icon">&#9906;</i> Search</a></li>
+      </ul>
+    </nav>
+
+    <div class="sidebar-search">
+      <form action="/search">
+        <input type="search" name="q" placeholder="Search posts&#8230;" aria-label="Search" />
+        <button type="submit">Go</button>
+      </form>
+    </div>
+
+  </div>
+
+  <footer class="sidebar-foot">
+    &copy; 2026 Giuslock
+  </footer>
+</aside>
+
+  <main class="main">
+    <div class="page">
+
+      <h1 class="page-title">Search</h1>
+      <span class="page-sub">Search by title or tag.</span>
+
+      <div class="search-form">
+        <input
+          id="search-input"
+          type="search"
+          placeholder="Type to search&#8230;"
+          autofocus
+          aria-label="Search posts"
+        />
       </div>
+
+      <ul id="search-results" class="post-list"></ul>
+
+      <script>
+        window.__SITE_INDEX__ = [{"title":"Why I Invested in the Burp Suite Certified Practitioner","url":"article/why-i-invested-in-the-burp-suite-certified-practitioner","date":"2026-02-28","tags":[]},{"title":"Conversor HTB - Complete Walkthrough","url":"article/conversor-htb-complete-walkthrough","date":"2026-01-20","tags":[]},{"title":"AzureSecAnalyzer - A PowerShell project that checks the security settings of Azure resources","url":"article/azuresecanalyzer","date":"2025-08-22","tags":[]},{"title":"CTF Report: 2Million","url":"article/untitled","date":"2025-02-15","tags":["topic:ctf"]},{"title":"Smithers - Echo CTF Challenge","url":"article/smithers-echo-ctf-challenge","date":"2025-02-15","tags":["topic:ctf"]},{"title":"Soccer - An HTB easy machine","url":"article/soccer-an-htb-easy-machine","date":"2025-02-15","tags":["topic:ctf"]}];
+      </script>
+      <script defer src="/_assets/js/search.js"></script>
+
     </div>
     <footer class="site-footer">
-  <div class="container">
-    <p>© 2026 Giuslock.</p>
-  </div>
+  &copy; 2026 Giuslock &mdash; 
 </footer>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
-<script defer src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/toolbar/prism-toolbar.min.js"></script>
-<script defer src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/copy-to-clipboard/prism-copy-to-clipboard.min.js"></script>
 
-  </body>
+  </main>
+</div>
+</body>
 </html>
