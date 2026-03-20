@@ -4,9 +4,56 @@
         <title></title>
         <link>undefined</link>
         <description>undefined</description>
-        <lastBuildDate>Sun, 08 Mar 2026 13:58:01 GMT</lastBuildDate>
+        <lastBuildDate>Fri, 20 Mar 2026 18:39:43 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>Joplin Pages Publisher</generator>
+        <item>
+            <title><![CDATA[AI Won't Steal Your Job, Private Equity Will]]></title>
+            <guid>0a0271a9288b43a7b16b065f0d3e5702</guid>
+            <pubDate>Fri, 20 Mar 2026 14:55:37 GMT</pubDate>
+            <content:encoded><![CDATA[<p><img src="/_resources/dc484823c59a45f4aad8a2c6c0fe98af.png" /></p>
+<h1 id="ai-wont-steal-your-job-private-equity-will-the-true-story-of-the-investcloud-case">AI Won't Steal Your Job, Private Equity Will: The True Story of the InvestCloud Case</h1>
+<p>In March 2026, 37 employees at the <strong>InvestCloud Italy</strong> headquarters in Marghera (Venice) <a title="https://oecd.ai/en/incidents/2026-03-11-3f67" href="https://oecd.ai/en/incidents/2026-03-11-3f67">received a collective dismissal letter</a>. The official reason provided by the company? A "realignment towards Artificial Intelligence systems".</p>
+<p>In simple terms: <em>algorithms</em> have become so good that we don't need you anymore.</p>
+<p>It’s a perfect narrative. It reassures shareholders and aligns seamlessly with the global panic about machines coming for our jobs. There is only one minor issue: <strong>it is a colossal lie</strong>.</p>
+<p>By analyzing financial statements, corporate dynamics, and—most importantly—the multinational's global job postings, a very different picture emerges. It highlights a dark and rapidly growing phenomenon known as <strong>AI-Washing</strong>: using Artificial Intelligence as a boogeyman to cover up basic offshoring and cost-cutting maneuvers.</p>
+<p>Here is how we dismantled the official narrative, piece by piece.</p>
+<h2 id="the-profit-paradox-and-the-monkey-jobs-myth">The Profit Paradox and the "Monkey Jobs" Myth</h2>
+<p>When a multinational corporation closes a branch and lays off its staff, public opinion tends to jump to one of two conclusions: either the company is bleeding money, or the employees were doing easily automatable tasks (so-called monkey jobs) that the latest off-the-shelf software could replace.</p>
+<p>The data from the Marghera hub (originally the Italian tech excellence Finantix, founded in 1999) flatly contradicts both scenarios.</p>
+<p>First of all, these workers were not mere data entry clerks. They were an elite team of Senior Software Engineers and Quality Assurance Analysts building complex architectures (in .NET, C#) for major European banks. This was bespoke, high-end coding, not an assembly line.</p>
+<p>Secondly, the company was not losing money. Quite the opposite:</p>
+<p>In 2023, the branch recorded a revenue of €6.08 million.</p>
+<p>In 2024, production value spiked to <strong>€9.96 million</strong> (+63.8%).</p>
+<p>Also in 2024, the branch generated a <strong>net profit of approximately €500,000</strong>.</p>
+<p>Why, then, close a highly profitable European hub in a <em>digital wealth</em> market that is experiencing unprecedented expansion?</p>
+<p>The answer doesn't lie in technological innovation, but rather in the spreadsheets of <em>Private Equity</em>.</p>
+<h2 id="the-technical-debt-and-the-scalability-obsession">The "Technical Debt" and the Scalability Obsession</h2>
+<p>Everything changed in early 2021, when a massive $1 billion merger orchestrated by Motive Partners and Clearlake Capital absorbed Finantix into InvestCloud. This new direction culminated in late 2024 with the arrival of a new CEO, Jeff Yabuki, a manager renowned for his ability to maximize shareholder value.</p>
+<p>Yabuki's vision is clear: the end of "custom-made" software.</p>
+<p>Developing tailored solutions for individual European banks, adapting to various local regulations, requires an army of highly skilled engineers. From the perspective of a US giant operating on a SaaS (Software-as-a-Service) model, all this fragmented code generates "technical debt" and is incredibly hard to scale. The ultimate goal is to sell a single, packaged, global product.</p>
+<p>Under this new model, the artisanal skills of the Venetian engineers suddenly became an unnecessary cost—or rather, an inefficient capital allocation for those seeking to maximize profit margins.</p>
+<h2 id="the-route-to-india">The Route to India</h2>
+<p>This brings us back to the paradox of their corporate communications: if the decision to close the branch was purely financial, why blame AI?</p>
+<p>Because telling the markets it’s about AI is highly convenient. As recent layoffs by tech giants like Block and Amazon have shown, justifying cuts with the "efficiency" brought by AI makes a company look cutting-edge and forward-thinking. Admitting that you are cutting jobs just to balance the books, on the other hand, is perceived as a sign of weakness.</p>
+<p>But there is a "smoking gun" that brings the whole house of cards crashing down. Right when the dismissal letters were being delivered in Italy, InvestCloud was aggressively ramping up its hiring in Asia.</p>
+<p>By checking the job openings posted by <em>InvestCloud Technology India Pvt Ltd</em> in Bengaluru (Bangalore), we find a millimeter-perfect overlap with the positions eliminated in Marghera:</p>
+<p><strong>Getting rid of .NET developers in Italy?</strong>  <a title="https://recruiting.ultipro.com/TEG1001TEGR/JobBoard/ad4204e8-c7f7-47f1-8177-c9f64730dccc/OpportunityDetail?opportunityId=ad95cf60-f30d-4fbb-a697-a28bbdb79993&amp;postingId=430773ed-666a-40f5-a5ec-5ba49d856d59" href="https://recruiting.ultipro.com/TEG1001TEGR/JobBoard/ad4204e8-c7f7-47f1-8177-c9f64730dccc/OpportunityDetail?opportunityId=ad95cf60-f30d-4fbb-a697-a28bbdb79993&amp;postingId=430773ed-666a-40f5-a5ec-5ba49d856d59">Openings for <em>Software Engineer (.Net Developer)</em> appear in India</a>.</p>
+<p><img src="/_resources/1aa73721b7ae4dfdb30fb40098f11a8b.png" /></p>
+<p><strong>Cutting testing analysts?</strong> <a title="https://in.indeed.com/cmp/Investcloud-Technology-India-Pvt-Ltd./jobs?jk=89542fad343dee81&amp;start=0" href="https://in.indeed.com/cmp/Investcloud-Technology-India-Pvt-Ltd./jobs?jk=89542fad343dee81&amp;start=0">They are hiring <em>Quality Assurance Analysts</em> in Bangalore</a>.</p>
+<p><img src="/_resources/f91fa7edd3cc4bf48f4dce80f84d5ec4.png" /></p>
+<p><strong>Slashing European support?</strong> <a title="https://in.indeed.com/cmp/Investcloud-Technology-India-Pvt-Ltd./jobs?jk=e9599024103f23ba&amp;start=0" href="https://in.indeed.com/cmp/Investcloud-Technology-India-Pvt-Ltd./jobs?jk=e9599024103f23ba&amp;start=0">Mass hiring for Asian <em>Product Support Analysts</em></a>.</p>
+<p><img src="/_resources/a6aac8e1e7334760a18a90e2d3ce0028.png" /></p>
+<p>Cognitive labor wasn't eradicated by some advanced algorithm. It was simply packaged and shipped off to a jurisdiction that guarantees massive wage arbitrage. It's the oldest trick in the book, disguised as an AI revolution.</p>
+<h2 id="the-real-lesson-for-the-future">The Real Lesson for the Future</h2>
+<p>The InvestCloud case leaves us with a bitter but crucial lesson.</p>
+<p>On one hand, it exposes how toothless traditional labor unions have become in the face of the "cloud economy". How do you organize a picket line or halt production when your product is immaterial and lives on a remote AWS server?</p>
+<p>On the other hand, it teaches us to read between the lines of tech PR. The next time a company tells you that Artificial Intelligence is coming for your job, take a deep breath and go check the career pages of their Indian branches.</p>
+<p>It’s not Terminator knocking at the door. It is, quite simply, plain old financial capitalism.</p>
+<h3 id="the-complete-investigation">The Complete Investigation</h3>
+<p>This article only scratches the surface. If you want to dive deeper into the financial data, the timeline of the merger, and the concrete evidence of this AI-washing strategy, I have compiled everything into a <a title="https://docs.google.com/document/d/1YqG1ql-fQTIlsDjGMAzTsU1cb1SXv3Ka9Ha5gzxWBOg/edit?usp=sharing" href="https://docs.google.com/document/d/1YqG1ql-fQTIlsDjGMAzTsU1cb1SXv3Ka9Ha5gzxWBOg/edit?usp=sharing">comprehensive research paper</a>.</p>
+]]></content:encoded>
+        </item>
         <item>
             <title><![CDATA[I'm a Certified Hacker - My Journey to CPTS]]></title>
             <guid>c279fd29c6954a7793a58450336ebbef</guid>
