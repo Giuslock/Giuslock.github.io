@@ -1,10 +1,17 @@
 <!doctype html>
 <html lang="en">
-<head><meta charset="UTF-8" />
+<head>
+<meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Giuslock Pages</title>
-<meta name="description" content="" />
+<title>Slop Overflow</title>
+<meta name="description" content="Cybersecurity, AI, OSINT, geopolitics, and lessons learned by breaking things." />
+<meta name="theme-color" content="#07090c" />
+<meta property="og:title" content="Slop Overflow" />
+<meta property="og:description" content="Cybersecurity, AI, OSINT, geopolitics, and lessons learned by breaking things." />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
 <link rel="icon" href="/favicon.ico" />
+<link rel="alternate" type="application/rss+xml" title="Slop Overflow RSS" href="/rss.xml" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;600;700&family=Outfit:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
@@ -17,25 +24,29 @@
 <div class="layout">
   
 
+
+
+<a class="skip-link" href="#main-content">Skip to content</a>
+
 <!-- Mobile topbar -->
 <header class="topbar">
-  <button class="hamburger" id="nav-toggle" aria-label="Open menu" aria-expanded="false">&#9776;</button>
-  <a href="/" class="topbar-brand">Giuslock Pages</a>
-  <a href="/search" class="topbar-search">grep</a>
+  <button class="hamburger" id="nav-toggle" aria-label="Open menu" aria-controls="sidebar" aria-expanded="false">&#9776;</button>
+  <a href="/" class="topbar-brand">Slop Overflow</a>
+  <a href="/search" class="topbar-search" aria-label="Search posts">grep</a>
 </header>
 
 <!-- Overlay -->
 <div class="overlay" id="nav-overlay"></div>
 
 <!-- Sidebar -->
-<aside class="sidebar" id="sidebar">
+<aside class="sidebar" id="sidebar" aria-label="Site navigation" tabindex="-1">
   <div class="sidebar-body">
 
     <a href="/" class="brand">
-      <img src="/_assets/img/profile.png" alt="Avatar" class="brand-avatar" width="44" height="44" loading="lazy" />
+      <img src="/_assets/img/profile.png" alt="Portrait of Giuslock" class="brand-avatar" width="44" height="44" loading="lazy" />
       <span>
-        <span class="brand-name">Giuslock Pages</span>
-        <span class="brand-sub"></span>
+        <span class="brand-name">Slop Overflow</span>
+        <span class="brand-sub">Security field notes, writeups, and useful skepticism.</span>
       </span>
     </a>
 
@@ -65,7 +76,7 @@
   </footer>
 </aside>
 
-  <main class="main">
+  <main class="main" id="main-content" tabindex="-1">
     <div class="page">
 
       <h1 class="page-title">Search</h1>
@@ -83,14 +94,15 @@
 
       <ul id="search-results" class="post-list"></ul>
 
+      
       <script>
-        window.__SITE_INDEX__ = [{"title":"OSCP Preparation - CHALLENGE_0 Secura - Writeup","url":"article/OSCP-Preparation-0","date":"2026-04-10","tags":["topic:ctf","offsec","OSCP"]},{"title":"AI Won't Steal Your Job, Private Equity Will","url":"article/ai-won't-steal-your-job-private-equity-will","date":"2026-03-20","tags":["ai","news","investcloud"]},{"title":"I'm a Certified Hacker - My Journey to CPTS","url":"article/i'm-a-certified-hacker-my-journey-to-cpts","date":"2026-03-05","tags":["CPTS","Hackthebox","Certified Penetration Tester Specialist","htb"]},{"title":"Why I Invested in the Burp Suite Certified Practitioner","url":"article/why-i-invested-in-the-burp-suite-certified-practitioner","date":"2026-02-28","tags":["Portswigger","BSCP"]},{"title":"Conversor HTB - Complete Walkthrough","url":"article/conversor-htb-complete-walkthrough","date":"2026-01-20","tags":["htb","topic:ctf"]},{"title":"AzureSecAnalyzer - A PowerShell project that checks the security settings of Azure resources","url":"article/azuresecanalyzer","date":"2025-08-22","tags":["Azure","Cloud"]},{"title":"CTF Report: 2Million","url":"article/untitled","date":"2025-02-15","tags":["topic:ctf","htb"]},{"title":"Smithers - Echo CTF Challenge","url":"article/smithers-echo-ctf-challenge","date":"2025-02-15","tags":["topic:ctf","echoctf"]},{"title":"Soccer - An HTB easy machine","url":"article/soccer-an-htb-easy-machine","date":"2025-02-15","tags":["topic:ctf","htb"]}];
+        window.__SITE_INDEX__ = [{"title":"Here I am. Giuslock here.","url":"article/here-i-am.-giuslock-here.","date":"2026-09-16","tags":["blogging"]},{"title":"OSCP Preparation - CHALLENGE_0 Secura - Writeup","url":"article/OSCP-Preparation-0","date":"2026-04-10","tags":["topic:ctf","offsec","OSCP"]},{"title":"AI Won't Steal Your Job, Private Equity Will","url":"article/ai-won't-steal-your-job-private-equity-will","date":"2026-03-20","tags":["ai","news","investcloud"]},{"title":"CCTV — HackTheBox Seasonal Writeup","url":"article/cctv_writeup","date":"2026-03-09","tags":["topic:ctf","htb"]},{"title":"Interpreter - Hack The Box Writeup","url":"article/interpreter_writeup","date":"2026-03-09","tags":["htb","topic:ctf"]},{"title":"I'm a Certified Hacker - My Journey to CPTS","url":"article/i'm-a-certified-hacker-my-journey-to-cpts","date":"2026-03-05","tags":["CPTS","Hackthebox","Certified Penetration Tester Specialist","htb"]},{"title":"Why I Invested in the Burp Suite Certified Practitioner","url":"article/why-i-invested-in-the-burp-suite-certified-practitioner","date":"2026-02-28","tags":["Portswigger","BSCP"]},{"title":"Conversor HTB - Complete Walkthrough","url":"article/conversor-htb-complete-walkthrough","date":"2026-01-20","tags":["htb","topic:ctf"]},{"title":"AzureSecAnalyzer - A PowerShell project that checks the security settings of Azure resources","url":"article/azuresecanalyzer","date":"2025-08-22","tags":["Azure","Cloud"]},{"title":"CTF Report: 2Million","url":"article/untitled","date":"2025-02-15","tags":["topic:ctf","htb"]},{"title":"Smithers - Echo CTF Challenge","url":"article/smithers-echo-ctf-challenge","date":"2025-02-15","tags":["topic:ctf","echoctf"]},{"title":"Soccer - An HTB easy machine","url":"article/soccer-an-htb-easy-machine","date":"2025-02-15","tags":["topic:ctf","htb"]}];
       </script>
       <script defer src="/_assets/js/search.js"></script>
 
     </div>
     <footer class="site-footer">
-  &copy; 2026 Giuslock &mdash; 
+  &copy; 2026 Giuslock &mdash; Security field notes, writeups, and useful skepticism.
 </footer>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>

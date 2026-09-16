@@ -2,11 +2,18 @@
 <html lang="en">
 <head>
   
-  <meta charset="UTF-8" />
+  
+<meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Giuslock Pages</title>
-<meta name="description" content="" />
+<title>Slop Overflow</title>
+<meta name="description" content="Cybersecurity, AI, OSINT, geopolitics, and lessons learned by breaking things." />
+<meta name="theme-color" content="#07090c" />
+<meta property="og:title" content="Slop Overflow" />
+<meta property="og:description" content="Cybersecurity, AI, OSINT, geopolitics, and lessons learned by breaking things." />
+<meta property="og:type" content="article" />
+<meta name="twitter:card" content="summary" />
 <link rel="icon" href="/favicon.ico" />
+<link rel="alternate" type="application/rss+xml" title="Slop Overflow RSS" href="/rss.xml" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;600;700&family=Outfit:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
@@ -20,25 +27,29 @@
 <div class="layout">
   
 
+
+
+<a class="skip-link" href="#main-content">Skip to content</a>
+
 <!-- Mobile topbar -->
 <header class="topbar">
-  <button class="hamburger" id="nav-toggle" aria-label="Open menu" aria-expanded="false">&#9776;</button>
-  <a href="/" class="topbar-brand">Giuslock Pages</a>
-  <a href="/search" class="topbar-search">grep</a>
+  <button class="hamburger" id="nav-toggle" aria-label="Open menu" aria-controls="sidebar" aria-expanded="false">&#9776;</button>
+  <a href="/" class="topbar-brand">Slop Overflow</a>
+  <a href="/search" class="topbar-search" aria-label="Search posts">grep</a>
 </header>
 
 <!-- Overlay -->
 <div class="overlay" id="nav-overlay"></div>
 
 <!-- Sidebar -->
-<aside class="sidebar" id="sidebar">
+<aside class="sidebar" id="sidebar" aria-label="Site navigation" tabindex="-1">
   <div class="sidebar-body">
 
     <a href="/" class="brand">
-      <img src="/_assets/img/profile.png" alt="Avatar" class="brand-avatar" width="44" height="44" loading="lazy" />
+      <img src="/_assets/img/profile.png" alt="Portrait of Giuslock" class="brand-avatar" width="44" height="44" loading="lazy" />
       <span>
-        <span class="brand-name">Giuslock Pages</span>
-        <span class="brand-sub"></span>
+        <span class="brand-name">Slop Overflow</span>
+        <span class="brand-sub">Security field notes, writeups, and useful skepticism.</span>
       </span>
     </a>
 
@@ -68,7 +79,7 @@
   </footer>
 </aside>
 
-  <main class="main">
+  <main class="main" id="main-content" tabindex="-1">
     <div class="page">
 
       
@@ -92,6 +103,8 @@
           <time datetime="2026-03-20T14:55:37.861Z">2026-03-20</time>
         </span>
         <span class="badge"><span class="badge-dot"></span>4 min read</span>
+        
+          <span class="badge"><span class="badge-dot"></span>Giuslock</span>
         
         
           <span class="badge"><span class="badge-dot"></span>ai, news, investcloud</span>
@@ -151,14 +164,14 @@
         </div>
         <div class="post-nav-next">
           
-            <a href="/article/i&#39;m-a-certified-hacker-my-journey-to-cpts">I&#39;m a Certified Hacker - My Journey to CPTS &rarr;</a>
+            <a href="/article/cctv_writeup">CCTV — HackTheBox Seasonal Writeup &rarr;</a>
           
         </div>
       </nav>
 
     </div>
     <footer class="site-footer">
-  &copy; 2026 Giuslock &mdash; 
+  &copy; 2026 Giuslock &mdash; Security field notes, writeups, and useful skepticism.
 </footer>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>

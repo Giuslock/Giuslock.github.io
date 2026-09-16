@@ -5,21 +5,47 @@
 
   var idx = window.__SITE_INDEX__;
 
+  function articleUrl(raw) {
+    raw = String(raw || '');
+    return raw.charAt(0) === '/' ? raw : '/' + raw;
+  }
+
+  function resultItem(item) {
+    var li = document.createElement('li');
+    li.className = 'post-list-item';
+
+    var date = document.createElement('span');
+    date.className = 'post-date';
+    date.textContent = item.date;
+
+    var link = document.createElement('a');
+    link.className = 'post-link';
+    link.href = articleUrl(item.url);
+    link.textContent = item.title;
+
+    li.appendChild(date);
+    li.appendChild(link);
+    return li;
+  }
+
   function render(items) {
+    results.replaceChildren();
     if (!items.length) {
-      results.innerHTML = '<li class="post-list-item"><span class="post-link" style="color:var(--muted)">No results found.</span></li>';
+      var empty = document.createElement('li');
+      empty.className = 'post-list-item empty-state';
+      empty.textContent = 'No results found.';
+      results.appendChild(empty);
       return;
     }
-    results.innerHTML = items.map(function (i) {
-      return '<li class="post-list-item">'
-        + '<span class="post-date">' + i.date + '</span>'
-        + '<a class="post-link" href="/' + i.url + '">' + i.title + '</a>'
-        + '</li>';
-    }).join('');
+    var fragment = document.createDocumentFragment();
+    items.forEach(function (item) {
+      fragment.appendChild(resultItem(item));
+    });
+    results.appendChild(fragment);
   }
 
   function search(q) {
-    if (!q) { results.innerHTML = ''; return; }
+    if (!q) { results.replaceChildren(); return; }
     var out = idx.filter(function (i) {
       return (i.title + ' ' + i.tags.join(' ')).toLowerCase().indexOf(q) !== -1;
     }).slice(0, 30);
