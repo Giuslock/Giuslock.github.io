@@ -4,15 +4,14 @@
         <title></title>
         <link>undefined</link>
         <description>undefined</description>
-        <lastBuildDate>Tue, 22 Sep 2026 18:14:00 GMT</lastBuildDate>
+        <lastBuildDate>Tue, 22 Sep 2026 18:14:53 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>Joplin Pages Publisher</generator>
         <item>
             <title><![CDATA[Precious - An HTB easy machine]]></title>
             <guid>fa99ec616e1c48348ff28ff51aa97548</guid>
             <pubDate>Sun, 20 Sep 2026 19:36:01 GMT</pubDate>
-            <content:encoded><![CDATA[<h1 id="precious-an-htb-easy-machine">Precious - An HTB easy machine</h1>
-<p><a title="https://app.hackthebox.com/machines/Precious" href="https://app.hackthebox.com/machines/Precious">Link to target</a></p>
+            <content:encoded><![CDATA[<p><a title="https://app.hackthebox.com/machines/Precious" href="https://app.hackthebox.com/machines/Precious">Link to target</a></p>
 <p><strong>Hostname:</strong> precious.htb<br />
 <strong>Difficulty:</strong> Easy<br />
 <strong>OS:</strong> Linux (Debian)</p>
