@@ -4,7 +4,7 @@
         <title></title>
         <link>undefined</link>
         <description>undefined</description>
-        <lastBuildDate>Sun, 20 Sep 2026 19:43:31 GMT</lastBuildDate>
+        <lastBuildDate>Tue, 22 Sep 2026 18:14:00 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>Joplin Pages Publisher</generator>
         <item>
@@ -264,8 +264,7 @@ read root-owned files from absolute paths and validate their contents.</li>
             <title><![CDATA[The Great Digital Anesthesia]]></title>
             <guid>59b929daaf2745c68bb3e12b79d978f3</guid>
             <pubDate>Sun, 20 Sep 2026 19:33:57 GMT</pubDate>
-            <content:encoded><![CDATA[<h1 id="the-great-digital-anesthesia">The Great Digital Anesthesia</h1>
-<p>I genuinely can't stop thinking about this.</p>
+            <content:encoded><![CDATA[<p>I genuinely can't stop thinking about this.</p>
 <p>Everywhere I look, I see people glued to their phones, endlessly scrolling through social media. And what worries me the most is seeing this behavior in people who are no longer particularly young.</p>
 <p>People who spend hours staring at a screen, consuming whatever the algorithm decides to throw at them.</p>
 <p>One video after another. One post after another. An endless stream of content.</p>
