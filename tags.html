@@ -12,12 +12,15 @@
 <meta name="twitter:card" content="summary" />
 <link rel="icon" href="/favicon.ico" />
 <link rel="alternate" type="application/rss+xml" title="Slop Overflow RSS" href="/rss.xml" />
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;600;700&family=Outfit:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="/_assets/css/style.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" />
 <script defer src="/_assets/js/app.js"></script>
+<link rel="stylesheet" href="/_assets/css/vault.css" />
+<link rel="stylesheet" href="/_assets/css/monitor.css" />
+<link rel="stylesheet" href="/_assets/css/reader.css" />
+<script defer src="/_assets/js/vault.js"></script>
+<script defer src="/_assets/js/terminal.js"></script>
+<script defer src="/_assets/js/reader.js"></script>
 <script data-goatcounter="https://giuslock.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </head>
 <body>
@@ -41,12 +44,17 @@
 <!-- Sidebar -->
 <aside class="sidebar" id="sidebar" aria-label="Site navigation" tabindex="-1">
   <div class="sidebar-body">
+    <header class="terminal-heading">
+      <p>ROBCO INDUSTRIES UNIFIED OPERATING SYSTEM</p>
+      <p>SLOP OVERFLOW / PERSONAL ARCHIVE</p>
+      <p class="terminal-date">Today's Date: <time id="terminal-today">2026-09-23</time></p>
+    </header>
 
     <a href="/" class="brand">
-      <img src="/_assets/img/profile.png" alt="Portrait of Giuslock" class="brand-avatar" width="44" height="44" loading="lazy" />
+      <span class="vault-mark" aria-hidden="true">[SO]</span>
       <span>
         <span class="brand-name">Slop Overflow</span>
-        <span class="brand-sub">Security field notes, writeups, and useful skepticism.</span>
+        <span class="brand-sub">PERSONAL TERMINAL / GIUSLOCK</span>
       </span>
     </a>
 
@@ -56,6 +64,7 @@
         <li><a href="/archives"><span class="nav-icon">ls</span> Archives</a></li>
         <li><a href="/tags"><span class="nav-icon">#</span> Tags</a></li>
         <li><a href="/about"><span class="nav-icon">id</span> About</a></li>
+        <li><a href="/search">Search</a></li>
         
           <li><a href="/rss.xml"><span class="nav-icon">rss</span> RSS</a></li>
         
@@ -72,12 +81,13 @@
   </div>
 
   <footer class="sidebar-foot">
+    <button type="button" id="crt-toggle" aria-pressed="true" hidden>CRT effects: on</button>
     &copy; 2026 Giuslock
   </footer>
 </aside>
 
   <main class="main" id="main-content" tabindex="-1">
-    <div class="page">
+    <div class="page tags-page" data-terminal-static>
 
       <h1 class="page-title">Tags</h1>
       <span class="page-sub">Browse posts by topic.</span>
@@ -85,7 +95,10 @@
       
 
       <!-- Show all button (hidden by default) -->
-      <button id="tags-show-all" class="tag-show-all" style="display:none">Show all tags</button>
+      <div class="tag-toolbar">
+        <button type="button" id="tags-show-all" class="tag-show-all" hidden disabled>Show all tags</button>
+        <span id="tag-status" role="status" aria-live="polite" aria-atomic="true"></span>
+      </div>
 
       <!-- Tag cloud -->
       
@@ -410,31 +423,31 @@
   var showAll  = document.getElementById('tags-show-all');
   if (!sections.length) return;
 
+  var main = document.querySelector('.main');
+  var status = document.getElementById('tag-status');
+  showAll.hidden = false;
   function filterByTag(tag) {
-    var found = false;
-    sections.forEach(function (s) {
-      if (s.getAttribute('data-tag-section') === tag) {
-        s.style.display = '';
-        found = true;
-      } else {
-        s.style.display = 'none';
-      }
+    // A filter is an immediate UI update, not part of the terminal print queue.
+    document.dispatchEvent(new Event('terminal-finish-printing'));
+    var selected = Array.from(sections).find(function(s){return s.dataset.tagSection === tag;});
+    sections.forEach(function(s){s.hidden = !!selected && s !== selected;});
+    pills.forEach(function(p){
+      var active = !!selected && p.dataset.tag === tag;
+      p.classList.toggle('tag-pill--active', active);
+      if(active) p.setAttribute('aria-current','true'); else p.removeAttribute('aria-current');
     });
-    pills.forEach(function (p) {
-      if (p.getAttribute('data-tag') === tag) {
-        p.classList.add('tag-pill--active');
-      } else {
-        p.classList.remove('tag-pill--active');
-      }
-    });
-    if (found) showAll.style.display = '';
+    showAll.disabled = !selected;
+    status.textContent = selected ? tag + ' — ' + selected.querySelectorAll('.post-list-item').length + ' post(s)' : 'All tags';
+    main.scrollTo({top:0,behavior:'instant'});
   }
-
-  function showAllTags() {
-    sections.forEach(function (s) { s.style.display = ''; });
-    pills.forEach(function (p) { p.classList.remove('tag-pill--active'); });
-    showAll.style.display = 'none';
-    history.replaceState(null, '', window.location.pathname);
+  function navigate(tag) {
+    var target = location.pathname + location.search + (tag ? '#' + encodeURIComponent(tag) : '');
+    if(target !== location.pathname + location.search + location.hash) history.pushState(null,'',target);
+    filterByTag(tag);
+  }
+  function fromLocation(){
+    var tag; try { tag = decodeURIComponent(location.hash.slice(1)); } catch(_) { tag = ''; }
+    filterByTag(tag);
   }
 
   // Click on tag pill -> filter
@@ -442,17 +455,16 @@
     p.addEventListener('click', function (e) {
       e.preventDefault();
       var tag = p.getAttribute('data-tag');
-      filterByTag(tag);
-      history.replaceState(null, '', '#' + tag);
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      navigate(tag);
     });
   });
 
-  showAll.addEventListener('click', showAllTags);
+  showAll.addEventListener('click', function(){navigate('');});
 
   // On load: filter if hash present
-  var hash = decodeURIComponent(window.location.hash.slice(1));
-  if (hash) filterByTag(hash);
+  window.addEventListener('popstate',fromLocation);
+  window.addEventListener('hashchange',fromLocation);
+  fromLocation();
 })();
 </script>
 </body>

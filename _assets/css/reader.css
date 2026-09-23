@@ -1,0 +1,53 @@
+:root { --font:Consolas,'Liberation Mono',monospace; --font-display:var(--font); --mono:var(--font); --accent:#44ff55; --text:#44ff55; }
+body,.terminal-session body,.terminal-boot { font-family:var(--font); font-weight:700; font-size:clamp(19px,2vw,30px); line-height:1.12; text-shadow:0 0 10px #23824c99; }
+.terminal-heading { text-align:center; color:var(--accent); font-size:inherit; }
+.terminal-heading p { margin:0; }
+.terminal-date { width:80%; margin:22px auto 12px!important; padding-bottom:5px; border-bottom:4px solid var(--accent); }
+.sidebar-body { gap:8px; }
+.nav-list { justify-content:center; margin-bottom:16px; }
+.home-intro .vault-system,.home-intro .vault-session,.home-intro .home-title,.home-intro .home-deck,.home-intro .home-scope { display:none; }
+.home-intro { margin:0; }
+.card-title { text-transform:none; display:block; }
+.card-title::before,.card-title::after { content:none; }
+.archive-month { margin:1.25em 0 .5em; font-size:.8em; }
+.archive-year { margin-top:1.5em; }
+.card-created { white-space:nowrap; font:inherit; }
+.tag-toolbar { display:flex; flex-wrap:wrap; align-items:center; gap:12px; margin:16px 0; min-height:36px; font-size:14px; }
+.tag-toolbar .tag-show-all { margin:0; }
+.tag-show-all:disabled { opacity:.45; cursor:default; }
+.tags-page .tag-pill { transition:none; }
+.tags-page .tag-pill--active { color:var(--bg); background:var(--accent); text-shadow:none; }
+.card { padding:3px 0; break-inside:avoid; }
+.card-title:hover,.card-title:focus-visible { display:block; }
+.prose { max-width:80ch!important; font-size:inherit; line-height:1.12; }
+.prose p { margin:0 0 1em; }
+.prose h1,.page>h1 { font-size:1.65em; line-height:1.05; }
+.prose h2 { font-size:1.3em; line-height:1.1; }
+.prose h1,.prose h2,.prose h3 { break-after:avoid; margin:0 0 .5em; }
+.prose img { max-height:var(--reader-height,65vh); width:auto; max-width:100%; object-fit:contain; filter:grayscale(1) sepia(1) saturate(5) hue-rotate(75deg); }
+.prose img:hover { filter:none; }
+.reader-controls { display:flex; flex-wrap:wrap; flex:0 0 auto; gap:8px 18px; align-items:center; padding-top:12px; font-size:15px; }
+.reader-controls button { color:var(--accent); font:inherit; border:0; background:none; cursor:pointer; padding:3px; }
+.reader-controls button::before,.reader-controls a::before { content:'[ '; }
+.reader-controls button::after,.reader-controls a::after { content:' ]'; }
+.reader-controls button:hover,.reader-controls button:focus-visible { color:var(--bg); background:var(--accent); }
+.reader-controls button:disabled { opacity:.4; cursor:default; }
+.reader-controls span { font-size:12px; }
+.terminal-session .main.terminal-paged { overflow:hidden; padding:0; scrollbar-gutter:auto; }
+.terminal-paged .page { height:var(--reader-height); width:100%; padding:0; columns:1; column-gap:48px; column-fill:auto; overflow:visible; }
+.terminal-paged .prose { max-width:none!important; }
+.terminal-paged pre { max-height:calc(var(--reader-height) - 32px); overflow:auto; break-inside:avoid; }
+.terminal-paged table { display:block; max-width:100%; overflow:auto; }
+.terminal-paged figure,.terminal-paged .post-nav { break-inside:avoid; }
+.terminal-paged .prose img { break-inside:avoid; }
+.terminal-paged .breadcrumb { font-size:.6em; }
+.terminal-paged .meta-row { font-size:.55em; }
+.terminal-paged .home-intro { display:none; }
+.terminal-paged .section-title { font-size:inherit; }
+.crt-off body,.crt-off .terminal-heading { text-shadow:none; }
+.main[data-printing='true'],.main[data-printing='true'] * { text-shadow:none!important; }
+.page .terminal-unrevealed { visibility:hidden!important; }
+.main { position:relative; }
+.print-head { position:absolute; pointer-events:none; line-height:1; color:var(--accent); z-index:2; }
+@media(max-width:700px) { body,.terminal-session body,.terminal-boot { font-size:17px; } .terminal-heading { font-size:14px; } .terminal-date { width:100%; margin-top:12px!important; border-width:2px; } .nav-list { margin-bottom:10px; } .reader-controls { font-size:12px; gap:5px 8px; padding-top:8px; } .layout,.terminal-session .layout { padding-bottom:65px; } }
+@media(max-height:600px) { .terminal-heading { font-size:13px; } .terminal-date { margin-top:6px!important; margin-bottom:5px!important; } .nav-list { margin-bottom:6px; } .layout,.terminal-session .layout { padding-top:22px; padding-bottom:48px; } }

@@ -12,12 +12,15 @@
 <meta name="twitter:card" content="summary" />
 <link rel="icon" href="/favicon.ico" />
 <link rel="alternate" type="application/rss+xml" title="Slop Overflow RSS" href="/rss.xml" />
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;600;700&family=Outfit:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="/_assets/css/style.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" />
 <script defer src="/_assets/js/app.js"></script>
+<link rel="stylesheet" href="/_assets/css/vault.css" />
+<link rel="stylesheet" href="/_assets/css/monitor.css" />
+<link rel="stylesheet" href="/_assets/css/reader.css" />
+<script defer src="/_assets/js/vault.js"></script>
+<script defer src="/_assets/js/terminal.js"></script>
+<script defer src="/_assets/js/reader.js"></script>
 <script data-goatcounter="https://giuslock.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </head>
 <body>
@@ -41,12 +44,17 @@
 <!-- Sidebar -->
 <aside class="sidebar" id="sidebar" aria-label="Site navigation" tabindex="-1">
   <div class="sidebar-body">
+    <header class="terminal-heading">
+      <p>ROBCO INDUSTRIES UNIFIED OPERATING SYSTEM</p>
+      <p>SLOP OVERFLOW / PERSONAL ARCHIVE</p>
+      <p class="terminal-date">Today's Date: <time id="terminal-today">2026-09-23</time></p>
+    </header>
 
     <a href="/" class="brand">
-      <img src="/_assets/img/profile.png" alt="Portrait of Giuslock" class="brand-avatar" width="44" height="44" loading="lazy" />
+      <span class="vault-mark" aria-hidden="true">[SO]</span>
       <span>
         <span class="brand-name">Slop Overflow</span>
-        <span class="brand-sub">Security field notes, writeups, and useful skepticism.</span>
+        <span class="brand-sub">PERSONAL TERMINAL / GIUSLOCK</span>
       </span>
     </a>
 
@@ -56,6 +64,7 @@
         <li><a href="/archives"><span class="nav-icon">ls</span> Archives</a></li>
         <li><a href="/tags"><span class="nav-icon">#</span> Tags</a></li>
         <li><a href="/about"><span class="nav-icon">id</span> About</a></li>
+        <li><a href="/search">Search</a></li>
         
           <li><a href="/rss.xml"><span class="nav-icon">rss</span> RSS</a></li>
         
@@ -72,6 +81,7 @@
   </div>
 
   <footer class="sidebar-foot">
+    <button type="button" id="crt-toggle" aria-pressed="true" hidden>CRT effects: on</button>
     &copy; 2026 Giuslock
   </footer>
 </aside>
@@ -80,12 +90,14 @@
     <div class="page">
 
       <h1 class="page-title">Archives</h1>
-      <span class="page-sub">All posts, sorted by date.</span>
+      <span class="page-sub">Browse the archive by year and month.</span>
 
       
 
       
-        <h2>2026</h2>
+        <h2 class="archive-year">2026</h2>
+        
+        <h3 class="archive-month">September (3)</h3>
         <ul class="post-list">
           
             <li class="post-list-item">
@@ -103,10 +115,20 @@
               <a class="post-link" href="/article/here-i-am.-giuslock-here.">Here I am. Giuslock here.</a>
             </li>
           
+        </ul>
+        
+        <h3 class="archive-month">April (1)</h3>
+        <ul class="post-list">
+          
             <li class="post-list-item">
               <span class="post-date">04-10</span>
               <a class="post-link" href="/article/OSCP-Preparation-0">OSCP Preparation - CHALLENGE_0 Secura - Writeup</a>
             </li>
+          
+        </ul>
+        
+        <h3 class="archive-month">March (4)</h3>
+        <ul class="post-list">
           
             <li class="post-list-item">
               <span class="post-date">03-20</span>
@@ -128,10 +150,20 @@
               <a class="post-link" href="/article/i&#39;m-a-certified-hacker-my-journey-to-cpts">I&#39;m a Certified Hacker - My Journey to CPTS</a>
             </li>
           
+        </ul>
+        
+        <h3 class="archive-month">February (1)</h3>
+        <ul class="post-list">
+          
             <li class="post-list-item">
               <span class="post-date">02-28</span>
               <a class="post-link" href="/article/why-i-invested-in-the-burp-suite-certified-practitioner">Why I Invested in the Burp Suite Certified Practitioner</a>
             </li>
+          
+        </ul>
+        
+        <h3 class="archive-month">January (1)</h3>
+        <ul class="post-list">
           
             <li class="post-list-item">
               <span class="post-date">01-20</span>
@@ -139,14 +171,22 @@
             </li>
           
         </ul>
+        
       
-        <h2>2025</h2>
+        <h2 class="archive-year">2025</h2>
+        
+        <h3 class="archive-month">August (1)</h3>
         <ul class="post-list">
           
             <li class="post-list-item">
               <span class="post-date">08-22</span>
               <a class="post-link" href="/article/azuresecanalyzer">AzureSecAnalyzer - A PowerShell project that checks the security settings of Azure resources</a>
             </li>
+          
+        </ul>
+        
+        <h3 class="archive-month">February (3)</h3>
+        <ul class="post-list">
           
             <li class="post-list-item">
               <span class="post-date">02-15</span>
@@ -164,6 +204,7 @@
             </li>
           
         </ul>
+        
       
 
       

@@ -12,12 +12,15 @@
 <meta name="twitter:card" content="summary" />
 <link rel="icon" href="/favicon.ico" />
 <link rel="alternate" type="application/rss+xml" title="Slop Overflow RSS" href="/rss.xml" />
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;600;700&family=Outfit:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="/_assets/css/style.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" />
 <script defer src="/_assets/js/app.js"></script>
+<link rel="stylesheet" href="/_assets/css/vault.css" />
+<link rel="stylesheet" href="/_assets/css/monitor.css" />
+<link rel="stylesheet" href="/_assets/css/reader.css" />
+<script defer src="/_assets/js/vault.js"></script>
+<script defer src="/_assets/js/terminal.js"></script>
+<script defer src="/_assets/js/reader.js"></script>
 <script data-goatcounter="https://giuslock.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </head>
 <body>
@@ -41,12 +44,17 @@
 <!-- Sidebar -->
 <aside class="sidebar" id="sidebar" aria-label="Site navigation" tabindex="-1">
   <div class="sidebar-body">
+    <header class="terminal-heading">
+      <p>ROBCO INDUSTRIES UNIFIED OPERATING SYSTEM</p>
+      <p>SLOP OVERFLOW / PERSONAL ARCHIVE</p>
+      <p class="terminal-date">Today's Date: <time id="terminal-today">2026-09-23</time></p>
+    </header>
 
     <a href="/" class="brand">
-      <img src="/_assets/img/profile.png" alt="Portrait of Giuslock" class="brand-avatar" width="44" height="44" loading="lazy" />
+      <span class="vault-mark" aria-hidden="true">[SO]</span>
       <span>
         <span class="brand-name">Slop Overflow</span>
-        <span class="brand-sub">Security field notes, writeups, and useful skepticism.</span>
+        <span class="brand-sub">PERSONAL TERMINAL / GIUSLOCK</span>
       </span>
     </a>
 
@@ -56,6 +64,7 @@
         <li><a href="/archives"><span class="nav-icon">ls</span> Archives</a></li>
         <li><a href="/tags"><span class="nav-icon">#</span> Tags</a></li>
         <li><a href="/about"><span class="nav-icon">id</span> About</a></li>
+        <li><a href="/search">Search</a></li>
         
           <li><a href="/rss.xml"><span class="nav-icon">rss</span> RSS</a></li>
         
@@ -72,6 +81,7 @@
   </div>
 
   <footer class="sidebar-foot">
+    <button type="button" id="crt-toggle" aria-pressed="true" hidden>CRT effects: on</button>
     &copy; 2026 Giuslock
   </footer>
 </aside>
@@ -80,21 +90,22 @@
     <div class="page">
 
       <header class="home-intro">
-        <h1 class="home-title"><span>Slop</span><span>Overflow<span class="terminal-cursor" aria-hidden="true">_</span></span></h1>
+        <p class="vault-system">ROBCO INDUSTRIES (TM) TERMLINK PROTOCOL</p>
+        <p class="vault-session">Personal archive / Access granted</p>
+        <h1 class="home-title">Slop Overflow<span class="terminal-cursor" aria-hidden="true">_</span></h1>
         <p class="home-deck">Security field notes, writeups, and useful skepticism.</p>
-        <p class="home-scope">Cybersecurity / AI / OSINT / geopolitics</p>
+        <p class="home-scope">&gt; Security logs. Field reports. Signals from the wasteland.</p>
       </header>
 
       
 
       <section aria-labelledby="latest-posts">
-        <h2 class="section-title" id="latest-posts">Latest notes</h2>
+        <h2 class="section-title" id="latest-posts">&gt; Open archive</h2>
         <div class="card-list">
         
           <article class="card">
-            <time class="card-stamp" datetime="2026-09-20T19:36:01.907Z">2026-09-20</time>
             <div class="card-body">
-              <h3 class="card-heading"><a class="card-title" href="/article/precious-an-htb-easy-machine">Precious - An HTB easy machine</a></h3>
+              <h3 class="card-heading"><a class="card-title" href="/article/precious-an-htb-easy-machine">[<time class="card-created" datetime="2026-09-20T19:36:01.907Z">2026-09-20</time> Precious - An HTB easy machine]</a></h3>
               
                 <p class="card-excerpt">Link to target Hostname: precious.htb Difficulty: Easy OS: Linux (Debian) | | |
 | | |
@@ -116,9 +127,8 @@
           </article>
         
           <article class="card">
-            <time class="card-stamp" datetime="2026-09-20T19:33:57.055Z">2026-09-20</time>
             <div class="card-body">
-              <h3 class="card-heading"><a class="card-title" href="/article/the-great-digital-anesthesia">The Great Digital Anesthesia</a></h3>
+              <h3 class="card-heading"><a class="card-title" href="/article/the-great-digital-anesthesia">[<time class="card-created" datetime="2026-09-20T19:33:57.055Z">2026-09-20</time> The Great Digital Anesthesia]</a></h3>
               
                 <p class="card-excerpt">I genuinely can&#39;t stop thinking about this. Everywhere I look, I see people glued to their phones, endlessly scrolling through social media. And what worries me the most is seeing this behavior in…</p>
               
@@ -133,9 +143,8 @@
           </article>
         
           <article class="card">
-            <time class="card-stamp" datetime="2026-09-16T17:38:52.533Z">2026-09-16</time>
             <div class="card-body">
-              <h3 class="card-heading"><a class="card-title" href="/article/here-i-am.-giuslock-here.">Here I am. Giuslock here.</a></h3>
+              <h3 class="card-heading"><a class="card-title" href="/article/here-i-am.-giuslock-here.">[<time class="card-created" datetime="2026-09-16T17:38:52.533Z">2026-09-16</time> Here I am. Giuslock here.]</a></h3>
               
                 <p class="card-excerpt">I&#39;m Back Here I am. Giuslock here. It’s been months since I last wrote something on this blog. After getting my CPTS , I just stopped. For a while, I fell into the AI doomer rabbit hole. I started…</p>
               
@@ -150,9 +159,8 @@
           </article>
         
           <article class="card">
-            <time class="card-stamp" datetime="2026-04-10T17:04:51.194Z">2026-04-10</time>
             <div class="card-body">
-              <h3 class="card-heading"><a class="card-title" href="/article/OSCP-Preparation-0">OSCP Preparation - CHALLENGE_0 Secura - Writeup</a></h3>
+              <h3 class="card-heading"><a class="card-title" href="/article/OSCP-Preparation-0">[<time class="card-created" datetime="2026-04-10T17:04:51.194Z">2026-04-10</time> OSCP Preparation - CHALLENGE_0 Secura - Writeup]</a></h3>
               
                 <p class="card-excerpt">Challenge 0 — OffSec Writeup Date: 2026 04 10 Lab: OffSec Challenge Lab 0 (OSCP prep) Forest: secura.yzx Targets: 192.168.224.95 (SECURE), 192.168.224.96 (ERA), 192.168.224.97 (DC01) Difficulty:…</p>
               
@@ -171,9 +179,8 @@
           </article>
         
           <article class="card">
-            <time class="card-stamp" datetime="2026-03-20T14:55:37.861Z">2026-03-20</time>
             <div class="card-body">
-              <h3 class="card-heading"><a class="card-title" href="/article/ai-won&#39;t-steal-your-job-private-equity-will">AI Won&#39;t Steal Your Job, Private Equity Will</a></h3>
+              <h3 class="card-heading"><a class="card-title" href="/article/ai-won&#39;t-steal-your-job-private-equity-will">[<time class="card-created" datetime="2026-03-20T14:55:37.861Z">2026-03-20</time> AI Won&#39;t Steal Your Job, Private Equity Will]</a></h3>
               
                 <p class="card-excerpt">AI Won&#39;t Steal Your Job, Private Equity Will: The True Story of the InvestCloud Case In March 2026, 37 employees at the InvestCloud Italy headquarters in Marghera (Venice) received a collective…</p>
               
@@ -192,9 +199,8 @@
           </article>
         
           <article class="card">
-            <time class="card-stamp" datetime="2026-03-09T17:16:31.229Z">2026-03-09</time>
             <div class="card-body">
-              <h3 class="card-heading"><a class="card-title" href="/article/cctv_writeup">CCTV — HackTheBox Seasonal Writeup</a></h3>
+              <h3 class="card-heading"><a class="card-title" href="/article/cctv_writeup">[<time class="card-created" datetime="2026-03-09T17:16:31.229Z">2026-03-09</time> CCTV — HackTheBox Seasonal Writeup]</a></h3>
               
                 <p class="card-excerpt">CCTV — HackTheBox Seasonal Writeup Date: 2026 03 09 IP: 10.129.1.238 Hostname: CCTV.htb Difficulty: Beginner OS: Ubuntu 24.04.4 LTS Table of Contents Reconnaissance Foothold CVE 2024 51482…</p>
               
@@ -211,9 +217,8 @@
           </article>
         
           <article class="card">
-            <time class="card-stamp" datetime="2026-03-09T17:15:53.945Z">2026-03-09</time>
             <div class="card-body">
-              <h3 class="card-heading"><a class="card-title" href="/article/interpreter_writeup">Interpreter - Hack The Box Writeup</a></h3>
+              <h3 class="card-heading"><a class="card-title" href="/article/interpreter_writeup">[<time class="card-created" datetime="2026-03-09T17:15:53.945Z">2026-03-09</time> Interpreter - Hack The Box Writeup]</a></h3>
               
                 <p class="card-excerpt">Interpreter Hack The Box Writeup Machine: Interpreter OS: Linux (Debian 12) Difficulty: Medium IP: 10.129.9.96 Table of Contents Summary Enumeration Foothold CVE 2023 43208 (Pre Auth RCE) Lateral…</p>
               
@@ -230,9 +235,8 @@
           </article>
         
           <article class="card">
-            <time class="card-stamp" datetime="2026-03-05T13:25:29.167Z">2026-03-05</time>
             <div class="card-body">
-              <h3 class="card-heading"><a class="card-title" href="/article/i&#39;m-a-certified-hacker-my-journey-to-cpts">I&#39;m a Certified Hacker - My Journey to CPTS</a></h3>
+              <h3 class="card-heading"><a class="card-title" href="/article/i&#39;m-a-certified-hacker-my-journey-to-cpts">[<time class="card-created" datetime="2026-03-05T13:25:29.167Z">2026-03-05</time> I&#39;m a Certified Hacker - My Journey to CPTS]</a></h3>
               
                 <p class="card-excerpt">After 17 days of waiting, I can finally say it: I am CPTS certified ! After 17 days of agonizing wait, I can finally say it: I am CPTS certified ! What can I say? In these uncertain times, bringing…</p>
               
@@ -253,9 +257,8 @@
           </article>
         
           <article class="card">
-            <time class="card-stamp" datetime="2026-02-28T11:28:43.172Z">2026-02-28</time>
             <div class="card-body">
-              <h3 class="card-heading"><a class="card-title" href="/article/why-i-invested-in-the-burp-suite-certified-practitioner">Why I Invested in the Burp Suite Certified Practitioner</a></h3>
+              <h3 class="card-heading"><a class="card-title" href="/article/why-i-invested-in-the-burp-suite-certified-practitioner">[<time class="card-created" datetime="2026-02-28T11:28:43.172Z">2026-02-28</time> Why I Invested in the Burp Suite Certified Practitioner]</a></h3>
               
                 <p class="card-excerpt">Navigating the AI Era: Why I Invested in the Burp Suite Certified Practitioner (BSCP) Exactly one month ago, I officially achieved the Burp Suite Certified Practitioner (BSCP) certification. In the…</p>
               
@@ -272,9 +275,8 @@
           </article>
         
           <article class="card">
-            <time class="card-stamp" datetime="2026-01-20T17:23:26.763Z">2026-01-20</time>
             <div class="card-body">
-              <h3 class="card-heading"><a class="card-title" href="/article/conversor-htb-complete-walkthrough">Conversor HTB - Complete Walkthrough</a></h3>
+              <h3 class="card-heading"><a class="card-title" href="/article/conversor-htb-complete-walkthrough">[<time class="card-created" datetime="2026-01-20T17:23:26.763Z">2026-01-20</time> Conversor HTB - Complete Walkthrough]</a></h3>
               
                 <p class="card-excerpt">Executive Summary This write up documents the complete exploitation chain for the &#34;Conversor&#34; machine on HackTheBox. The attack path leverages an XSLT injection vulnerability in a web application…</p>
               
@@ -291,9 +293,8 @@
           </article>
         
           <article class="card">
-            <time class="card-stamp" datetime="2025-08-22T07:43:24.255Z">2025-08-22</time>
             <div class="card-body">
-              <h3 class="card-heading"><a class="card-title" href="/article/azuresecanalyzer">AzureSecAnalyzer - A PowerShell project that checks the security settings of Azure resources</a></h3>
+              <h3 class="card-heading"><a class="card-title" href="/article/azuresecanalyzer">[<time class="card-created" datetime="2025-08-22T07:43:24.255Z">2025-08-22</time> AzureSecAnalyzer - A PowerShell project that checks the security settings of Azure resources]</a></h3>
               
                 <p class="card-excerpt">I&#39;m excited to announce that I&#39;ve just published AzureSecAnalyzer , a PowerShell based tool that checks the security settings of Azure resources. Whether you&#39;re managing a small scale deployment or a…</p>
               
@@ -310,9 +311,8 @@
           </article>
         
           <article class="card">
-            <time class="card-stamp" datetime="2025-02-15T16:59:06.085Z">2025-02-15</time>
             <div class="card-body">
-              <h3 class="card-heading"><a class="card-title" href="/article/untitled">CTF Report: 2Million</a></h3>
+              <h3 class="card-heading"><a class="card-title" href="/article/untitled">[<time class="card-created" datetime="2025-02-15T16:59:06.085Z">2025-02-15</time> CTF Report: 2Million]</a></h3>
               
                 <p class="card-excerpt">CTF Report: 2Million https://app.hackthebox.com/machines/TwoMillion Initial Results and Information We started by performing an Nmap scan on the target machine: We have two services running: SSH and…</p>
               
@@ -329,9 +329,8 @@
           </article>
         
           <article class="card">
-            <time class="card-stamp" datetime="2025-02-15T16:54:47.104Z">2025-02-15</time>
             <div class="card-body">
-              <h3 class="card-heading"><a class="card-title" href="/article/smithers-echo-ctf-challenge">Smithers - Echo CTF Challenge</a></h3>
+              <h3 class="card-heading"><a class="card-title" href="/article/smithers-echo-ctf-challenge">[<time class="card-created" datetime="2025-02-15T16:54:47.104Z">2025-02-15</time> Smithers - Echo CTF Challenge]</a></h3>
               
                 <p class="card-excerpt">Link to target Introduction
 This post details the process of solving the &#34;Smithers&#34; challenge on echoctf.red. Enumeration Phase Nmap Scan
@@ -350,9 +349,8 @@ I start the reconnaissance with nmap: Web Server on Port…</p>
           </article>
         
           <article class="card">
-            <time class="card-stamp" datetime="2025-02-15T16:41:34.433Z">2025-02-15</time>
             <div class="card-body">
-              <h3 class="card-heading"><a class="card-title" href="/article/soccer-an-htb-easy-machine">Soccer - An HTB easy machine</a></h3>
+              <h3 class="card-heading"><a class="card-title" href="/article/soccer-an-htb-easy-machine">[<time class="card-created" datetime="2025-02-15T16:41:34.433Z">2025-02-15</time> Soccer - An HTB easy machine]</a></h3>
               
                 <p class="card-excerpt">Link to target Capture the Flag (CTF) Write Up: Soccer.htb Table of Contents
 1. Initial Enumeration Nmap Scan Key Findings
