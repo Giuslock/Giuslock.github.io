@@ -12,15 +12,12 @@
 <meta name="twitter:card" content="summary" />
 <link rel="icon" href="/favicon.ico" />
 <link rel="alternate" type="application/rss+xml" title="Slop Overflow RSS" href="/rss.xml" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;600;700&family=Outfit:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="/_assets/css/style.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" />
 <script defer src="/_assets/js/app.js"></script>
-<link rel="stylesheet" href="/_assets/css/vault.css" />
-<link rel="stylesheet" href="/_assets/css/monitor.css" />
-<link rel="stylesheet" href="/_assets/css/reader.css" />
-<script defer src="/_assets/js/vault.js"></script>
-<script defer src="/_assets/js/terminal.js"></script>
-<script defer src="/_assets/js/reader.js"></script>
 <script data-goatcounter="https://giuslock.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </head>
 <body>
@@ -44,17 +41,12 @@
 <!-- Sidebar -->
 <aside class="sidebar" id="sidebar" aria-label="Site navigation" tabindex="-1">
   <div class="sidebar-body">
-    <header class="terminal-heading">
-      <p>ROBCO INDUSTRIES UNIFIED OPERATING SYSTEM</p>
-      <p>SLOP OVERFLOW / PERSONAL ARCHIVE</p>
-      <p class="terminal-date">Today's Date: <time id="terminal-today">2026-09-23</time></p>
-    </header>
 
     <a href="/" class="brand">
-      <span class="vault-mark" aria-hidden="true">[SO]</span>
+      <img src="/_assets/img/profile.png" alt="Portrait of Giuslock" class="brand-avatar" width="44" height="44" loading="lazy" />
       <span>
         <span class="brand-name">Slop Overflow</span>
-        <span class="brand-sub">PERSONAL TERMINAL / GIUSLOCK</span>
+        <span class="brand-sub">Security field notes, writeups, and useful skepticism.</span>
       </span>
     </a>
 
@@ -64,7 +56,6 @@
         <li><a href="/archives"><span class="nav-icon">ls</span> Archives</a></li>
         <li><a href="/tags"><span class="nav-icon">#</span> Tags</a></li>
         <li><a href="/about"><span class="nav-icon">id</span> About</a></li>
-        <li><a href="/search">Search</a></li>
         
           <li><a href="/rss.xml"><span class="nav-icon">rss</span> RSS</a></li>
         
@@ -81,7 +72,6 @@
   </div>
 
   <footer class="sidebar-foot">
-    <button type="button" id="crt-toggle" aria-pressed="true" hidden>CRT effects: on</button>
     &copy; 2026 Giuslock
   </footer>
 </aside>
@@ -97,20 +87,31 @@
       </div>
 
       <div class="prose">
-        <p>Hey, Giuslock here.</p>
-        <p>I'm a penetration tester with around five years of experience messing with web applications, mobile apps, cloud environments, and whatever else happens to be vulnerable.</p>
-        <p>I hold the CPTS and BSCP certifications, and I'm currently working towards the OSCP. Apparently, I haven't had enough of staring at terminals and questioning my life choices.</p>
-        <p>Outside of cybersecurity, I'm interested in geopolitics, technology, and the increasingly weird relationship between humans and machines. Especially now that AI seems determined to fill every corner of the Internet with absolute slop.</p>
-        <p>I like breaking things, figuring out how they work, and occasionally wondering what the fuck we're doing as a species.</p>
-        <h2>So, what's this place about?</h2>
-        <p>Honestly? Whatever catches my attention.</p>
-        <p>You'll find CTF write-ups, offensive security research, certification experiences, technical notes, and whatever I happen to learn while going down yet another rabbit hole.</p>
-        <p>But this isn't strictly a cybersecurity blog.</p>
-        <p>Sometimes I'll write about AI, geopolitics, the state of the Internet, or something that's been bothering me enough to sit down and write a few paragraphs about it.</p>
-        <p>Don't expect a content strategy, perfectly structured tutorials, or groundbreaking research every week.</p>
-        <p>Some posts might be useful. Others might just be me ranting about something.</p>
-        <p><strong>Think of this place as a personal dumping ground for technical discoveries, questionable thoughts, and occasional existential crises.</strong></p>
-        <p>Welcome to the mess.</p>
+        <p>
+          Hi, I'm <strong>Giuslock</strong>: a penetration tester with 5 years of experience
+          across web apps, mobile, and cloud.
+        </p>
+
+        <p>
+          I have a deep fascination for geopolitics and tech. Why? Because data is the new raw material
+          everyone is hunting for, and the line between global conflicts and cyber security is thinner than ever.
+        </p>
+
+        <p>
+          When I'm not doing my day job, I'm hunting bugs on HackerOne, playing CTFs on HackTheBox,
+          or studying for my next challenge (currently holding CPTS and BSCP).
+        </p>
+
+        <h2>What to expect from this blog?</h2>
+        <p>
+          No strict rules. I write about whatever catches my attention. You'll find CTF write-ups,
+          my personal reviews on cybersecurity certifications, deep dives into OSINT and AI,
+          or just my thoughts on what's happening around the globe.
+        </p>
+
+        <p>
+          It's a chaotic mix, but basically, I'm just documenting my journey through these crazy times.
+        </p>
 
         <h2>Links</h2>
         <ul class="social-links">
