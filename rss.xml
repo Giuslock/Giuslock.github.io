@@ -4,7 +4,7 @@
         <title></title>
         <link>undefined</link>
         <description>undefined</description>
-        <lastBuildDate>Tue, 13 Oct 2026 14:56:56 GMT</lastBuildDate>
+        <lastBuildDate>Tue, 13 Oct 2026 15:04:13 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>Joplin Pages Publisher</generator>
         <item>
@@ -956,8 +956,7 @@ cat /root/root.txt</code></pre></div>
             <title><![CDATA[Interpreter - Hack The Box Writeup]]></title>
             <guid>5d8b9b1943014aa8ba59dd952adab978</guid>
             <pubDate>Mon, 09 Mar 2026 17:15:53 GMT</pubDate>
-            <content:encoded><![CDATA[<h1 id="interpreter-hack-the-box-writeup">Interpreter - Hack The Box Writeup</h1>
-<p><strong>Machine:</strong> Interpreter<br />
+            <content:encoded><![CDATA[<p><strong>Machine:</strong> Interpreter<br />
 <strong>OS:</strong> Linux (Debian 12)<br />
 <strong>Difficulty:</strong> Medium<br />
 <strong>IP:</strong> 10.129.9.96</p>
