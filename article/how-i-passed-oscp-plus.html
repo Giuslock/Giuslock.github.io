@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+<head>
+  
+  
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Slop Overflow</title>
+<meta name="description" content="Cybersecurity, AI, OSINT, geopolitics, and lessons learned by breaking things." />
+<meta name="theme-color" content="#07090c" />
+<meta property="og:title" content="Slop Overflow" />
+<meta property="og:description" content="Cybersecurity, AI, OSINT, geopolitics, and lessons learned by breaking things." />
+<meta property="og:type" content="article" />
+<meta name="twitter:card" content="summary" />
+<link rel="icon" href="/favicon.ico" />
+<link rel="alternate" type="application/rss+xml" title="Slop Overflow RSS" href="/rss.xml" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;600;700&family=Outfit:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/_assets/css/style.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" />
+<script defer src="/_assets/js/app.js"></script>
+<script data-goatcounter="https://giuslock.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+
+</head>
+<body>
+<div class="layout">
+  
+
+
+
+<a class="skip-link" href="#main-content">Skip to content</a>
+
+<!-- Mobile topbar -->
+<header class="topbar">
+  <button class="hamburger" id="nav-toggle" aria-label="Open menu" aria-controls="sidebar" aria-expanded="false">&#9776;</button>
+  <a href="/" class="topbar-brand">Slop Overflow</a>
+  <a href="/search" class="topbar-search" aria-label="Search posts">grep</a>
+</header>
+
+<!-- Overlay -->
+<div class="overlay" id="nav-overlay"></div>
+
+<!-- Sidebar -->
+<aside class="sidebar" id="sidebar" aria-label="Site navigation" tabindex="-1">
+  <div class="sidebar-body">
+
+    <a href="/" class="brand">
+      <img src="/_assets/img/profile.png" alt="Portrait of Giuslock" class="brand-avatar" width="44" height="44" loading="lazy" />
+      <span>
+        <span class="brand-name">Slop Overflow</span>
+        <span class="brand-sub">Security field notes, writeups, and useful skepticism.</span>
+      </span>
+    </a>
+
+    <nav>
+      <ul class="nav-list">
+        <li><a href="/"><span class="nav-icon">~/</span> Home</a></li>
+        <li><a href="/archives"><span class="nav-icon">ls</span> Archives</a></li>
+        <li><a href="/tags"><span class="nav-icon">#</span> Tags</a></li>
+        <li><a href="/about"><span class="nav-icon">id</span> About</a></li>
+        
+          <li><a href="/rss.xml"><span class="nav-icon">rss</span> RSS</a></li>
+        
+      </ul>
+    </nav>
+
+    <div class="sidebar-search">
+      <form action="/search" method="get">
+        <input type="search" name="q" placeholder="Search posts&#8230;" aria-label="Search" />
+        <button type="submit">Go</button>
+      </form>
+    </div>
+
+  </div>
+
+  <footer class="sidebar-foot">
+    &copy; 2026 Giuslock
+  </footer>
+</aside>
+
+  <main class="main" id="main-content" tabindex="-1">
+    <div class="page">
+
+      
+
+      <!-- Breadcrumb -->
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="/">~</a>
+        <span class="breadcrumb-sep">/</span>
+        <a href="/archives">archives</a>
+        
+          <span class="breadcrumb-sep">/</span>
+          <a href="/tags#OSCP">OSCP</a>
+        
+      </nav>
+
+      <!-- Title & meta -->
+      <h1>How I Passed the OSCP+ (and Broke a Window Along the Way)</h1>
+      <div class="meta-row">
+        <span class="badge">
+          <span class="badge-dot"></span>
+          <time datetime="2026-10-13T14:44:29.273Z">2026-10-13</time>
+        </span>
+        <span class="badge"><span class="badge-dot"></span>3 min read</span>
+        
+          <span class="badge"><span class="badge-dot"></span>Giuslock</span>
+        
+        
+          <span class="badge"><span class="badge-dot"></span>OSCP, OSCP Exam Experience, OSCP Preparation, Penetration Testing, OSCP+</span>
+        
+      </div>
+
+      <!-- Content -->
+      <div class="prose"><p><img src="/_resources/319de012721a4b239af5c86cbf4dc1c7.png" /></p>
+<p><strong>2026 roadmap: BSCP, CPTS, OSCP+. Completed.</strong></p>
+<p>At the beginning of 2026, I set myself a goal: earn the BSCP, CPTS, and OSCP+ certifications. Now that I've finally completed the roadmap, I thought I'd share how I prepared for the OSCP+, what helped me the most, and a few things I learned along the way.</p>
+<h2 id="preparation">Preparation</h2>
+<p>At the beginning of the year, I decided to tackle the CPTS first. My reasoning was pretty simple: I wanted solid technical training that would help me approach the OSCP with the right mindset and, hopefully, make the whole preparation process a bit faster.</p>
+<p>Looking back, I think it was the right decision.</p>
+<p>One article that really gave me the motivation to go for the OSCP was <a title="https://h3rac1es.github.io/posts/OSCP/" href="https://h3rac1es.github.io/posts/OSCP/">H3racl3s' OSCP experience</a>. Seriously, reading about his journey gave me the push I needed, along with some genuinely useful tips.</p>
+<p>One of those was <a title="https://docs.google.com/spreadsheets/d/13YoNQuY6HC5ot-lZiX2tY9pR5mvwnp3xV6lHs78DlqQ/edit?gid=878934599" href="https://docs.google.com/spreadsheets/d/13YoNQuY6HC5ot-lZiX2tY9pR5mvwnp3xV6lHs78DlqQ/edit?gid=878934599">LainKusanagi's OSCP Preparation Spreadsheet</a>, a collection of machines from various CTF platforms that are particularly useful for OSCP preparation.</p>
+<p>Since I had already completed the CPTS, my preparation was basically straightforward: <strong>jump into those machines and hack away.</strong></p>
+<p>My goal was to complete at least one machine per day while constantly reviewing and improving my notes.</p>
+<p>And trust me, those notes turned out to be absolutely essential during the exam.</p>
+<h2 id="a-tool-worth-mentioning-penelope">A Tool Worth Mentioning: Penelope</h2>
+<p>Another great discovery during this journey was <a title="https://github.com/brightio/penelope" href="https://github.com/brightio/penelope">Penelope</a>.</p>
+<p>If you've never heard of it, it's an amazing shell handler that quickly became part of my daily workflow.</p>
+<p>Its features saved me a ridiculous amount of time, both during CTFs and, more importantly, during the actual exam.</p>
+<p>I liked it so much that I still use it pretty much every day.</p>
+<p>Seriously, give it a try.</p>
+<h2 id="exam-day-and-the-window-incident">Exam Day (and the Window Incident)</h2>
+<p>Unlike H3racl3s, who managed to finish his exam in around seven hours, I wasn't quite that fast.</p>
+<p>I started at <strong>10 AM and finished at 1 AM</strong>.</p>
+<p>Yes, that's a long day.</p>
+<p>Somewhere in between exploiting machines, enumerating services, and questioning my life choices, I also somehow managed to <strong>break a window in my room</strong>.</p>
+<p>And fix it.</p>
+<p>During the exam.</p>
+<p>But that's a story for another day.</p>
+<p>I just hope the recording of that particular moment never starts circulating around the OffSec offices.</p>
+<p>Anyway, despite the unexpected home maintenance session, I made it through and passed the exam.</p>
+<h2 id="a-few-pieces-of-advice">A Few Pieces of Advice</h2>
+<p>If I had to give a few tips to anyone preparing for the OSCP+, they'd be these:</p>
+<p><strong>Treat your notes like they're sacred.</strong></p>
+<p>Seriously. Build them, organize them, update them, and make sure you can quickly find whatever you need. During the exam, you don't want to waste precious time trying to remember that one command you used three months ago.</p>
+<p><strong>Prepare your meals in advance.</strong></p>
+<p>It might sound stupid, but when you're spending an entire day in front of a terminal, the last thing you want to worry about is what to eat. Do yourself a favor and get that sorted beforehand.</p>
+<p><strong>Enumerate. Enumerate. Enumerate.</strong></p>
+<p>And when you think you've enumerated enough, enumerate some more.</p>
+<p>Sometimes the clue you're looking for is buried under a mountain of completely useless information.</p>
+<p>And believe me, <strong>there's a lot of noise</strong>.</p>
+<p>I think that's actually one of the most important things this exam tests: your ability to identify what matters, filter out the noise, and keep moving when things aren't immediately obvious.</p>
+<h2 id="final-thoughts">Final Thoughts</h2>
+<p>I'm genuinely happy to have finally earned the OSCP+ and completed my 2026 certification roadmap.</p>
+<p>The CPTS gave me a strong foundation, the practice machines helped me sharpen my methodology, and the OSCP+ put everything to the test.</p>
+<p>Was it exhausting? Absolutely.</p>
+<p>Was it worth it? Definitely.</p>
+<p>Would I recommend breaking a window during your exam?</p>
+<p>Probably not.</p>
+<p><strong>See you on the next box.</strong></p>
+<p><img src="/_resources/3e88f36eaf784045b02da8f630801251.gif" /></p>
+</div>
+
+      <!-- Prev / Next -->
+      <nav class="post-nav" aria-label="Post navigation">
+        <div class="post-nav-prev">
+          
+        </div>
+        <div class="post-nav-next">
+          
+            <a href="/article/precious">Precious - An HTB easy machine &rarr;</a>
+          
+        </div>
+      </nav>
+
+    </div>
+    <footer class="site-footer">
+  &copy; 2026 Giuslock &mdash; Security field notes, writeups, and useful skepticism.
+</footer>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+
+  </main>
+</div>
+</body>
+</html>
